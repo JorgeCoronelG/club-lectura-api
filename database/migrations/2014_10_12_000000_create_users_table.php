@@ -16,16 +16,20 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('code', UserFields::CODE_LENGTH);
+            $table->string('code', UserFields::CODE_LENGTH)
+                ->nullable();
             $table->string('name', UserFields::NAME_MAX_LENGTH);
             $table->string('paternal_surname', UserFields::LAST_NAME_MAX_LENGTH);
             $table->string('maternal_surname', UserFields::LAST_NAME_MAX_LENGTH);
             $table->string('email', UserFields::EMAIL_MAX_LENGTH)
-                ->unique();
+                ->unique()
+                ->index();
             $table->string('password');
             $table->string('phone', UserFields::PHONE_LENGTH);
+            $table->date('birthday');
             $table->enum('gender', UserFields::ALL_GENDER);
-            $table->string('photo', UserFields::PHOTO_LENGTH);
+            $table->string('photo', UserFields::PHOTO_LENGTH)
+                ->nullable();
             $table->enum('status', UserFields::ALL_STATUS);
             $table->boolean('verified')
                 ->default(UserFields::NOT_VERIFIED);

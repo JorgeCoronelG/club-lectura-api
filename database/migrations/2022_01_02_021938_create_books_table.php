@@ -16,6 +16,8 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+            $table->string('code', BookFields::CODE_LENGTH)
+                ->nullable();
             $table->string('title', BookFields::TITLE_MAX_LENGTH);
             $table->text('review')
                 ->nullable();
@@ -24,6 +26,7 @@ class CreateBooksTable extends Migration
             $table->float('price', BookFields::PRICE_TOTAL_DIGITS, BookFields::PRICE_TOTAL_DECIMAL);
             $table->tinyInteger('edition');
             $table->string('image', BookFields::IMAGE_LENGTH);
+            $table->smallInteger('copy');
             $table->enum('status', BookFields::ALL_STATUS);
             $table->foreignId('donation_id')
                 ->constrained()
