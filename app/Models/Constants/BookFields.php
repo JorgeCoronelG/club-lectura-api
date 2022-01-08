@@ -4,6 +4,7 @@ namespace App\Models\Constants;
 
 class BookFields
 {
+    const CODE_LENGTH = 15;
     const TITLE_MIN_LENGTH = 2;
     const TITLE_MAX_LENGTH = 150;
     const NEW_CONDITION = 'Nuevo';

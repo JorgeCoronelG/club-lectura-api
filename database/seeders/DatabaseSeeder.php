@@ -19,10 +19,14 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         DB::table('roles')->truncate();
+        DB::table('role_user')->truncate();
+        DB::table('users');
 
         Role::flushEventListeners();
 
         $this->call(RoleSeeder::class);
+        $this->call(UserAdminSeeder::class);
+        $this->call(UserSeeder::class);
 
         Schema::enableForeignKeyConstraints();
     }

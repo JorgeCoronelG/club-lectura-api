@@ -5,7 +5,7 @@ namespace App\Models\Constants;
 class StudentFields
 {
     const GROUP_MAX_LENGTH = 15;
-    const MORNING_SHIFT = 'Matutino';
-    const AFTERNOON_SHIFT = 'Vespertino';
-    const ALL_TURNS = [self::MORNING_SHIFT, self::AFTERNOON_SHIFT];
+    const MORNING_TURN = 'Matutino';
+    const AFTERNOON_TURN = 'Vespertino';
+    const ALL_TURNS = [self::MORNING_TURN, self::AFTERNOON_TURN];
 }
