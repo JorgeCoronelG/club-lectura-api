@@ -19,11 +19,10 @@ use Symfony\Component\HttpFoundation\Response;
 class Validation
 {
     // Formatos
-    public const FORMAT_PHONE = '###-###-####';
     public const FORMAT_DATE_YMD = 'Y-m-d';
 
     // Expresiones regulares
-    public const PHONE_REGEX = '/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/';
+    public const PHONE_REGEX = '/^[0-9]{10}$/';
 
     // Tipos de validaciones
     public const PHONE_TYPE = 'phone';
@@ -86,12 +85,6 @@ class Validation
                 default:
                     throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
             }
-
-            if (isset($filter[QueryParam::VALIDATION_KEY])) {
-                if ($filter[QueryParam::VALIDATION_KEY] == self::PHONE_TYPE) {
-                    $arrayFilters[$filter[QueryParam::FIELD_KEY]] = self::validatePhoneNumber($filter[QueryParam::VALUE_KEY]);
-                }
-            }
         }
 
         return $arrayFilters;
@@ -126,49 +119,5 @@ class Validation
         }
 
         return $date;
-    }
-
-    /**
-     * Función para validar un número telefónico en formato ###-###-####
-     * @throws \Exception
-     */
-    public static function validatePhoneNumber(string $phone = null): string | null
-    {
-        if (is_null($phone)) {
-            return null;
-        }
-
-        if (!ctype_digit($phone)) {
-            throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
-        }
-
-        switch (strlen($phone)) {
-            case 1:
-            case 2:
-            case 3:
-                $phoneParse = substr($phone, 0);
-                break;
-            case 4:
-            case 5:
-            case 6:
-                $phoneParse = substr($phone,0, 3);
-                $phoneParse .= '-';
-                $phoneParse .= substr($phone,3, strlen($phone) - 3);
-                break;
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-                $phoneParse = substr($phone, 0,3);
-                $phoneParse .= '-';
-                $phoneParse .= substr($phone,3, 3);
-                $phoneParse .= '-';
-                $phoneParse .= substr($phone,6, strlen($phone) - 6);
-                break;
-            default:
-                throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
-        }
-
-        return $phoneParse;
     }
 }
