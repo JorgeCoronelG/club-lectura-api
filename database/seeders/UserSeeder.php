@@ -2,17 +2,28 @@
 
 namespace Database\Seeders;
 
+use App\Contracts\Repositories\IExternalRepository;
 use App\Models\Academic;
 use App\Models\Constants\RoleFields;
-use App\Models\External;
+use App\Models\Constants\UserFields;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
+    protected IExternalRepository $externalRepository;
+
     public const TOTAL_USERS_CAPTURIST = 5;
     public const TOTAL_USERS_READER = 50;
+
+    /**
+     * @param IExternalRepository $externalRepository
+     */
+    public function __construct(IExternalRepository $externalRepository)
+    {
+        $this->externalRepository = $externalRepository;
+    }
 
     /**
      * Run the database seeds.
@@ -25,7 +36,7 @@ class UserSeeder extends Seeder
             ->times(self::TOTAL_USERS_CAPTURIST)
             ->create()
             ->each(function (User $user) {
-                $user->code = "CLUB/LECT-$user->id";
+                $user->code = UserFields::CODE_INITIAL.$user->id;
                 $user->save();
 
                 $user->roles()->attach([RoleFields::CAPTURIST, RoleFields::READER]);
@@ -37,7 +48,7 @@ class UserSeeder extends Seeder
             ->times(self::TOTAL_USERS_READER)
             ->create()
             ->each(function (User $user) {
-                $user->code = "CLUB/LECT-$user->id";
+                $user->code = UserFields::CODE_INITIAL.$user->id;
                 $user->save();
 
                 $user->roles()->attach(RoleFields::READER);
@@ -50,7 +61,7 @@ class UserSeeder extends Seeder
                     Academic::factory(['user_id' => $user->id])->create();
                 }
                 if ($type === 3) {
-                    External::create(['user_id' => $user->id]);
+                    $this->externalRepository->create(['user_id' => $user->id]);
                 }
             });
     }

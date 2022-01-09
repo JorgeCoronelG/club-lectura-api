@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Repositories\LiteraryGenderRepository;
+use App\Contracts\Repositories\ILiteraryGenderRepository;
 use Illuminate\Database\Seeder;
 use Throwable;
 
 class LiteraryGenderSeeder extends Seeder
 {
-    protected LiteraryGenderRepository $literaryGenderRepository;
+    protected ILiteraryGenderRepository $literaryGenderRepository;
 
     /**
-     * @param LiteraryGenderRepository $literaryGenderRepository
+     * @param ILiteraryGenderRepository $literaryGenderRepository
      */
-    public function __construct(LiteraryGenderRepository $literaryGenderRepository)
+    public function __construct(ILiteraryGenderRepository $literaryGenderRepository)
     {
         $this->literaryGenderRepository = $literaryGenderRepository;
     }

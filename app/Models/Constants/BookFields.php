@@ -5,6 +5,7 @@ namespace App\Models\Constants;
 class BookFields
 {
     const CODE_LENGTH = 15;
+    const CODE_INITIAL = 'LIB-';
     const TITLE_MIN_LENGTH = 2;
     const TITLE_MAX_LENGTH = 150;
     const NEW_CONDITION = 'Nuevo';
@@ -15,5 +16,7 @@ class BookFields
     const IMAGE_LENGTH = 35;
     const AVAILABLE_STATUS = 'Disponible';
     const ON_LOAN_STATUS = 'En préstamo';
-    const ALL_STATUS = [self::AVAILABLE_STATUS, self::ON_LOAN_STATUS];
+    const LOST_STATUS = 'Perdido';
+    const NOT_RECOVERED_STATUS = 'No recuperado';
+    const ALL_STATUS = [self::AVAILABLE_STATUS, self::ON_LOAN_STATUS, self::LOST_STATUS, self::NOT_RECOVERED_STATUS];
 }

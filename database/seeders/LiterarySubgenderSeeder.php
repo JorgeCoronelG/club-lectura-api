@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Repositories\LiterarySubgenderRepository;
+use App\Contracts\Repositories\ILiterarySubgenderRepository;
 use Illuminate\Database\Seeder;
 use Throwable;
 
 class LiterarySubgenderSeeder extends Seeder
 {
-    protected LiterarySubgenderRepository $literarySubgenderRepository;
+    protected ILiterarySubgenderRepository $literarySubgenderRepository;
 
     /**
-     * @param LiterarySubgenderRepository $literarySubgenderRepository
+     * @param ILiterarySubgenderRepository $literarySubgenderRepository
      */
-    public function __construct(LiterarySubgenderRepository $literarySubgenderRepository)
+    public function __construct(ILiterarySubgenderRepository $literarySubgenderRepository)
     {
         $this->literarySubgenderRepository = $literarySubgenderRepository;
     }

@@ -13,7 +13,10 @@ class RepositoryServiceProvider extends ServiceProvider
         'IRoleRepository' => 'RoleRepository',
         'IUserRepository' => 'UserRepository',
         'ILiteraryGenderRepository' => 'LiteraryGenderRepository',
-        'ILiterarySubgenderRepository' => 'LiterarySubgenderRepository'
+        'ILiterarySubgenderRepository' => 'LiterarySubgenderRepository',
+        'IDonationRepository' => 'DonationRepository',
+        'IExternalRepository' => 'ExternalRepository',
+        'IAuthorRepository' => 'AuthorRepository'
     ];
 
     /**

@@ -2,20 +2,22 @@
 
 namespace Database\Seeders;
 
+use App\Contracts\Repositories\IExternalRepository;
 use App\Contracts\Repositories\IUserRepository;
 use App\Models\Constants\RoleFields;
 use App\Models\Constants\UserFields;
-use App\Models\External;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class UserAdminSeeder extends Seeder
 {
     protected IUserRepository $userRepository;
+    protected IExternalRepository $externalRepository;
 
-    public function __construct(IUserRepository $userRepository)
+    public function __construct(IUserRepository $userRepository, IExternalRepository $externalRepository)
     {
         $this->userRepository = $userRepository;
+        $this->externalRepository = $externalRepository;
     }
 
     /**
@@ -42,6 +44,6 @@ class UserAdminSeeder extends Seeder
             'email_verified_at' => now()
         ]);
         $admin->roles()->attach([RoleFields::ADMIN, RoleFields::READER]);
-        External::create(['user_id' => $admin->id]);
+        $this->externalRepository->create(['user_id' => $admin->id]);
     }
 }
