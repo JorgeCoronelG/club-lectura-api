@@ -11,7 +11,9 @@ class RepositoryServiceProvider extends ServiceProvider
 
     protected array $repositories = [
         'IRoleRepository' => 'RoleRepository',
-        'IUserRepository' => 'UserRepository'
+        'IUserRepository' => 'UserRepository',
+        'ILiteraryGenderRepository' => 'LiteraryGenderRepository',
+        'ILiterarySubgenderRepository' => 'LiterarySubgenderRepository'
     ];
 
     /**

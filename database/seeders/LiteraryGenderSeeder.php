@@ -2,25 +2,37 @@
 
 namespace Database\Seeders;
 
-use App\Models\LiteraryGender;
+use App\Repositories\LiteraryGenderRepository;
 use Illuminate\Database\Seeder;
+use Throwable;
 
 class LiteraryGenderSeeder extends Seeder
 {
+    protected LiteraryGenderRepository $literaryGenderRepository;
+
+    /**
+     * @param LiteraryGenderRepository $literaryGenderRepository
+     */
+    public function __construct(LiteraryGenderRepository $literaryGenderRepository)
+    {
+        $this->literaryGenderRepository = $literaryGenderRepository;
+    }
+
     /**
      * Run the database seeds.
      *
      * @return void
+     * @throws Throwable
      */
     public function run()
     {
-        LiteraryGender::create(['name' => 'Épico']);
-        LiteraryGender::create(['name' => 'Lírico']);
-        LiteraryGender::create(['name' => 'Dramático']);
-        LiteraryGender::create(['name' => 'Didáctico']);
-        LiteraryGender::create(['name' => 'Novela']);
-        LiteraryGender::create(['name' => 'Relato']);
-        LiteraryGender::create(['name' => 'Ensayo']);
-        LiteraryGender::create(['name' => 'Poesía']);
+        $this->literaryGenderRepository->create(['name' => 'Épico']);
+        $this->literaryGenderRepository->create(['name' => 'Lírico']);
+        $this->literaryGenderRepository->create(['name' => 'Dramático']);
+        $this->literaryGenderRepository->create(['name' => 'Didáctico']);
+        $this->literaryGenderRepository->create(['name' => 'Novela']);
+        $this->literaryGenderRepository->create(['name' => 'Relato']);
+        $this->literaryGenderRepository->create(['name' => 'Ensayo']);
+        $this->literaryGenderRepository->create(['name' => 'Poesía']);
     }
 }
