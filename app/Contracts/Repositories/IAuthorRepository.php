@@ -3,7 +3,6 @@
 namespace App\Contracts\Repositories;
 
 use App\Core\Contracts\IBaseRepository;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @author jcgonzalez
@@ -12,5 +11,5 @@ use Illuminate\Database\Eloquent\Collection;
  */
 interface IAuthorRepository extends IBaseRepository
 {
-    public function findRandoms(int $rows): Collection;
+    //
 }

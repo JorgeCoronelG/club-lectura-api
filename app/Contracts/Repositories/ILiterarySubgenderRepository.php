@@ -3,7 +3,6 @@
 namespace App\Contracts\Repositories;
 
 use App\Core\Contracts\IBaseRepository;
-use App\Models\LiterarySubgender;
 
 /**
  * @author jcgonzalez
@@ -12,5 +11,5 @@ use App\Models\LiterarySubgender;
  */
 interface ILiterarySubgenderRepository extends IBaseRepository
 {
-    public function findRandom(): LiterarySubgender;
+    //
 }

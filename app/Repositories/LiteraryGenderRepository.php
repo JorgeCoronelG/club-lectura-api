@@ -23,6 +23,4 @@ class LiteraryGenderRepository extends BaseRepository implements ILiteraryGender
     {
         $this->entity = $literaryGender;
     }
-
-
 }

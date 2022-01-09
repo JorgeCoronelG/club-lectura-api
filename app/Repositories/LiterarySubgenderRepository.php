@@ -6,7 +6,6 @@ use App\Contracts\Repositories\ILiterarySubgenderRepository;
 use App\Core\BaseRepository;
 use App\Models\LiterarySubgender;
 use Illuminate\Database\Eloquent\Model;
-use Throwable;
 
 /**
  * @author jcgonzalez
@@ -23,13 +22,5 @@ class LiterarySubgenderRepository extends BaseRepository implements ILiterarySub
     public function __construct(LiterarySubgender $literarySubgender)
     {
         $this->entity = $literarySubgender;
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function findRandom(): LiterarySubgender
-    {
-        return $this->findAll()->random();
     }
 }
