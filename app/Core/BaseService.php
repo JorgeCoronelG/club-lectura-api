@@ -6,6 +6,7 @@ use App\Core\Contracts\IBaseRepository;
 use App\Core\Contracts\IBaseService;
 use App\Helpers\Enum\QueryParam;
 use App\Helpers\Validation;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class BaseService implements IBaseService
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function findAllPaginated(Request $request): LengthAwarePaginator
     {
@@ -63,5 +64,15 @@ class BaseService implements IBaseService
     public function delete(Model $entity): void
     {
         $this->entityRepository->delete($entity);
+    }
+
+    public function findRandom(): Model
+    {
+        return $this->entityRepository->findRandom();
+    }
+
+    public function findRandoms(int $records = 1): Collection
+    {
+        return $this->entityRepository->findRandoms($records);
     }
 }

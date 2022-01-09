@@ -19,4 +19,8 @@ interface IBaseRepository
     public function update(array $data, \Illuminate\Database\Eloquent\Model $entity): \Illuminate\Database\Eloquent\Model;
 
     public function delete(\Illuminate\Database\Eloquent\Model $entity): void;
+
+    public function findRandom(): \Illuminate\Database\Eloquent\Model;
+
+    public function findRandoms(int $records = 1): \Illuminate\Database\Eloquent\Collection;
 }
