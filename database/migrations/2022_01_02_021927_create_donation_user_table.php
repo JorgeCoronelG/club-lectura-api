@@ -23,7 +23,6 @@ class CreateDonationUserTable extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->text('reason')
-                ->default(null)
                 ->nullable();
             $table->timestamps();
         });

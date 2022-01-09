@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Academic;
 use App\Models\Author;
+use App\Models\Donation;
 use App\Models\External;
 use App\Models\LiteraryGender;
 use App\Models\LiterarySubgender;
@@ -34,6 +35,7 @@ class DatabaseSeeder extends Seeder
         DB::table('literary_genders')->truncate();
         DB::table('literary_subgenders')->truncate();
         DB::table('authors')->truncate();
+        DB::table('donations')->truncate();
 
         Role::flushEventListeners();
         User::flushEventListeners();
@@ -43,6 +45,7 @@ class DatabaseSeeder extends Seeder
         LiteraryGender::flushEventListeners();
         LiterarySubgender::flushEventListeners();
         Author::flushEventListeners();
+        Donation::flushEventListeners();
 
         $this->call(RoleSeeder::class);
         $this->call(UserAdminSeeder::class);
@@ -50,6 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LiteraryGenderSeeder::class);
         $this->call(LiterarySubgenderSeeder::class);
         $this->call(AuthorSeeder::class);
+        $this->call(DonationSeeder::class);
 
         Schema::enableForeignKeyConstraints();
     }

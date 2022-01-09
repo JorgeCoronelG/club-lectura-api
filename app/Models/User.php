@@ -50,4 +50,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Academic::class);
     }
+
+    public function external(): HasOne
+    {
+        return $this->hasOne(External::class);
+    }
+
+    public function donations(): BelongsToMany
+    {
+        return $this->belongsToMany(Donation::class)->withTimestamps();
+    }
 }
