@@ -3,9 +3,11 @@
 namespace App\Core;
 
 use App\Core\Contracts\IBaseRepository;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Throwable;
 
 /**
  * @author JorgeCoronelG
@@ -16,7 +18,7 @@ class BaseRepository implements IBaseRepository
     protected Model $entity;
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function findAll(): Collection
     {
@@ -33,7 +35,7 @@ class BaseRepository implements IBaseRepository
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function findAllPaginated(array $filters, int $paginated, string $sort = null): LengthAwarePaginator
     {
@@ -49,7 +51,7 @@ class BaseRepository implements IBaseRepository
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function create(array $data): Model
     {
@@ -59,7 +61,7 @@ class BaseRepository implements IBaseRepository
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function update(array $data, Model $entity): Model
     {
@@ -69,10 +71,26 @@ class BaseRepository implements IBaseRepository
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete(Model $entity): void
     {
         $entity->delete();
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function findRandom(): \Illuminate\Database\Eloquent\Model
+    {
+        return $this->findAll()->random();
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function findRandoms(int $records = 1): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->findAll()->random($records);
     }
 }
