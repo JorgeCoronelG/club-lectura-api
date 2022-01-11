@@ -28,4 +28,9 @@ class Book extends Model
     {
         return $this->belongsToMany(Author::class)->withTimestamps();
     }
+
+    public function loans(): BelongsToMany
+    {
+        return $this->belongsToMany(Loan::class)->withTimestamps();
+    }
 }

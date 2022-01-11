@@ -15,7 +15,7 @@ class DonationFactory extends Factory
     public function definition()
     {
         return [
-            'donation_date' => ($this->faker->dateTimeBetween($start_date = '-30 days', $endDate = 'now'))
+            'donation_date' => ($this->faker->dateTimeBetween('-60 days', '-30 days'))
                 ->format(Validation::FORMAT_DATE_YMD)
         ];
     }
