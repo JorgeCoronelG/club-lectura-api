@@ -7,6 +7,11 @@ use App\Core\BaseRepository;
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @author jcgonzalez
+ * @version 1.0
+ * Created 08/01/2022
+ */
 class AuthorRepository extends BaseRepository implements IAuthorRepository
 {
     protected Model $entity;

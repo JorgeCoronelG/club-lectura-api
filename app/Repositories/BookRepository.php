@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Contracts\Repositories\IBookRepository;
+use App\Core\BaseRepository;
+use App\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @author jcgonzalez
+ * @version 1.0
+ * Created 08/01/2022
+ */
+class BookRepository extends BaseRepository implements IBookRepository
+{
+    protected Model $entity;
+
+    /**
+     * @param Book $book
+     */
+    public function __construct(Book $book)
+    {
+        $this->entity = $book;
+    }
+
+    public function findByStatus(string $status): Collection
+    {
+        return $this->entity->where('status', $status)->get();
+    }
+}
