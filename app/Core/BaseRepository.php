@@ -81,7 +81,7 @@ class BaseRepository implements IBaseRepository
     /**
      * @throws Throwable
      */
-    public function findRandom(): \Illuminate\Database\Eloquent\Model
+    public function findRandom(): Model
     {
         return $this->findAll()->random();
     }
@@ -89,7 +89,7 @@ class BaseRepository implements IBaseRepository
     /**
      * @throws Throwable
      */
-    public function findRandoms(int $records = 1): \Illuminate\Database\Eloquent\Collection
+    public function findRandoms(int $records = 1): Collection
     {
         return $this->findAll()->random($records);
     }
