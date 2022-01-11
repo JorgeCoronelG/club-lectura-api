@@ -18,7 +18,6 @@ class CreateLoansTable extends Migration
             $table->date('loan');
             $table->date('approximate_delivery');
             $table->date('actual_delivery')
-                ->default(null)
                 ->nullable();
             $table->foreignId('user_id')
                 ->constrained()
