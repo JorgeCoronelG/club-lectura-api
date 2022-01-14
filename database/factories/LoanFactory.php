@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Helpers\Validation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LoanFactory extends Factory
@@ -14,11 +14,19 @@ class LoanFactory extends Factory
      */
     public function definition(): array
     {
-        $dateLoan = $this->faker->dateTimeBetween('-15 days');
-        return [
-            'loan' => $dateLoan->format(Validation::FORMAT_DATE_YMD),
-            'approximate_delivery' => date_add($dateLoan, date_interval_create_from_date_string('15 days'))
-                ->format(Validation::FORMAT_DATE_YMD)
-        ];
+        $fakeData = array();
+        $dateLoan = Carbon::parse($this->faker->dateTimeBetween('-25 days'));
+        $fakeData['loan'] = $dateLoan->toDateString();
+
+        $dateLoan->addDays(15);
+        $fakeData['approximate_delivery'] = $dateLoan->toDateString();
+
+        $now = now();
+        $fakeData['actual_delivery'] = null;
+        if ($dateLoan->toDateString() === $now->toDateString()) {
+            $fakeData['actual_delivery'] = $dateLoan->toDateString();
+        }
+
+        return $fakeData;
     }
 }

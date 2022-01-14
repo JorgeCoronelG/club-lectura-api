@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Loan extends Model
 {
@@ -19,5 +20,10 @@ class Loan extends Model
     public function books(): BelongsToMany
     {
         return $this->belongsToMany(Book::class)->withTimestamps();
+    }
+
+    public function fines(): HasOne
+    {
+        return $this->hasOne(Loan::class);
     }
 }

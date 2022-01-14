@@ -17,7 +17,9 @@ class RepositoryServiceProvider extends ServiceProvider
         'IDonationRepository' => 'DonationRepository',
         'IExternalRepository' => 'ExternalRepository',
         'IAuthorRepository' => 'AuthorRepository',
-        'IBookRepository' => 'BookRepository'
+        'IBookRepository' => 'BookRepository',
+        'ILoanRepository' => 'LoanRepository',
+        'IFineRepository' => 'FineRepository'
     ];
 
     /**

@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Donation;
 use App\Models\External;
+use App\Models\Fine;
 use App\Models\LiteraryGender;
 use App\Models\LiterarySubgender;
 use App\Models\Loan;
@@ -43,6 +44,7 @@ class DatabaseSeeder extends Seeder
         DB::table('author_book')->truncate();
         DB::table('loans')->truncate();
         DB::table('book_loan')->truncate();
+        DB::table('fines')->truncate();
 
         Role::flushEventListeners();
         User::flushEventListeners();
@@ -55,6 +57,7 @@ class DatabaseSeeder extends Seeder
         Donation::flushEventListeners();
         Book::flushEventListeners();
         Loan::flushEventListeners();
+        Fine::flushEventListeners();
 
         $this->call(RoleSeeder::class);
         $this->call(UserAdminSeeder::class);
@@ -65,6 +68,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DonationSeeder::class);
         $this->call(BookSeeder::class);
         $this->call(LoanSeeder::class);
+        $this->call(FineSeeder::class);
 
         Schema::enableForeignKeyConstraints();
     }

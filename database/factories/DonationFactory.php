@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Helpers\Validation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DonationFactory extends Factory
@@ -15,8 +15,8 @@ class DonationFactory extends Factory
     public function definition()
     {
         return [
-            'donation_date' => ($this->faker->dateTimeBetween('-60 days', '-30 days'))
-                ->format(Validation::FORMAT_DATE_YMD)
+            'donation_date' => Carbon::parse($this->faker->dateTimeBetween('-60 days', '-30 days'))
+                ->toDateString()
         ];
     }
 }
