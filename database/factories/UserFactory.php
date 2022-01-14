@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Helpers\Enum\Path;
 use App\Helpers\Validation;
 use App\Models\Constants\UserFields;
 use App\Models\User;
@@ -25,7 +26,7 @@ class UserFactory extends Factory
             'gender' => ($gender === 'male')
                 ? UserFields::MALE_GENDER
                 : UserFields::FEMALE_GENDER,
-            'photo' => null,
+            'photo' => $this->faker->image(public_path(Path::STORAGE->value.Path::USER_IMAGES->value), 600, 600, fullPath: false),
             'status' => UserFields::ACTIVE_STATUS,
             'verified' => $verified = $this->faker->randomElement([UserFields::VERIFIED, UserFields::NOT_VERIFIED]),
             'verification_token' => User::generateVerificationToken(),

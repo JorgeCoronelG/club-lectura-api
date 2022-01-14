@@ -13,7 +13,7 @@ class BookFields
     const ALL_CONDITIONS = [self::NEW_CONDITION, self::USED_CONDITION];
     const PRICE_TOTAL_DIGITS = 6;
     const PRICE_TOTAL_DECIMAL = 2;
-    const IMAGE_LENGTH = 35;
+    const IMAGE_LENGTH = 50;
     const AVAILABLE_STATUS = 'Disponible';
     const ON_LOAN_STATUS = 'En préstamo';
     const LOST_STATUS = 'Perdido';

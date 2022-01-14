@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\Enum\Path;
 use App\Models\Academic;
 use App\Models\Author;
 use App\Models\Book;
@@ -59,6 +60,9 @@ class DatabaseSeeder extends Seeder
         Loan::flushEventListeners();
         Fine::flushEventListeners();
 
+        $this->deleteFiles(Path::USER_IMAGES->value);
+        $this->deleteFiles(Path::BOOK_IMAGES->value);
+
         $this->call(RoleSeeder::class);
         $this->call(UserAdminSeeder::class);
         $this->call(UserSeeder::class);
@@ -71,5 +75,16 @@ class DatabaseSeeder extends Seeder
         $this->call(FineSeeder::class);
 
         Schema::enableForeignKeyConstraints();
+    }
+
+    private function deleteFiles(string $customPath): void
+    {
+        $files = glob(public_path(Path::STORAGE->value.$customPath.'*'));
+
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
     }
 }

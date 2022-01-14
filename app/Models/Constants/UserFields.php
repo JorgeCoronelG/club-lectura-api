@@ -16,7 +16,7 @@ class UserFields
     const MALE_GENDER = 'Hombre';
     const FEMALE_GENDER = 'Mujer';
     const ALL_GENDER = [self::MALE_GENDER, self::FEMALE_GENDER];
-    const PHOTO_LENGTH = 35;
+    const PHOTO_LENGTH = 50;
     const ACTIVE_STATUS = 'Activo';
     const INACTIVE_STATUS = 'Inactivo';
     const BLOCKED_STATUS = 'En deuda';
