@@ -9,7 +9,7 @@
         "fruitcake/laravel-cors": "v2.0.5",
         "guzzlehttp/guzzle": "7.4.1",
         "intervention/image": "2.7.1",
-        "laravel/framework": "v8.78.1",
+        "laravel/framework": "v8.80.0",
         "laravel/sanctum": "v2.13.0",
         "laravel/tinker": "v2.6.3",
         "spatie/data-transfer-object": "3.7.3"
