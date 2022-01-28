@@ -16,9 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class File
 {
-    public const IMAGE_HEIGHT = 512;
-    public const IMAGE_NAME_LENGHT = 40;
-    public const IMG_USER_SIZE = 10240;
+    const IMAGE_HEIGHT = 512;
+    const IMAGE_NAME_LENGHT = 40;
 
     /**
      * @throws \Exception
@@ -28,7 +27,7 @@ class File
         try {
             $imageName = Str::random(self::IMAGE_NAME_LENGHT).
                 self::getFileExtension($imageFile->getClientOriginalName());
-            $pathUrl = self::getFilePublicPath($imageName, $customPath);
+            $pathUrl = self::getFilePublicPath($customPath, $imageName);
             Image::make($imageFile)
                 ->resize(null, self::IMAGE_HEIGHT, function ($constraint) {
                     $constraint->aspectRatio();
@@ -50,13 +49,17 @@ class File
         return '.'.pathinfo($file, PATHINFO_EXTENSION);
     }
 
-    public static function getFilePublicPath(string $filename, string $path): string
+    public static function getFilePublicPath(string $path, string $filename = null): string
     {
-        return public_path(Path::STORAGE->value.$path.$filename);
+        return (!is_null($filename))
+            ? public_path(Path::STORAGE->value.$path.$filename)
+            : public_path(Path::STORAGE->value.$path);
     }
 
-    public static function getFileStoragePath(string $filename, string $path): string
+    public static function getFileStoragePath(string $path, string $filename = null): string
     {
-        return Path::STORAGE_PUBLIC->value.$path.$filename;
+        return (!is_null($filename))
+            ? Path::STORAGE_PUBLIC->value.$path.$filename
+            : Path::STORAGE_PUBLIC->value.$path;
     }
 }
