@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Contracts\Repositories\IExternalRepository;
 use App\Contracts\Repositories\IUserRepository;
-use App\Models\Constants\RoleFields;
-use App\Models\Constants\UserFields;
+use App\Helpers\Enum\Gender;
+use App\Models\Enums\StatusUser;
+use App\Models\FormFields\RoleFields;
+use App\Models\FormFields\UserFields;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -36,9 +38,28 @@ class UserAdminSeeder extends Seeder
             'password' => bcrypt('Jorge32079.'),
             'phone' => '4423178052',
             'birthday' => '1998-08-29',
-            'gender' => UserFields::MALE_GENDER,
+            'gender' => Gender::Male->value,
             'photo' => null,
-            'status' => UserFields::ACTIVE_STATUS,
+            'status' => StatusUser::Active->value,
+            'verified' => UserFields::VERIFIED,
+            'verification_token' => User::generateVerificationToken(),
+            'email_verified_at' => now()
+        ]);
+        $admin->roles()->attach([RoleFields::ADMIN, RoleFields::READER]);
+        $this->externalRepository->create(['user_id' => $admin->id]);
+
+        $admin = $this->userRepository->create([
+            'code' => UserFields::CODE_INITIAL.'2',
+            'name' => 'Nancy',
+            'paternal_surname' => 'Oviedo',
+            'maternal_surname' => 'López',
+            'email' => 'isc.nancy.oviedo@hotmail.com',
+            'password' => bcrypt('password'),
+            'phone' => '4421010101',
+            'birthday' => '1990-01-01',
+            'gender' => Gender::Female->value,
+            'photo' => null,
+            'status' => StatusUser::Active->value,
             'verified' => UserFields::VERIFIED,
             'verification_token' => User::generateVerificationToken(),
             'email_verified_at' => now()

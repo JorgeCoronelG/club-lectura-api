@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use App\Contracts\Repositories\IExternalRepository;
 use App\Models\Academic;
-use App\Models\Constants\RoleFields;
-use App\Models\Constants\UserFields;
+use App\Models\FormFields\RoleFields;
+use App\Models\FormFields\UserFields;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Database\Seeder;

@@ -2,9 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Helpers\Enum\Gender;
 use App\Helpers\Enum\Path;
+use App\Helpers\File;
 use App\Helpers\Validation;
-use App\Models\Constants\UserFields;
+use App\Models\Enums\StatusUser;
+use App\Models\FormFields\UserFields;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,10 +27,10 @@ class UserFactory extends Factory
             'phone' => $this->faker->numerify('##########'),
             'birthday' =>$this->faker->date(Validation::FORMAT_DATE_YMD),
             'gender' => ($gender === 'male')
-                ? UserFields::MALE_GENDER
-                : UserFields::FEMALE_GENDER,
-            'photo' => $this->faker->image(public_path(Path::STORAGE->value.Path::USER_IMAGES->value), 600, 600, fullPath: false),
-            'status' => UserFields::ACTIVE_STATUS,
+                ? Gender::Male->value
+                : Gender::Female->value,
+            'photo' => $this->faker->image(File::getFilePublicPath(Path::USER_IMAGES->value), 500, 500, fullPath: false),
+            'status' => StatusUser::Active->value,
             'verified' => $verified = $this->faker->randomElement([UserFields::VERIFIED, UserFields::NOT_VERIFIED]),
             'verification_token' => User::generateVerificationToken(),
             'email_verified_at' => ($verified) ? now() : null
