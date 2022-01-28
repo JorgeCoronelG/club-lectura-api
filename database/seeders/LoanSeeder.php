@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Contracts\Repositories\IBookRepository;
 use App\Contracts\Repositories\IUserRepository;
 use App\Models\Book;
-use App\Models\Constants\BookFields;
+use App\Models\FormFields\BookFields;
 use App\Models\Loan;
 use Illuminate\Database\Seeder;
 
