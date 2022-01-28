@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
                 $user->code = UserFields::CODE_INITIAL.$user->id;
                 $user->save();
 
-                $user->roles()->attach([RoleFields::CAPTURIST, RoleFields::READER]);
+                $user->roles()->attach([RoleFields::Capturist->value, RoleFields::Reader->value]);
 
                 Student::factory(['user_id' => $user->id])->create();
             });
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
                 $user->code = UserFields::CODE_INITIAL.$user->id;
                 $user->save();
 
-                $user->roles()->attach(RoleFields::READER);
+                $user->roles()->attach(RoleFields::Reader->value);
 
                 $type = rand(1,3);
                 if ($type === 1) {

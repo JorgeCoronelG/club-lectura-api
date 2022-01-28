@@ -45,7 +45,7 @@ class UserAdminSeeder extends Seeder
             'verification_token' => User::generateVerificationToken(),
             'email_verified_at' => now()
         ]);
-        $admin->roles()->attach([RoleFields::ADMIN, RoleFields::READER]);
+        $admin->roles()->attach([RoleFields::Admin->value, RoleFields::Reader->value]);
         $this->externalRepository->create(['user_id' => $admin->id]);
 
         $admin = $this->userRepository->create([
@@ -64,7 +64,7 @@ class UserAdminSeeder extends Seeder
             'verification_token' => User::generateVerificationToken(),
             'email_verified_at' => now()
         ]);
-        $admin->roles()->attach([RoleFields::ADMIN, RoleFields::READER]);
+        $admin->roles()->attach([RoleFields::Admin->value, RoleFields::Reader->value]);
         $this->externalRepository->create(['user_id' => $admin->id]);
     }
 }
