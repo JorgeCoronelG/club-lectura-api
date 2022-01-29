@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Constants\StudentFields;
+use App\Models\FormFields\StudentFields;
 
 class CreateStudentsTable extends Migration
 {
@@ -16,7 +16,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->string('group', StudentFields::GROUP_MAX_LENGTH);
-            $table->enum('turn', StudentFields::ALL_TURNS);
+            $table->tinyInteger('turn');
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete()

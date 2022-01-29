@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\FormFields\AcademicFields;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Constants\AcademicFields;
 
 class CreateAcademicsTable extends Migration
 {
@@ -16,7 +16,7 @@ class CreateAcademicsTable extends Migration
     {
         Schema::create('academics', function (Blueprint $table) {
             $table->string('registration', AcademicFields::REGISTRATION_MAX_LENGTH);
-            $table->enum('type', AcademicFields::ALL_TYPES);
+            $table->tinyInteger('type');
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnDelete()

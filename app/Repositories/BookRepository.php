@@ -25,7 +25,7 @@ class BookRepository extends BaseRepository implements IBookRepository
         $this->entity = $book;
     }
 
-    public function findByStatus(string $status): Collection
+    public function findByStatus(int $status): Collection
     {
         return $this->entity->where('status', $status)->get();
     }

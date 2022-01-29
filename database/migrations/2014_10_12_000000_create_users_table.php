@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Constants\UserFields;
+use App\Models\FormFields\UserFields;
 
 class CreateUsersTable extends Migration
 {
@@ -27,10 +27,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('phone', UserFields::PHONE_LENGTH);
             $table->date('birthday');
-            $table->enum('gender', UserFields::ALL_GENDER);
+            $table->tinyInteger('gender');
             $table->string('photo', UserFields::PHOTO_LENGTH)
                 ->nullable();
-            $table->enum('status', UserFields::ALL_STATUS);
+            $table->tinyInteger('status');
             $table->boolean('verified')
                 ->default(UserFields::NOT_VERIFIED);
             $table->string('verification_token', UserFields::VERIFICATION_TOKEN_LENGTH)
