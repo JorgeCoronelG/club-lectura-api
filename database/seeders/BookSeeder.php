@@ -6,7 +6,7 @@ use App\Contracts\Repositories\IAuthorRepository;
 use App\Contracts\Repositories\IDonationRepository;
 use App\Contracts\Repositories\ILiterarySubgenderRepository;
 use App\Models\Book;
-use App\Models\Constants\BookFields;
+use App\Models\FormFields\BookFields;
 use App\Models\Donation;
 use Illuminate\Database\Seeder;
 use Throwable;
