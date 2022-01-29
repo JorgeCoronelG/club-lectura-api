@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Constants;
+namespace App\Models\FormFields;
 
 class AuthorFields
 {

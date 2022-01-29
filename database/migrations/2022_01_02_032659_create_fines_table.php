@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Constants\FineFields;
+use App\Models\FormFields\FineFields;
 
 class CreateFinesTable extends Migration
 {
@@ -17,7 +17,7 @@ class CreateFinesTable extends Migration
         Schema::create('fines', function (Blueprint $table) {
             $table->id();
             $table->float('cost', FineFields::COST_TOTAL_DIGITS, FineFields::COST_TOTAL_DECIMAL);
-            $table->enum('status', FineFields::ALL_STATUS);
+            $table->tinyInteger('status');
             $table->foreignId('loan_id')
                 ->constrained()
                 ->cascadeOnDelete()

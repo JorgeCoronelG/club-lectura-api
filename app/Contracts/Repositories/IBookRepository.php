@@ -12,5 +12,5 @@ use Illuminate\Database\Eloquent\Collection;
  */
 interface IBookRepository extends IBaseRepository
 {
-    public function findByStatus(string $status): Collection;
+    public function findByStatus(int $status): Collection;
 }

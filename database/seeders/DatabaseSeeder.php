@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Helpers\Enum\Path;
+use App\Helpers\File;
 use App\Models\Academic;
 use App\Models\Author;
 use App\Models\Book;
@@ -79,7 +80,7 @@ class DatabaseSeeder extends Seeder
 
     private function deleteFiles(string $customPath): void
     {
-        $files = glob(public_path(Path::STORAGE->value.$customPath.'*'));
+        $files = glob(File::getFilePublicPath("$customPath*"));
 
         foreach ($files as $file) {
             if (is_file($file)) {
