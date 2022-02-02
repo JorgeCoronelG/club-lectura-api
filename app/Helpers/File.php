@@ -3,9 +3,9 @@
 namespace App\Helpers;
 
 use App\Helpers\Enum\Path;
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,37 +16,29 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class File
 {
-    const IMAGE_HEIGHT = 512;
-    const IMAGE_NAME_LENGHT = 40;
-
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function uploadImage(UploadedFile $imageFile, string $customPath): string
+    public static function uploadImage(UploadedFile $imageFile, string $customPath, int $width = 500, int $height = 500): string
     {
         try {
-            $imageName = Str::random(self::IMAGE_NAME_LENGHT).
-                self::getFileExtension($imageFile->getClientOriginalName());
+            $imageName = $imageFile->hashName();
             $pathUrl = self::getFilePublicPath($customPath, $imageName);
             Image::make($imageFile)
-                ->resize(null, self::IMAGE_HEIGHT, function ($constraint) {
+                ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
+                    $constraint->upsize();
                 })
                 ->save($pathUrl);
             return $imageName;
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public static function deleteFile(string $filename, string $path): void
+    public static function deleteFile(string $path, string $filename): void
     {
-        Storage::delete(self::getFileStoragePath($filename, $path));
-    }
-
-    public static function getFileExtension(string $file): string
-    {
-        return '.'.pathinfo($file, PATHINFO_EXTENSION);
+        Storage::delete(self::getFileStoragePath($path, $filename));
     }
 
     public static function getFilePublicPath(string $path, string $filename = null): string
