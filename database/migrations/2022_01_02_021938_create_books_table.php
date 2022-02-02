@@ -1,9 +1,10 @@
 <?php
 
+use App\Models\Enums\IsbnBook;
+use App\Models\FormFields\BookFields;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\FormFields\BookFields;
 
 class CreateBooksTable extends Migration
 {
@@ -18,6 +19,7 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('code', BookFields::CODE_LENGTH)
                 ->nullable();
+            $table->string('isbn', IsbnBook::ISBN_NEW_LENGTH->value);
             $table->string('title', BookFields::TITLE_MAX_LENGTH);
             $table->text('review')
                 ->nullable();
