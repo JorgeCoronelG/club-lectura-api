@@ -11,6 +11,7 @@ class Book extends Model
     use HasFactory;
 
     protected $fillable = [
+        'isbn',
         'title',
         'review',
         'no_pages',
@@ -19,6 +20,7 @@ class Book extends Model
         'edition',
         'image',
         'copy',
+        'language',
         'status',
         'donation_id',
         'literary_subgender_id'
