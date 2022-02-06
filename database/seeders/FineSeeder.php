@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use App\Contracts\Repositories\IFineRepository;
 use App\Contracts\Repositories\ILoanRepository;
-use App\Models\Constants\FineFields;
+use App\Models\Enums\StatusFine;
+use App\Models\FormFields\FineFields;
 use App\Models\Loan;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -38,7 +39,7 @@ class FineSeeder extends Seeder
 
             $this->fineRepository->create([
                 'cost' => $diff * FineFields::FINE_PER_DAY,
-                'status' => FineFields::PENDING_STATUS,
+                'status' => StatusFine::Pending->value,
                 'loan_id' => $loan->id
             ]);
         });

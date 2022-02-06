@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Constants\StudentFields;
+use App\Models\Enums\TurnStudent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StudentFactory extends Factory
@@ -11,7 +11,7 @@ class StudentFactory extends Factory
     {
         return [
             'group' => $this->faker->word(),
-            'turn' => $this->faker->randomElement([StudentFields::MORNING_TURN, StudentFields::AFTERNOON_TURN])
+            'turn' => $this->faker->randomElement(TurnStudent::getAllTurns())
         ];
     }
 }

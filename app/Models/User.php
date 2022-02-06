@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Constants\UserFields;
+use App\Models\FormFields\UserFields;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
