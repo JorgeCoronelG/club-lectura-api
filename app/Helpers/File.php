@@ -3,9 +3,9 @@
 namespace App\Helpers;
 
 use App\Helpers\Enum\Path;
+use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,47 +16,42 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class File
 {
-    public const IMAGE_HEIGHT = 512;
-    public const IMAGE_NAME_LENGHT = 40;
-    public const IMG_USER_SIZE = 10240;
-
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public static function uploadImage(UploadedFile $imageFile, string $customPath): string
+    public static function uploadImage(UploadedFile $imageFile, string $customPath, int $width = 500, int $height = 500): string
     {
         try {
-            $imageName = Str::random(self::IMAGE_NAME_LENGHT).
-                self::getFileExtension($imageFile->getClientOriginalName());
-            $pathUrl = self::getFilePublicPath($imageName, $customPath);
+            $imageName = $imageFile->hashName();
+            $pathUrl = self::getFilePublicPath($customPath, $imageName);
             Image::make($imageFile)
-                ->resize(null, self::IMAGE_HEIGHT, function ($constraint) {
+                ->resize($width, $height, function ($constraint) {
                     $constraint->aspectRatio();
+                    $constraint->upsize();
                 })
                 ->save($pathUrl);
             return $imageName;
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public static function deleteFile(string $filename, string $path): void
+    public static function deleteFile(string $path, string $filename): void
     {
-        Storage::delete(self::getFileStoragePath($filename, $path));
+        Storage::delete(self::getFileStoragePath($path, $filename));
     }
 
-    public static function getFileExtension(string $file): string
+    public static function getFilePublicPath(string $path, string $filename = null): string
     {
-        return '.'.pathinfo($file, PATHINFO_EXTENSION);
+        return (!is_null($filename))
+            ? public_path(Path::STORAGE->value.$path.$filename)
+            : public_path(Path::STORAGE->value.$path);
     }
 
-    public static function getFilePublicPath(string $filename, string $path): string
+    public static function getFileStoragePath(string $path, string $filename = null): string
     {
-        return public_path(Path::STORAGE->value.$path.$filename);
-    }
-
-    public static function getFileStoragePath(string $filename, string $path): string
-    {
-        return Path::STORAGE_PUBLIC->value.$path.$filename;
+        return (!is_null($filename))
+            ? Path::STORAGE_PUBLIC->value.$path.$filename
+            : Path::STORAGE_PUBLIC->value.$path;
     }
 }
