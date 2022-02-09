@@ -12,6 +12,8 @@ class UserFields
     final const LAST_NAME_MAX_LENGTH = 120;
     final const EMAIL_MIN_LENGTH = 10;
     final const EMAIL_MAX_LENGTH = 120;
+    final const PASSWORD_MIN_LENGTH = 8;
+    final const PASSWORD_MAX_LENGTH = 50;
     final const PHONE_LENGTH = 10;
     final const PHOTO_LENGTH = 50;
     final const VERIFIED = true;

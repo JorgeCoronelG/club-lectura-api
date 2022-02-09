@@ -13,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasApiTokens;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
@@ -30,6 +30,11 @@ class User extends Authenticatable
         'verification_token',
         'email_verified_at'
     ];
+
+    public function isVerified(): bool
+    {
+        return $this->verified;
+    }
 
     public static function generateVerificationToken(): string
     {
