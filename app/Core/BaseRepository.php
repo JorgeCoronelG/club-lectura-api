@@ -78,19 +78,18 @@ class BaseRepository implements IBaseRepository
         $entity->delete();
     }
 
-    /**
-     * @throws Throwable
-     */
     public function findRandom(): Model
     {
-        return $this->findAll()->random();
+        return $this->entity->inRandomOrder()->limit(1)->first();
     }
 
-    /**
-     * @throws Throwable
-     */
     public function findRandoms(int $records = 1): Collection
     {
-        return $this->findAll()->random($records);
+        return $this->entity->inRandomOrder()->limit($records)->get();
+    }
+
+    public function findRecordsLatest(int $records = 10): Collection
+    {
+        return $this->entity->latest()->limit($records)->get();
     }
 }
