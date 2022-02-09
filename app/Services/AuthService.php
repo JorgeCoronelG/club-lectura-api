@@ -7,7 +7,9 @@ use App\Contracts\Services\IAuthService;
 use App\Core\BaseService;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
+use App\Models\Enums\StatusUser;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -42,7 +44,11 @@ class AuthService extends BaseService implements IAuthService
      */
     private function checkAccount(string $email, string $password): User
     {
-        $user = $this->userRepository->findByEmail($email);
+        try {
+            $user = $this->userRepository->findByEmail($email);
+        } catch (ModelNotFoundException) {
+            throw new CustomErrorException(Message::CREDENTIALS_INVALID, Response::HTTP_BAD_REQUEST);
+        }
 
         if (!Hash::check($password, $user->password)) {
             throw new CustomErrorException(Message::CREDENTIALS_INVALID, Response::HTTP_BAD_REQUEST);
@@ -50,6 +56,10 @@ class AuthService extends BaseService implements IAuthService
 
         if (!$user->isVerified()) {
             throw new CustomErrorException(Message::USER_NOT_VERIFIED, Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($user->status === StatusUser::Inactive->value) {
+            throw new CustomErrorException(Message::USER_INACTIVE, Response::HTTP_BAD_REQUEST);
         }
 
         return $user;
