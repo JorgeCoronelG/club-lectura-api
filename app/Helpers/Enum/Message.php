@@ -13,6 +13,7 @@ class Message
     public const CREDENTIALS_INVALID = 'Credenciales inválidas.';
     public const USER_IS_VERIFIED = 'El usuario ya fue verificado.';
     public const USER_NOT_VERIFIED = 'Usuario no verificado.';
+    public const USER_INACTIVE = 'El usuario está inactivo.';
     public const INVALID_QUERY_PARAMETER = 'Parámetro de consulta inválido.';
 
     // Mensajes de excepciones
