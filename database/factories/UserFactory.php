@@ -22,7 +22,7 @@ class UserFactory extends Factory
                 : $this->faker->name('female'),
             'paternal_surname' => $this->faker->lastName(),
             'maternal_surname' => $this->faker->lastName(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'email' => $this->faker->unique()->freeEmail(),
             'password' => bcrypt('password'),
             'phone' => $this->faker->numerify('##########'),
             'birthday' =>$this->faker->date(Validation::FORMAT_DATE_YMD),
