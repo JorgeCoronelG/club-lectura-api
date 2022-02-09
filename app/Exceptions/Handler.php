@@ -58,9 +58,6 @@ class Handler extends ExceptionHandler
             if ($e instanceof ValidationException) {
                 return $this->convertValidationExceptionToResponse($e, $request);
             }
-            if ($e instanceof ModelNotFoundException) {
-                return $this->errorResponse(Message::MODEL_NOT_FOUND_EXCEPTION, Response::HTTP_NOT_FOUND);
-            }
             if ($e instanceof AuthenticationException) {
                 return $this->unauthenticated($request, $e);
             }
@@ -68,6 +65,9 @@ class Handler extends ExceptionHandler
                 return $this->errorResponse(Message::AUTHORIZATION_EXCEPTION, Response::HTTP_FORBIDDEN);
             }
             if ($e instanceof NotFoundHttpException) {
+                if (!is_null($e->getPrevious()) && $e->getPrevious() instanceof ModelNotFoundException) {
+                    return $this->errorResponse(Message::MODEL_NOT_FOUND_EXCEPTION, Response::HTTP_NOT_FOUND);
+                }
                 return $this->errorResponse(Message::NOT_FOUND_HTTP_EXCEPTION, Response::HTTP_NOT_FOUND);
             }
             if ($e instanceof MethodNotAllowedHttpException) {
