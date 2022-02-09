@@ -75,4 +75,9 @@ class BaseService implements IBaseService
     {
         return $this->entityRepository->findRandoms($records);
     }
+
+    public function findRecordsLatest(int $records = 10): Collection
+    {
+        return $this->entityRepository->findRecordsLatest($records);
+    }
 }
