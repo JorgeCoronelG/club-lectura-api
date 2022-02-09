@@ -24,5 +24,5 @@ interface IBaseRepository
 
     public function findRandoms(int $records = 1): \Illuminate\Database\Eloquent\Collection;
 
-    public function findRecordsLatest(int $record = 10): \Illuminate\Database\Eloquent\Collection;
+    public function findRecordsLatest(int $records = 10): \Illuminate\Database\Eloquent\Collection;
 }
