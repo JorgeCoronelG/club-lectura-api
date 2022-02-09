@@ -142,10 +142,7 @@ return [
     'custom'               => [
         'email'    => [
             'unique' => 'El :attribute ya ha sido registrado.',
-        ],
-        'password' => [
-            'min' => 'La :attribute debe contener más de :min caracteres',
-        ],
+        ]
     ],
 
     /*
@@ -170,7 +167,7 @@ return [
         'date'                  => 'fecha',
         'day'                   => 'día',
         'description'           => 'descripción',
-        'email'                 => 'correo electrónico',
+        'email'                 => 'Correo electrónico',
         'excerpt'               => 'extracto',
         'first_name'            => 'nombre',
         'gender'                => 'género',
@@ -181,7 +178,7 @@ return [
         'mobile'                => 'móvil',
         'month'                 => 'mes',
         'name'                  => 'nombre',
-        'password'              => 'contraseña',
+        'password'              => 'Contraseña',
         'password_confirmation' => 'confirmación de la contraseña',
         'phone'                 => 'teléfono',
         'photo'                 => 'foto',

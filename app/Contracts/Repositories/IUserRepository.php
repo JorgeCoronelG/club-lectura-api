@@ -3,6 +3,7 @@
 namespace App\Contracts\Repositories;
 
 use App\Core\Contracts\IBaseRepository;
+use App\Models\User;
 
 /**
  * @author jcgonzalez
@@ -11,5 +12,5 @@ use App\Core\Contracts\IBaseRepository;
  */
 interface IUserRepository extends IBaseRepository
 {
-    //
+    public function findByEmail(string $email): User;
 }
