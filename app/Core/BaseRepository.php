@@ -18,14 +18,6 @@ class BaseRepository implements IBaseRepository
     protected Model $entity;
 
     /**
-     * @param Model $entity
-     */
-    public function __construct(Model $entity)
-    {
-        $this->entity = $entity;
-    }
-
-    /**
      * @throws Throwable
      */
     public function findAll(): Collection
