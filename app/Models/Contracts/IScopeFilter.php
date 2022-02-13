@@ -2,7 +2,7 @@
 
 namespace App\Models\Contracts;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 interface IScopeFilter
 {
