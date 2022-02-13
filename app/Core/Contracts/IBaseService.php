@@ -8,21 +8,24 @@ namespace App\Core\Contracts;
  */
 interface IBaseService
 {
-    public function findAll(): \Illuminate\Database\Eloquent\Collection;
-
-    public function findAllPaginated(\Illuminate\Http\Request $request): \Illuminate\Pagination\LengthAwarePaginator;
-
-    public function findById(int $id): \Illuminate\Database\Eloquent\Model;
-
     public function create(\Spatie\DataTransferObject\DataTransferObject $dto): \Illuminate\Database\Eloquent\Model;
 
-    public function update(\Spatie\DataTransferObject\DataTransferObject $dto, \Illuminate\Database\Eloquent\Model $entity): \Illuminate\Database\Eloquent\Model;
+    public function delete(int $id): void;
 
-    public function delete(\Illuminate\Database\Eloquent\Model $entity): void;
+    public function findAll(array $filter = [], string $sort = null, array $columns = ['*']):
+        \Illuminate\Database\Eloquent\Collection;
+
+    public function findAllPaginated(\Illuminate\Http\Request $request, array $columns = ['*']):
+        \Illuminate\Pagination\LengthAwarePaginator;
+
+    public function findById(int $id): \Illuminate\Database\Eloquent\Model;
 
     public function findRandom(): \Illuminate\Database\Eloquent\Model;
 
     public function findRandoms(int $records = 1): \Illuminate\Database\Eloquent\Collection;
 
     public function findRecordsLatest(int $records = 10): \Illuminate\Database\Eloquent\Collection;
+
+    public function update(int $id, \Spatie\DataTransferObject\DataTransferObject $dto):
+        \Illuminate\Database\Eloquent\Model;
 }
