@@ -12,5 +12,5 @@ use Illuminate\Database\Eloquent\Collection;
  */
 interface ILoanRepository extends IBaseRepository
 {
-    public function findDeliveryExpired(): Collection;
+    //
 }
