@@ -18,7 +18,7 @@ interface IBaseRepository
     public function findAllPaginated(array $filters, int $limit, string $sort = null, array $columns = ['*']):
         \Illuminate\Pagination\LengthAwarePaginator;
 
-    public function findByField(string $field, mixed $value, array $columns = ['*']):
+    public function findByField(string $field, mixed $value, string $operator = '=', array $columns = ['*']):
         \Illuminate\Database\Eloquent\Collection;
 
     public function findById(int $id): \Illuminate\Database\Eloquent\Model;
