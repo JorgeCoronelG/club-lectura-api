@@ -26,44 +26,35 @@ class BaseService implements IBaseService
         $this->entityRepository = $entityRepository;
     }
 
-    public function findAll(): Collection
-    {
-        if (func_num_args() === 2) {
-            $args = func_get_args();
-            return $this->entityRepository->findAll($args[0], $args[1]);
-        }
-        return $this->entityRepository->findAll();
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function findAllPaginated(Request $request): LengthAwarePaginator
-    {
-        $filters = Validation::getFilters($request->get(QueryParam::FILTERS_KEY));
-        $perPage = Validation::getPerPage($request->get(QueryParam::PAGINATION_KEY));
-        $sort = $request->get(QueryParam::ORDER_BY_KEY);
-        return $this->entityRepository->findAllPaginated($filters, $perPage, $sort);
-    }
-
-    public function findById(int $id): Model
-    {
-        return $this->entityRepository->findById($id);
-    }
-
     public function create(DataTransferObject $dto): Model
     {
         return $this->entityRepository->create($dto->toArray());
     }
 
-    public function update(DataTransferObject $dto, Model $entity): Model
+    public function delete(int $id): void
     {
-        return $this->entityRepository->update($dto->toArray(), $entity);
+        $this->entityRepository->delete($id);
     }
 
-    public function delete(Model $entity): void
+    public function findAll(array $filter = [], string $sort = null, array $columns = ['*']): Collection
     {
-        $this->entityRepository->delete($entity);
+        return $this->entityRepository->findAll($filter, $sort, $columns);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function findAllPaginated(Request $request, array $columns = ['*']): LengthAwarePaginator
+    {
+        $filters = Validation::getFilters($request->get(QueryParam::FILTERS_KEY));
+        $perPage = Validation::getPerPage($request->get(QueryParam::PAGINATION_KEY));
+        $sort = $request->get(QueryParam::ORDER_BY_KEY);
+        return $this->entityRepository->findAllPaginated($filters, $perPage, $sort, $columns);
+    }
+
+    public function findById(int $id): Model
+    {
+        return $this->entityRepository->findById($id);
     }
 
     public function findRandom(): Model
@@ -79,5 +70,10 @@ class BaseService implements IBaseService
     public function findRecordsLatest(int $records = 10): Collection
     {
         return $this->entityRepository->findRecordsLatest($records);
+    }
+
+    public function update(int $id, DataTransferObject $dto): Model
+    {
+        return $this->entityRepository->update($id, $dto->toArray());
     }
 }
