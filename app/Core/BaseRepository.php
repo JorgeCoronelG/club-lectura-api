@@ -67,9 +67,9 @@ class BaseRepository implements IBaseRepository
         return $this->entity->findOrFail($id);
     }
 
-    public function findByField(string $field, mixed $value, array $columns = ['*']): Collection
+    public function findByField(string $field, mixed $value, string $operator = '=', array $columns = ['*']): Collection
     {
-        return $this->entity->where($field, '=', $value)->get($columns);
+        return $this->entity->where($field, $operator, $value)->get($columns);
     }
 
     /**
@@ -167,8 +167,8 @@ class BaseRepository implements IBaseRepository
                 list($value) = $value;
                 $this->entity = $this->entity->where($field, '=', $value);
             } else if (count($value) === 2) {
-                list($value, $condition) = $value;
-                $this->entity = $this->entity->where($field, $condition, $value);
+                list($value, $operator) = $value;
+                $this->entity = $this->entity->where($field, $operator, $value);
             }
         }
     }
