@@ -6,6 +6,7 @@ use App\Contracts\Repositories\IFineRepository;
 use App\Core\BaseRepository;
 use App\Models\Fine;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class FineRepository extends BaseRepository implements IFineRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param Fine $fine

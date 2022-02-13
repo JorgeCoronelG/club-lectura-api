@@ -6,6 +6,7 @@ use App\Contracts\Repositories\IDonationRepository;
 use App\Core\BaseRepository;
 use App\Models\Donation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DonationRepository extends BaseRepository implements IDonationRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param Donation $donation
