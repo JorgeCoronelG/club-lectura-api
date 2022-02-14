@@ -32,14 +32,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $rolesCapturist = [RoleFields::Capturist->value, RoleFields::Reader->value];
+        $roleReader = RoleFields::Reader->value;
+
         User::factory()
             ->times(self::TOTAL_USERS_CAPTURIST)
             ->create()
-            ->each(function (User $user) {
+            ->each(function (User $user) use ($rolesCapturist) {
                 $user->code = UserFields::CODE_INITIAL.$user->id;
                 $user->save();
 
-                $user->roles()->attach([RoleFields::Capturist->value, RoleFields::Reader->value]);
+                $user->roles()->attach($rolesCapturist);
 
                 Student::factory(['user_id' => $user->id])->create();
             });
@@ -47,11 +50,11 @@ class UserSeeder extends Seeder
         User::factory()
             ->times(self::TOTAL_USERS_READER)
             ->create()
-            ->each(function (User $user) {
+            ->each(function (User $user) use ($roleReader) {
                 $user->code = UserFields::CODE_INITIAL.$user->id;
                 $user->save();
 
-                $user->roles()->attach(RoleFields::Reader->value);
+                $user->roles()->attach($roleReader);
 
                 $type = rand(1,3);
                 if ($type === 1) {
