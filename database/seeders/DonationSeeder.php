@@ -26,18 +26,17 @@ class DonationSeeder extends Seeder
      */
     public function run()
     {
+        $reasons = [
+            'Un estudiante',
+            'Un profesor',
+            'Página web',
+            'Por mi hijo(a)',
+            'Redes sociales'
+        ];
         $users = $this->userRepository->findAll();
 
-        $users->each(function (User $user) {
+        $users->each(function (User $user) use ($reasons) {
             $donation = Donation::factory()->create();
-
-            $reasons = [
-                'Un estudiante',
-                'Un profesor',
-                'Página web',
-                'Por mi hijo(a)',
-                'Redes sociales'
-            ];
 
             $user->donations()->attach($donation->id, ['reason' => $reasons[array_rand($reasons)]]);
         });
