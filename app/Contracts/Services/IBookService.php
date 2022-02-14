@@ -3,6 +3,8 @@
 namespace App\Contracts\Services;
 
 use App\Core\Contracts\IBaseService;
+use App\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @author JorgeCoronelG
@@ -11,5 +13,7 @@ use App\Core\Contracts\IBaseService;
  */
 interface IBookService extends IBaseService
 {
-    //
+    public function findOnePortal($id): Book;
+
+    public function findMostRead(int $records = 10): Collection;
 }

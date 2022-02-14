@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class LiterarySubgender extends Model
 {
@@ -16,5 +16,10 @@ class LiterarySubgender extends Model
     public function literaryGender(): BelongsTo
     {
         return $this->belongsTo(LiteraryGender::class);
+    }
+
+    public function books(): HasMany
+    {
+        return $this->hasMany(Book::class);
     }
 }

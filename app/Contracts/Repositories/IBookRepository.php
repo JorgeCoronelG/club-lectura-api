@@ -12,8 +12,10 @@ use Illuminate\Database\Eloquent\Collection;
  * Created 08/01/2022
  *
  * @method Book create(array $data)
+ * @method Book findById(int $id)
+ * @method IBookRepository with(array|string $relations)
  */
 interface IBookRepository extends IBaseRepository
 {
-    //
+    public function findMostRead(int $records = 10): Collection;
 }

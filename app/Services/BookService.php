@@ -5,6 +5,10 @@ namespace App\Services;
 use App\Contracts\Repositories\IBookRepository;
 use App\Contracts\Services\IBookService;
 use App\Core\BaseService;
+use App\Core\Contracts\IBaseRepository;
+use App\Core\Contracts\IBaseService;
+use App\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @author JorgeCoronelG
@@ -13,13 +17,22 @@ use App\Core\BaseService;
  */
 class BookService extends BaseService implements IBookService
 {
-    protected IBookRepository $bookRepository;
+    protected IBaseRepository $entityRepository;
 
-    /**
-     * @param IBookRepository $bookRepository
-     */
     public function __construct(IBookRepository $bookRepository)
     {
-        $this->bookRepository = $bookRepository;
+        $this->entityRepository = $bookRepository;
+    }
+
+    public function findMostRead(int $records = 10): Collection
+    {
+        return $this->entityRepository->findMostRead($records);
+    }
+
+    public function findOnePortal($id): Book
+    {
+        return $this->entityRepository
+            ->with(['authors', 'literarySubgender.literaryGender'])
+            ->findById($id);
     }
 }

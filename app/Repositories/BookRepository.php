@@ -27,16 +27,25 @@ class BookRepository extends BaseRepository implements IBookRepository
         $this->entity = $book;
     }
 
-    public function findByStatus(int $status): Collection
-    {
-        return $this->entity->where('status', $status)->get();
-    }
-
     public function findRecordsLatest(int $records = 10): Collection
     {
         return $this->entity
+            ->selectRaw('id, title, status, image')
             ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
+            ->with('authors')
             ->latest()
+            ->limit($records)
+            ->get();
+    }
+
+    public function findMostRead(int $records = 10): Collection
+    {
+        return $this->entity
+            ->selectRaw('id, title, status, image')
+            ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
+            ->has('loans')
+            ->withCount('loans')
+            ->orderBy('loans_count', 'DESC')
             ->limit($records)
             ->get();
     }

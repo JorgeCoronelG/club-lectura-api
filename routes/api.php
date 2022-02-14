@@ -14,8 +14,10 @@ Route::prefix('v1')->group(function () {
 
     Route::controller(BookController::class)
         ->prefix('books')
-        ->name('book')
+        ->name('books.')
         ->group(function () {
-            Route::get('/latest', 'latest')->name('latest');
+            Route::get('/portal/detail/{id}', 'findOnePortal')->name('find.one.portal');
+            Route::get('/portal/latest', 'findLatest')->name('find.latest');
+            Route::get('/portal/most-read', 'findMostRead')->name('find.most.read');
         });
 });
