@@ -6,7 +6,7 @@ use App\Contracts\Repositories\ILoanRepository;
 use App\Core\BaseRepository;
 use App\Models\Loan;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @author jcgonzalez
