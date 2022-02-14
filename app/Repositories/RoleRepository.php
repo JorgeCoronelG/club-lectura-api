@@ -6,7 +6,7 @@ use App\Contracts\Repositories\IRoleRepository;
 use App\Core\BaseRepository;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @author jcgonzalez

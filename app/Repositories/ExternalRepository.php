@@ -6,7 +6,7 @@ use App\Contracts\Repositories\IExternalRepository;
 use App\Core\BaseRepository;
 use App\Models\External;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @author jcgonzalez
