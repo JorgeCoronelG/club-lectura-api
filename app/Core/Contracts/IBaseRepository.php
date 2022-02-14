@@ -41,21 +41,21 @@ interface IBaseRepository
     public function findWhereNotIn(string $field, array $values, array $columns = ['*']):
     \Illuminate\Database\Eloquent\Collection;
 
-    public function has(string $relation): \App\Core\BaseRepository;
+    public function has(string $relation): IBaseRepository;
 
-    public function hidden(array $fields): \App\Core\BaseRepository;
+    public function hidden(array $fields): IBaseRepository;
 
-    public function orderBy(string $column, string $direction = 'ASC'): \App\Core\BaseRepository;
+    public function orderBy(string $column, string $direction = 'ASC'): IBaseRepository;
 
     public function sync(int $id, string $relation, array $attributes, bool $detaching = true): array;
 
     public function update(int $id, array $data): \Illuminate\Database\Eloquent\Model;
 
-    public function visible(array $fields): \App\Core\BaseRepository;
+    public function visible(array $fields): IBaseRepository;
 
-    public function whereHas(string $relation, \Closure $closure): \App\Core\BaseRepository;
+    public function whereHas(string $relation, \Closure $closure): IBaseRepository;
 
-    public function with(array|string $relations): \App\Core\BaseRepository;
+    public function with(array|string $relations): IBaseRepository;
 
-    public function withCount(array|string $relations): \App\Core\BaseRepository;
+    public function withCount(array|string $relations): IBaseRepository;
 }
