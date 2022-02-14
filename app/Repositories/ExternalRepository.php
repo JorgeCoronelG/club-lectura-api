@@ -6,6 +6,7 @@ use App\Contracts\Repositories\IExternalRepository;
 use App\Core\BaseRepository;
 use App\Models\External;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ExternalRepository extends BaseRepository implements IExternalRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param External $external

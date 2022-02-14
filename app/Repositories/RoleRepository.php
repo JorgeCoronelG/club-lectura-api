@@ -6,6 +6,7 @@ use App\Contracts\Repositories\IRoleRepository;
 use App\Core\BaseRepository;
 use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class RoleRepository extends BaseRepository implements IRoleRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param Role $role

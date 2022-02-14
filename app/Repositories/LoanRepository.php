@@ -5,8 +5,8 @@ namespace App\Repositories;
 use App\Contracts\Repositories\ILoanRepository;
 use App\Core\BaseRepository;
 use App\Models\Loan;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class LoanRepository extends BaseRepository implements ILoanRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param Loan $loan
@@ -23,12 +23,5 @@ class LoanRepository extends BaseRepository implements ILoanRepository
     public function __construct(Loan $loan)
     {
         $this->entity = $loan;
-    }
-
-    public function findDeliveryExpired(): Collection
-    {
-        return $this->entity
-            ->where('approximate_delivery', '<', now()->toDateString())
-            ->get();
     }
 }

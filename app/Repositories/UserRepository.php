@@ -6,6 +6,7 @@ use App\Contracts\Repositories\IUserRepository;
 use App\Core\BaseRepository;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserRepository extends BaseRepository implements IUserRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param User $user
@@ -22,10 +23,5 @@ class UserRepository extends BaseRepository implements IUserRepository
     public function __construct(User $user)
     {
         $this->entity = $user;
-    }
-
-    public function findByEmail(string $email): User
-    {
-        return $this->entity->where('email', $email)->firstOrFail();
     }
 }

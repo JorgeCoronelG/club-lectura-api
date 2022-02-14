@@ -6,6 +6,7 @@ use App\Contracts\Repositories\IAuthorRepository;
 use App\Core\BaseRepository;
 use App\Models\Author;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AuthorRepository extends BaseRepository implements IAuthorRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param Author $author

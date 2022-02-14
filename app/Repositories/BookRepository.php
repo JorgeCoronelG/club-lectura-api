@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * @author jcgonzalez
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BookRepository extends BaseRepository implements IBookRepository
 {
-    protected Model $entity;
+    protected Builder|Model $entity;
 
     /**
      * @param Book $book
