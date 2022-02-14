@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Core\Contracts\IReturnDto;
+use App\Http\Requests\Contracts\IReturnDto;
 use App\Models\Dto\UserDTO;
 use App\Models\FormFields\UserFields;
 use Illuminate\Foundation\Http\FormRequest;
