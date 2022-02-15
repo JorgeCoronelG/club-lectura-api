@@ -21,11 +21,6 @@ class BaseService implements IBaseService
 {
     protected IBaseRepository $entityRepository;
 
-    public function __construct(IBaseRepository $entityRepository)
-    {
-        $this->entityRepository = $entityRepository;
-    }
-
     public function create(DataTransferObject $dto): Model
     {
         return $this->entityRepository->create($dto->toArray());
