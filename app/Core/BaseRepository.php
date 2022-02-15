@@ -3,9 +3,9 @@
 namespace App\Core;
 
 use App\Core\Contracts\IBaseRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Throwable;
 
@@ -120,19 +120,19 @@ class BaseRepository implements IBaseRepository
         return $this->entity->whereNotIn($field, $values)->get($columns);
     }
 
-    public function has(string $relation): BaseRepository
+    public function has(string $relation): IBaseRepository
     {
         $this->entity = $this->entity->has($relation);
         return $this;
     }
 
-    public function hidden(array $fields): BaseRepository
+    public function hidden(array $fields): IBaseRepository
     {
         $this->entity->setHidden($fields);
         return $this;
     }
 
-    public function orderBy(string $column, string $direction = 'ASC'): BaseRepository
+    public function orderBy(string $column, string $direction = 'ASC'): IBaseRepository
     {
         $this->entity = $this->entity->orderBy($column, $direction);
         return $this;
@@ -154,7 +154,7 @@ class BaseRepository implements IBaseRepository
         return $entity;
     }
 
-    public function visible(array $fields): BaseRepository
+    public function visible(array $fields): IBaseRepository
     {
         $this->entity->setVisible($fields);
         return $this;
@@ -173,19 +173,19 @@ class BaseRepository implements IBaseRepository
         }
     }
 
-    public function whereHas(string $relation, \Closure $closure): \App\Core\BaseRepository
+    public function whereHas(string $relation, \Closure $closure): IBaseRepository
     {
         $this->entity = $this->entity->whereHas($relation, $closure);
         return $this;
     }
 
-    public function with(array|string $relations): BaseRepository
+    public function with(array|string $relations): IBaseRepository
     {
         $this->entity = $this->entity->with($relations);
         return $this;
     }
 
-    public function withCount(array|string $relations): BaseRepository
+    public function withCount(array|string $relations): IBaseRepository
     {
         $this->entity = $this->entity->withCount($relations);
         return $this;
