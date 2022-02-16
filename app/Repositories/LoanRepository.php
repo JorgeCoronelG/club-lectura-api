@@ -5,9 +5,10 @@ namespace App\Repositories;
 use App\Contracts\Repositories\ILoanRepository;
 use App\Core\BaseRepository;
 use App\Models\Loan;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
  * @author jcgonzalez
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class LoanRepository extends BaseRepository implements ILoanRepository
 {
-    protected Builder|Model $entity;
+    protected Builder|Model|QueryBuilder $entity;
 
     /**
      * @param Loan $loan
