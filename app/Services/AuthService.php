@@ -45,21 +45,21 @@ class AuthService extends BaseService implements IAuthService
     private function checkAccount(string $email, string $password): User
     {
         try {
-            $user = $this->userRepository->findOneWithCondition('email', $email);
+            $user = $this->userRepository->findByEmail($email);
         } catch (ModelNotFoundException) {
             throw new CustomErrorException(Message::CREDENTIALS_INVALID, Response::HTTP_BAD_REQUEST);
         }
 
-        if (!Hash::check($password, $user->password)) {
-            throw new CustomErrorException(Message::CREDENTIALS_INVALID, Response::HTTP_BAD_REQUEST);
+        if ($user->status === StatusUser::Inactive->value) {
+            throw new CustomErrorException(Message::USER_INACTIVE, Response::HTTP_BAD_REQUEST);
         }
 
         if (!$user->isVerified()) {
             throw new CustomErrorException(Message::USER_NOT_VERIFIED, Response::HTTP_BAD_REQUEST);
         }
 
-        if ($user->status === StatusUser::Inactive->value) {
-            throw new CustomErrorException(Message::USER_INACTIVE, Response::HTTP_BAD_REQUEST);
+        if (!Hash::check($password, $user->password)) {
+            throw new CustomErrorException(Message::CREDENTIALS_INVALID, Response::HTTP_BAD_REQUEST);
         }
 
         return $user;
