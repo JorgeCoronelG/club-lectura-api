@@ -38,7 +38,7 @@ class LoanSeeder extends Seeder
      */
     public function run()
     {
-        $books = $this->bookRepository->findByField('status', StatusBook::OnLoan->value);
+        $books = $this->bookRepository->findAllByStatus(StatusBook::OnLoan->value);
         $books->each(function (Book $book) {
             $user = $this->userRepository->findRandom();
 

@@ -12,9 +12,8 @@ use App\Models\User;
  *
  * @method User create(array $data)
  * @method User findRandom()
- * @method User findOneWithCondition(string $field, mixed $value, string $operator = '=' )
  */
 interface IUserRepository extends IBaseRepository
 {
-    //
+    public function findByEmail(string $email): User;
 }

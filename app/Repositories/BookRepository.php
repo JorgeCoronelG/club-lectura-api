@@ -5,8 +5,8 @@ namespace App\Repositories;
 use App\Contracts\Repositories\IBookRepository;
 use App\Core\BaseRepository;
 use App\Models\Book;
-use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Collection;
+use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -48,5 +48,12 @@ class BookRepository extends BaseRepository implements IBookRepository
             ->orderBy('loans_count', 'DESC')
             ->limit($records)
             ->get();
+    }
+
+    public function findAllByStatus(array|int $status): Collection
+    {
+        return is_array($status)
+            ? $this->entity->whereIn('status', $status)->get()
+            : $this->entity->where('status', $status)->get();
     }
 }

@@ -32,7 +32,7 @@ class FineSeeder extends Seeder
      */
     public function run()
     {
-        $loans = $this->loanRepository->findByField('approximate_delivery', now()->toDateString(), '<');
+        $loans = $this->loanRepository->findAllExpired();
 
         $loans->each(function (Loan $loan) {
             $diff = Carbon::now()->diffInDays(Carbon::parse($loan->approximate_delivery));
