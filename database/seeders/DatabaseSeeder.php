@@ -10,6 +10,8 @@ use App\Models\Book;
 use App\Models\Donation;
 use App\Models\External;
 use App\Models\Fine;
+use App\Models\FormFields\BookFields;
+use App\Models\FormFields\UserFields;
 use App\Models\LiteraryGender;
 use App\Models\LiterarySubgender;
 use App\Models\Loan;
@@ -83,6 +85,12 @@ class DatabaseSeeder extends Seeder
         $files = glob(File::getFilePublicPath("$customPath*"));
 
         foreach ($files as $file) {
+            if (str_contains($file, UserFields::PHOTO_DEFAULT)) {
+                continue;
+            }
+            if (str_contains($file, BookFields::IMAGE_DEFAULT)) {
+                continue;
+            }
             if (is_file($file)) {
                 unlink($file);
             }
