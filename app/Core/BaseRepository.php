@@ -67,28 +67,6 @@ class BaseRepository implements IBaseRepository
         return $this->entity->findOrFail($id);
     }
 
-    public function findByField(string $field, mixed $value, string $operator = '=', array $columns = ['*']): Collection
-    {
-        return $this->entity->where($field, $operator, $value)->get($columns);
-    }
-
-    /**
-     * @param array $where
-     * Especificación del array $where
-     * Estructura: array('campo' => ['valor_a_buscar', 'operador'], 'campo' => ['valor_a_buscar'])
-     * Ejemplo:
-     * array('nombre' => ['Jorge', '!='], 'email' => ['tprog'])
-     * Si el arreglo secundario contiene un valor, sería el valor a buscar y el operador por defecto sería '='
-     * Si el arreglo secundario contiene 2 valores, el primero será el valor a buscar y el segundo el operador de la búsqueda
-     * @param array $columns
-     * @return Collection
-     */
-    public function findByMultipleConditions(array $where, array $columns = ['*']): Collection
-    {
-        $this->applyConditions($where);
-        return $this->entity->get($columns);
-    }
-
     public function findRandom(): Model
     {
         return $this->entity->inRandomOrder()->limit(1)->first();
@@ -107,17 +85,14 @@ class BaseRepository implements IBaseRepository
     /**
      * @throws Throwable
      */
-    public function findOneWithCondition(string $field, mixed $value, string $operator = '=' ): Model
+    public function firstOrFail(): Model
     {
-        return $this->entity->where($field, $operator, $value)->firstOrFail();
+        return $this->entity->firstOrFail();
     }
 
-    public function findWhereIn(string $field, array $values, array $columns = ['*']): Collection {
-        return $this->entity->whereIn($field, $values)->get($columns);
-    }
-
-    public function findWhereNotIn(string $field, array $values, array $columns = ['*']): Collection {
-        return $this->entity->whereNotIn($field, $values)->get($columns);
+    public function get(array $columns = ['*']): Collection
+    {
+        return $this->entity->get($columns);
     }
 
     public function has(string $relation): IBaseRepository
@@ -126,15 +101,39 @@ class BaseRepository implements IBaseRepository
         return $this;
     }
 
-    public function hidden(array $fields): IBaseRepository
+    public function hidden(array $columns): IBaseRepository
     {
-        $this->entity->setHidden($fields);
+        $this->entity->setHidden($columns);
+        return $this;
+    }
+
+    public function latest(string $column = null): IBaseRepository
+    {
+        $this->entity = $this->entity->latest($column);
+        return $this;
+    }
+
+    public function limit($records = 10): IBaseRepository
+    {
+        $this->entity = $this->entity->limit($records);
+        return $this;
+    }
+
+    public function oldest($column = null): IBaseRepository
+    {
+        $this->entity = $this->entity->oldest($column);
         return $this;
     }
 
     public function orderBy(string $column, string $direction = 'ASC'): IBaseRepository
     {
         $this->entity = $this->entity->orderBy($column, $direction);
+        return $this;
+    }
+
+    public function select(mixed $columns): IBaseRepository
+    {
+        $this->entity = $this->entity->select($columns);
         return $this;
     }
 
@@ -154,23 +153,28 @@ class BaseRepository implements IBaseRepository
         return $entity;
     }
 
-    public function visible(array $fields): IBaseRepository
+    public function visible(array $columns): IBaseRepository
     {
-        $this->entity->setVisible($fields);
+        $this->entity->setVisible($columns);
         return $this;
     }
 
-    private function applyConditions(array $where): void
+    public function where(string $column, mixed $value, string $operator = '='): IBaseRepository
     {
-        foreach ($where as $field => $value) {
-            if (count($value) === 1) {
-                list($value) = $value;
-                $this->entity = $this->entity->where($field, '=', $value);
-            } else if (count($value) === 2) {
-                list($value, $operator) = $value;
-                $this->entity = $this->entity->where($field, $operator, $value);
-            }
-        }
+        $this->entity = $this->entity->where($column, $operator, $value);
+        return $this;
+    }
+
+    public function whereIn(string $column, array $values): IBaseRepository
+    {
+        $this->entity = $this->entity->whereIn($column, $values);
+        return $this;
+    }
+
+    public function whereNotIn(string $column, array $values): IBaseRepository
+    {
+        $this->entity = $this->entity->whereNotIn($column, $values);
+        return $this;
     }
 
     public function whereHas(string $relation, \Closure $closure): IBaseRepository
