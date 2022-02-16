@@ -5,10 +5,11 @@ namespace App\Repositories;
 use App\Contracts\Repositories\IBookRepository;
 use App\Core\BaseRepository;
 use App\Models\Book;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
  * @author jcgonzalez
@@ -17,7 +18,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class BookRepository extends BaseRepository implements IBookRepository
 {
-    protected Builder|Model $entity;
+    protected Builder|Model|QueryBuilder $entity;
 
     /**
      * @param Book $book

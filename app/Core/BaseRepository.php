@@ -6,6 +6,7 @@ use App\Core\Contracts\IBaseRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Throwable;
 
@@ -15,7 +16,7 @@ use Throwable;
  */
 class BaseRepository implements IBaseRepository
 {
-    protected Builder|Model $entity;
+    protected Builder|Model|QueryBuilder $entity;
 
     /**
      * @throws Throwable

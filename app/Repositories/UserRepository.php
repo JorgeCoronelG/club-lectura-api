@@ -5,8 +5,9 @@ namespace App\Repositories;
 use App\Contracts\Repositories\IUserRepository;
 use App\Core\BaseRepository;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
  * @author jcgonzalez
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class UserRepository extends BaseRepository implements IUserRepository
 {
-    protected Builder|Model $entity;
+    protected Builder|Model|QueryBuilder $entity;
 
     /**
      * @param User $user
