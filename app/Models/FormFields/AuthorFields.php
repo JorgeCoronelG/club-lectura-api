@@ -4,6 +4,6 @@ namespace App\Models\FormFields;
 
 class AuthorFields
 {
-    const NAME_MIN_LENGTH = 5;
-    const NAME_MAX_LENGTH = 120;
+    final const NAME_MIN_LENGTH = 5;
+    final const NAME_MAX_LENGTH = 120;
 }
