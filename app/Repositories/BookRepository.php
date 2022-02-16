@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\Repositories\IBookRepository;
 use App\Core\BaseRepository;
 use App\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -23,5 +24,12 @@ class BookRepository extends BaseRepository implements IBookRepository
     public function __construct(Book $book)
     {
         $this->entity = $book;
+    }
+
+    public function findAllByStatus(array|int $status): Collection
+    {
+        return is_array($status)
+            ? $this->entity->whereIn('status', $status)->get()
+            : $this->entity->where('status', $status)->get();
     }
 }
