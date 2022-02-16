@@ -4,7 +4,7 @@ namespace App\Models\FormFields;
 
 class FineFields
 {
-    const COST_TOTAL_DIGITS = 6;
-    const COST_TOTAL_DECIMAL = 2;
-    const FINE_PER_DAY = 5;
+    final const COST_TOTAL_DIGITS = 6;
+    final const COST_TOTAL_DECIMAL = 2;
+    final const FINE_PER_DAY = 5;
 }
