@@ -67,28 +67,6 @@ class BaseRepository implements IBaseRepository
         return $this->entity->findOrFail($id);
     }
 
-    public function findByField(string $field, mixed $value, string $operator = '=', array $columns = ['*']): Collection
-    {
-        return $this->entity->where($field, $operator, $value)->get($columns);
-    }
-
-    /**
-     * @param array $where
-     * Especificación del array $where
-     * Estructura: array('campo' => ['valor_a_buscar', 'operador'], 'campo' => ['valor_a_buscar'])
-     * Ejemplo:
-     * array('nombre' => ['Jorge', '!='], 'email' => ['tprog'])
-     * Si el arreglo secundario contiene un valor, sería el valor a buscar y el operador por defecto sería '='
-     * Si el arreglo secundario contiene 2 valores, el primero será el valor a buscar y el segundo el operador de la búsqueda
-     * @param array $columns
-     * @return Collection
-     */
-    public function findByMultipleConditions(array $where, array $columns = ['*']): Collection
-    {
-        $this->applyConditions($where);
-        return $this->entity->get($columns);
-    }
-
     public function findRandom(): Model
     {
         return $this->entity->inRandomOrder()->limit(1)->first();
@@ -97,45 +75,6 @@ class BaseRepository implements IBaseRepository
     public function findRandoms(int $records = 1): Collection
     {
         return $this->entity->inRandomOrder()->limit($records)->get();
-    }
-
-    public function findRecordsLatest(int $records = 10): Collection
-    {
-        return $this->entity->latest()->limit($records)->get();
-    }
-
-    /**
-     * @throws Throwable
-     */
-    public function findOneWithCondition(string $field, mixed $value, string $operator = '=' ): Model
-    {
-        return $this->entity->where($field, $operator, $value)->firstOrFail();
-    }
-
-    public function findWhereIn(string $field, array $values, array $columns = ['*']): Collection {
-        return $this->entity->whereIn($field, $values)->get($columns);
-    }
-
-    public function findWhereNotIn(string $field, array $values, array $columns = ['*']): Collection {
-        return $this->entity->whereNotIn($field, $values)->get($columns);
-    }
-
-    public function has(string $relation): IBaseRepository
-    {
-        $this->entity = $this->entity->has($relation);
-        return $this;
-    }
-
-    public function hidden(array $fields): IBaseRepository
-    {
-        $this->entity->setHidden($fields);
-        return $this;
-    }
-
-    public function orderBy(string $column, string $direction = 'ASC'): IBaseRepository
-    {
-        $this->entity = $this->entity->orderBy($column, $direction);
-        return $this;
     }
 
     public function sync(int $id, string $relation, array $attributes, bool $detaching = true): array
@@ -152,42 +91,5 @@ class BaseRepository implements IBaseRepository
         $entity->fill($data);
         $entity->saveOrFail();
         return $entity;
-    }
-
-    public function visible(array $fields): IBaseRepository
-    {
-        $this->entity->setVisible($fields);
-        return $this;
-    }
-
-    private function applyConditions(array $where): void
-    {
-        foreach ($where as $field => $value) {
-            if (count($value) === 1) {
-                list($value) = $value;
-                $this->entity = $this->entity->where($field, '=', $value);
-            } else if (count($value) === 2) {
-                list($value, $operator) = $value;
-                $this->entity = $this->entity->where($field, $operator, $value);
-            }
-        }
-    }
-
-    public function whereHas(string $relation, \Closure $closure): IBaseRepository
-    {
-        $this->entity = $this->entity->whereHas($relation, $closure);
-        return $this;
-    }
-
-    public function with(array|string $relations): IBaseRepository
-    {
-        $this->entity = $this->entity->with($relations);
-        return $this;
-    }
-
-    public function withCount(array|string $relations): IBaseRepository
-    {
-        $this->entity = $this->entity->withCount($relations);
-        return $this;
     }
 }
