@@ -19,7 +19,7 @@ class BookController extends BaseApiController
 
     public function findOnePortal(int $id): JsonResponse
     {
-        $book = $this->bookService->findOnePortal($id);
+        $book = $this->bookService->findByIdPortal($id);
         return $this->showOne(new BookPortalResource($book));
     }
 

@@ -7,8 +7,12 @@ use App\Contracts\Services\IBookService;
 use App\Core\BaseService;
 use App\Core\Contracts\IBaseRepository;
 use App\Core\Contracts\IBaseService;
+use App\Exceptions\CustomErrorException;
+use App\Helpers\Enum\Message;
 use App\Models\Book;
+use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author JorgeCoronelG
@@ -24,15 +28,20 @@ class BookService extends BaseService implements IBookService
         $this->entityRepository = $bookRepository;
     }
 
+    /**
+     * @throws CustomErrorException
+     */
+    public function findByIdPortal(int $id): Book
+    {
+        $book = $this->entityRepository->findByIdPortal($id);
+        if ($book->status === StatusBook::Lost->value || $book->status === StatusBook::NotRecovered->value) {
+            throw new CustomErrorException(Message::MODEL_NOT_FOUND_EXCEPTION, Response::HTTP_NOT_FOUND);
+        }
+        return $book;
+    }
+
     public function findMostRead(int $records = 10): Collection
     {
         return $this->entityRepository->findMostRead($records);
-    }
-
-    public function findOnePortal($id): Book
-    {
-        return $this->entityRepository
-            ->with(['authors', 'literarySubgender.literaryGender'])
-            ->findById($id);
     }
 }

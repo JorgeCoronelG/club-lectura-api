@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
  */
 interface IBookService extends IBaseService
 {
-    public function findOnePortal($id): Book;
+    public function findByIdPortal(int $id): Book;
 
     public function findMostRead(int $records = 10): Collection;
 }

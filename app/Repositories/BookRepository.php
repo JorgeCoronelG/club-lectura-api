@@ -5,9 +5,9 @@ namespace App\Repositories;
 use App\Contracts\Repositories\IBookRepository;
 use App\Core\BaseRepository;
 use App\Models\Book;
+use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
@@ -28,10 +28,22 @@ class BookRepository extends BaseRepository implements IBookRepository
         $this->entity = $book;
     }
 
+    public function findAllByStatus(array|int $status): Collection
+    {
+        return is_array($status)
+            ? $this->entity->whereIn('status', $status)->get()
+            : $this->entity->where('status', $status)->get();
+    }
+
+    public function findByIdPortal(int $id): Book
+    {
+        return $this->entity->with(['authors', 'literarySubgender.literaryGender'])->findOrFail($id);
+    }
+
     public function findRecordsLatest(int $records = 10): Collection
     {
         return $this->entity
-            ->selectRaw('id, title, status, image')
+            ->select('id', 'title', 'status', 'image')
             ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
             ->with('authors')
             ->latest()
@@ -42,19 +54,12 @@ class BookRepository extends BaseRepository implements IBookRepository
     public function findMostRead(int $records = 10): Collection
     {
         return $this->entity
-            ->selectRaw('id, title, status, image')
+            ->select('id', 'title', 'status', 'image')
             ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
-            ->has('loans')
+            ->with('authors')
             ->withCount('loans')
             ->orderBy('loans_count', 'DESC')
             ->limit($records)
             ->get();
-    }
-
-    public function findAllByStatus(array|int $status): Collection
-    {
-        return is_array($status)
-            ? $this->entity->whereIn('status', $status)->get()
-            : $this->entity->where('status', $status)->get();
     }
 }
