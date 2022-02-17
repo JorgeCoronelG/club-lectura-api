@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Book extends Model
@@ -34,5 +35,10 @@ class Book extends Model
     public function loans(): BelongsToMany
     {
         return $this->belongsToMany(Loan::class)->withTimestamps();
+    }
+
+    public function literarySubgender(): BelongsTo
+    {
+        return $this->belongsTo(LiterarySubgender::class);
     }
 }

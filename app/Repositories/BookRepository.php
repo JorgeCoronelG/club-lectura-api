@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\Repositories\IBookRepository;
 use App\Core\BaseRepository;
 use App\Models\Book;
+use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -32,5 +33,33 @@ class BookRepository extends BaseRepository implements IBookRepository
         return is_array($status)
             ? $this->entity->whereIn('status', $status)->get()
             : $this->entity->where('status', $status)->get();
+    }
+
+    public function findByIdPortal(int $id): Book
+    {
+        return $this->entity->with(['authors', 'literarySubgender.literaryGender'])->findOrFail($id);
+    }
+
+    public function findRecordsLatest(int $records = 10): Collection
+    {
+        return $this->entity
+            ->select('id', 'title', 'status', 'image')
+            ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
+            ->with('authors')
+            ->latest()
+            ->limit($records)
+            ->get();
+    }
+
+    public function findMostRead(int $records = 10): Collection
+    {
+        return $this->entity
+            ->select('id', 'title', 'status', 'image')
+            ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
+            ->with('authors')
+            ->withCount('loans')
+            ->orderBy('loans_count', 'DESC')
+            ->limit($records)
+            ->get();
     }
 }
