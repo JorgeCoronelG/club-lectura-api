@@ -13,11 +13,11 @@ Route::prefix('v1')->group(function () {
         });
 
     Route::controller(BookController::class)
-        ->prefix('books')
+        ->prefix('portal/books')
         ->name('books.')
         ->group(function () {
-            Route::get('/portal/detail/{id}', 'findOnePortal')->name('find.one.portal');
-            Route::get('/portal/latest', 'findLatest')->name('find.latest');
-            Route::get('/portal/most-read', 'findMostRead')->name('find.most.read');
+            Route::get('/detail/{id}', 'findOnePortal')->name('find.one.portal');
+            Route::get('/latest', 'findLatest')->name('find.latest');
+            Route::get('/most-read', 'findMostRead')->name('find.most.read');
         });
 });

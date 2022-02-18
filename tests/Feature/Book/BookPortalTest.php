@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class BookPortalTest extends TestCase
 {
-    const URL = '/api/v1/books/portal';
+    const URL = '/api/v1/portal/books';
 
     public function test_new_books(): void
     {
