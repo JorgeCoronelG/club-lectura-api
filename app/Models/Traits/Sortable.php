@@ -32,7 +32,7 @@ trait Sortable
                 $sortField = substr($sortField, 1);
             }
 
-            if (collect($this->allowedSorts)->contains($sortField)) {
+            if (!collect($this->allowedSorts)->contains($sortField)) {
                 throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
             }
 
