@@ -2,10 +2,10 @@
 
 namespace App\Helpers;
 
+use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
 use App\Helpers\Enum\QueryParam;
 use Illuminate\Support\Str;
-use PHPUnit\Util\Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -34,7 +34,7 @@ class Validation
     }
 
     /**
-     * @throws \Exception
+     * @throws CustomErrorException
      */
     public static function getFilters(string $queryParam = null): array
     {
@@ -46,13 +46,13 @@ class Validation
         $filters = json_decode($json, true);
 
         if (!isset($filters[QueryParam::FILTERS_FIELD_KEY])) {
-            throw new \Exception(Message::INVALID_QUERY_PARAMETER,Response::HTTP_BAD_REQUEST);
+            throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER,Response::HTTP_BAD_REQUEST);
         }
 
         $arrayFilters = [];
         foreach ($filters[QueryParam::FILTERS_FIELD_KEY] as $filter) {
             if (!isset($filter[QueryParam::FIELD_KEY]) || !isset($filter[QueryParam::TYPE_KEY]) || !isset($filter[QueryParam::VALUE_KEY])) {
-                throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+                throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
             }
 
             switch ($filter[QueryParam::TYPE_KEY]) {
@@ -61,14 +61,14 @@ class Validation
                     break;
                 case 'int':
                     if (!is_int($filter[QueryParam::VALUE_KEY])) {
-                        throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+                        throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
                     }
 
                     $arrayFilters[$filter[QueryParam::FIELD_KEY]] = $filter[QueryParam::VALUE_KEY];
                     break;
                 case 'double':
                     if (!is_double($filter[QueryParam::VALUE_KEY])) {
-                        throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+                        throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
                     }
 
                     $arrayFilters[$filter[QueryParam::FIELD_KEY]] = $filter[QueryParam::VALUE_KEY];
@@ -77,7 +77,7 @@ class Validation
                     $arrayFilters[$filter[QueryParam::FIELD_KEY]] = self::validateDate($filter[QueryParam::VALUE_KEY]);
                     break;
                 default:
-                    throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+                    throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
             }
         }
 
@@ -86,12 +86,12 @@ class Validation
 
     /**
      * Función para validar una fecha en formato AAAA/MM/DD
-     * @throws \Exception
+     * @throws CustomErrorException
      */
     public static function validateDate(string $date = null): string | null
     {
         if (is_null($date)) {
-            return null;
+            throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
         }
 
         $dateParse = null;
@@ -105,11 +105,11 @@ class Validation
         }
 
         if (is_null($dateParse)) {
-            throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+            throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
         }
 
         if (count($dateParse) !== 3 && !checkdate($dateParse[1], $dateParse[2], $dateParse[0])) {
-            throw new Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+            throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
         }
 
         return $date;
