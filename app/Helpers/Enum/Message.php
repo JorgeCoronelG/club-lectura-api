@@ -30,8 +30,8 @@ class Message
     public const EMAIL_UPDATED = 'Confirma tu nuevo correo electrónico';
     public const RESTORE_PASSWORD = 'Nueva contraseña';
 
-    public static function getMessageHasNotAllowedFields(string $class): string
+    public static function getMessageHasNotAllowedSorts(string $class): string
     {
-        return "Establezca la propiedad pública allowedFields dentro de $class";
+        return "Establezca la propiedad pública allowedSorts dentro de $class";
     }
 }

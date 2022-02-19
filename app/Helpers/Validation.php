@@ -24,12 +24,6 @@ class Validation
     // Expresiones regulares
     public const PHONE_REGEX = '/^[0-9]{10}$/';
 
-    // Tipos de validaciones
-    public const PHONE_TYPE = 'phone';
-
-    // Validation
-    public const RESTORE_PASSWORD_LENGHT = 10;
-
     public static function getPerPage(string $queryParam = null): int
     {
         if (is_null($queryParam)) {

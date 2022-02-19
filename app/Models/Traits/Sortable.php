@@ -2,14 +2,22 @@
 
 namespace App\Models\Traits;
 
+use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response;
 
 trait Sortable
 {
+    /**
+     * @throws CustomErrorException
+     */
     public function scopeApplySort(Builder $query, string $sort = null): Builder
     {
+        if (!property_exists($this, 'allowedSorts')) {
+            throw new CustomErrorException(Message::getMessageHasNotAllowedSorts(get_class($this)), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
         if (is_null($sort)) {
             return $query;
         }
@@ -24,11 +32,11 @@ trait Sortable
                 $sortField = substr($sortField, 1);
             }
 
-            if (!array_key_exists($sortField, $this->allowedFields)) {
-                throw new \Exception(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+            if (collect($this->allowedSorts)->contains($sortField)) {
+                throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
             }
 
-            $query->orderBy($this->allowedFields[$sortField], $direction);
+            $query->orderBy($sortField, $direction);
         }
 
         return $query;
