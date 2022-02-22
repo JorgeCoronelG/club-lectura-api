@@ -7,6 +7,7 @@ use App\Core\BaseApiController;
 use App\Http\Resources\Book\BookPortalCollection;
 use App\Http\Resources\Book\BookPortalResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class BookController extends BaseApiController
 {
@@ -15,6 +16,12 @@ class BookController extends BaseApiController
     public function __construct(IBookService $bookService)
     {
         $this->bookService = $bookService;
+    }
+
+    public function findAllPortal(Request $request): JsonResponse
+    {
+        $books = $this->bookService->findAllPortalPaginated($request);
+        return $this->showAll(new BookPortalCollection($books, true));
     }
 
     public function findOnePortal(int $id): JsonResponse
