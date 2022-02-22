@@ -27,8 +27,7 @@ class CreateBooksTable extends Migration
             $table->tinyInteger('condition');
             $table->float('price', BookFields::PRICE_TOTAL_DIGITS, BookFields::PRICE_TOTAL_DECIMAL);
             $table->tinyInteger('edition');
-            $table->string('image', BookFields::IMAGE_LENGTH)
-                ->nullable();
+            $table->string('image', BookFields::IMAGE_LENGTH);
             $table->smallInteger('copy');
             $table->tinyInteger('language');
             $table->tinyInteger('status');
