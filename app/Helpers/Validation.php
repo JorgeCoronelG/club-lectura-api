@@ -56,7 +56,28 @@ class Validation
             }
 
             switch ($filter[QueryParam::TYPE_KEY]) {
-                case 'string':
+                case 'array':
+                    if (!is_array($filter[QueryParam::VALUE_KEY])) {
+                        throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+                    }
+
+                    $arrayFilters[$filter[QueryParam::FIELD_KEY]] = $filter[QueryParam::VALUE_KEY];
+                    break;
+                case 'boolean':
+                    if (!is_bool($filter[QueryParam::VALUE_KEY])) {
+                        throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+                    }
+
+                    $arrayFilters[$filter[QueryParam::FIELD_KEY]] = $filter[QueryParam::VALUE_KEY];
+                    break;
+                case 'date':
+                    $arrayFilters[$filter[QueryParam::FIELD_KEY]] = self::validateDate($filter[QueryParam::VALUE_KEY]);
+                    break;
+                case 'double':
+                    if (!is_double($filter[QueryParam::VALUE_KEY])) {
+                        throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
+                    }
+
                     $arrayFilters[$filter[QueryParam::FIELD_KEY]] = $filter[QueryParam::VALUE_KEY];
                     break;
                 case 'int':
@@ -66,15 +87,12 @@ class Validation
 
                     $arrayFilters[$filter[QueryParam::FIELD_KEY]] = $filter[QueryParam::VALUE_KEY];
                     break;
-                case 'double':
-                    if (!is_double($filter[QueryParam::VALUE_KEY])) {
+                case 'string':
+                    if (!is_string($filter[QueryParam::VALUE_KEY])) {
                         throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
                     }
 
                     $arrayFilters[$filter[QueryParam::FIELD_KEY]] = $filter[QueryParam::VALUE_KEY];
-                    break;
-                case 'date':
-                    $arrayFilters[$filter[QueryParam::FIELD_KEY]] = self::validateDate($filter[QueryParam::VALUE_KEY]);
                     break;
                 default:
                     throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);
