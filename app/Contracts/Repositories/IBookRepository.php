@@ -5,7 +5,7 @@ namespace App\Contracts\Repositories;
 use App\Core\Contracts\IBaseRepository;
 use App\Models\Book;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @author jcgonzalez
@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\Model;
 interface IBookRepository extends IBaseRepository
 {
     public function findAllByStatus(array|int $status): Collection;
+
+    public function findAllPortalPaginated(array $filters, int $limit, array $authorsId, string $sort = null,
+        array $columns = ['*']): LengthAwarePaginator;
 
     public function findByIdPortal(int $id): Book;
 

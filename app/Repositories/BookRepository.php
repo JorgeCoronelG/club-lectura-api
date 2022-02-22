@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @author jcgonzalez
@@ -33,6 +34,22 @@ class BookRepository extends BaseRepository implements IBookRepository
         return is_array($status)
             ? $this->entity->whereIn('status', $status)->get()
             : $this->entity->where('status', $status)->get();
+    }
+
+    public function findAllPortalPaginated(array $filters, int $limit, array $authorsId, string $sort = null,
+        array $columns = ['*']): LengthAwarePaginator
+    {
+        if (!empty($authorsId)) {
+            $this->entity = $this->entity
+                ->whereHas('authors', function (Builder $query) use ($authorsId) {
+                    $query->whereIn('author_id', $authorsId);
+                });
+        }
+        return $this->entity
+            ->with('authors')
+            ->filterPortal($filters)
+            ->applySort($sort)
+            ->paginate($limit, $columns);
     }
 
     public function findByIdPortal(int $id): Book
