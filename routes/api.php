@@ -16,8 +16,9 @@ Route::prefix('v1')->group(function () {
         ->prefix('portal/books')
         ->name('books.')
         ->group(function () {
-            Route::get('/detail/{id}', 'findOnePortal')->name('find.one.portal');
+            Route::get('', 'findAllPortal')->name('find.all.portal');
             Route::get('/latest', 'findLatest')->name('find.latest');
             Route::get('/most-read', 'findMostRead')->name('find.most.read');
+            Route::get('/detail/{id}', 'findOnePortal')->name('find.one.portal');
         });
 });
