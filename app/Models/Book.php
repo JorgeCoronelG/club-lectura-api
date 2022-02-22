@@ -51,8 +51,8 @@ class Book extends Model implements IScopeFilter
             return $query;
         }
 
-        if (isset($params['title']) && trim($params['title']) !== '') {
-            $query->orWhere('title', 'LIKE', "%${params['title']}%");
+        if (isset($params['searchGeneral']) && trim($params['searchGeneral']) !== '') {
+            $query->orWhere('title', 'LIKE', "%${params['searchGeneral']}%");
         }
         if (isset($params['language'])) {
             $query->whereIn('language', $params['language']);

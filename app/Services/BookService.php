@@ -47,8 +47,8 @@ class BookService extends BaseService implements IBookService
         $perPage = Validation::getPerPage($request->get(QueryParam::PAGINATION_KEY));
         $sort = $request->get(QueryParam::ORDER_BY_KEY);
         $authorsId = [];
-        if (isset($filters['author'])) {
-            $authorsId = $this->authorRepository->findAllByName($filters['author'])->pluck('id')->toArray();
+        if (isset($filters['searchGeneral'])) {
+            $authorsId = $this->authorRepository->findAllByName($filters['searchGeneral'])->pluck('id')->toArray();
         }
         return $this->entityRepository->findAllPortalPaginated($filters, $perPage, $authorsId, $sort,
                                                                ['id', 'title', 'status', 'image']);
