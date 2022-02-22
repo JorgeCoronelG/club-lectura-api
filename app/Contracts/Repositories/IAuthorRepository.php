@@ -3,6 +3,7 @@
 namespace App\Contracts\Repositories;
 
 use App\Core\Contracts\IBaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @author jcgonzalez
@@ -11,5 +12,5 @@ use App\Core\Contracts\IBaseRepository;
  */
 interface IAuthorRepository extends IBaseRepository
 {
-    //
+    public function findAllByName(string $name): Collection;
 }
