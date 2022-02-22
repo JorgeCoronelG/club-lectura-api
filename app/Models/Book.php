@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Contracts\IScopeFilter;
+use App\Models\Traits\Sortable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Book extends Model
+class Book extends Model implements IScopeFilter
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     protected $fillable = [
         'isbn',
@@ -26,6 +29,47 @@ class Book extends Model
         'donation_id',
         'literary_subgender_id'
     ];
+
+    public array $allowedSorts = ['title', 'created_at'];
+
+    public function scopeFilter(Builder $query, array $params = []): Builder
+    {
+        if(empty($params)) {
+            return $query;
+        }
+
+        if (isset($params['title']) && trim($params['title']) !== '') {
+            $query->where('title', 'LIKE', "%${params['title']}%");
+        }
+
+        return $query;
+    }
+
+    public function scopeFilterPortal(Builder $query, array $params = []): Builder
+    {
+        if(empty($params)) {
+            return $query;
+        }
+
+        if (isset($params['title']) && trim($params['title']) !== '') {
+            $query->orWhere('title', 'LIKE', "%${params['title']}%");
+        }
+        if (isset($params['language'])) {
+            $query->whereIn('language', $params['language']);
+        }
+        if (isset($params['literarySubgender'])) {
+            $query->whereIn('subgender', $params['literarySubgender']);
+        }
+        if (isset($params['status'])) {
+            $query->whereIn('status', $params['status']);
+        }
+        if (isset($params['noPageMin']) && isset($params['noPageMax'])) {
+            $query->where('no_pages', '>=', $params['noPageMin'])
+                ->where('no_pages', '<=', $params['noPageMax']);
+        }
+
+        return $query;
+    }
 
     public function authors(): BelongsToMany
     {
