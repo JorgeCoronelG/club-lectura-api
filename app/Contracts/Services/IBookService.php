@@ -5,6 +5,8 @@ namespace App\Contracts\Services;
 use App\Core\Contracts\IBaseService;
 use App\Models\Book;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @author JorgeCoronelG
@@ -13,6 +15,8 @@ use Illuminate\Database\Eloquent\Collection;
  */
 interface IBookService extends IBaseService
 {
+    public function findAllPortalPaginated(Request $request): LengthAwarePaginator;
+
     public function findByIdPortal(int $id): Book;
 
     public function findMostRead(int $records = 10): Collection;

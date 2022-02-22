@@ -2,16 +2,20 @@
 
 namespace App\Services;
 
+use App\Contracts\Repositories\IAuthorRepository;
 use App\Contracts\Repositories\IBookRepository;
 use App\Contracts\Services\IBookService;
 use App\Core\BaseService;
 use App\Core\Contracts\IBaseRepository;
-use App\Core\Contracts\IBaseService;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
+use App\Helpers\Enum\QueryParam;
+use App\Helpers\Validation;
 use App\Models\Book;
 use App\Models\Enums\StatusBook;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -22,10 +26,32 @@ use Symfony\Component\HttpFoundation\Response;
 class BookService extends BaseService implements IBookService
 {
     protected IBaseRepository $entityRepository;
+    protected IAuthorRepository $authorRepository;
 
-    public function __construct(IBookRepository $bookRepository)
+    /**
+     * @param IBookRepository $bookRepository
+     * @param IAuthorRepository $authorRepository
+     */
+    public function __construct(IBookRepository $bookRepository, IAuthorRepository $authorRepository)
     {
         $this->entityRepository = $bookRepository;
+        $this->authorRepository = $authorRepository;
+    }
+
+    /**
+     * @throws CustomErrorException
+     */
+    public function findAllPortalPaginated(Request $request): LengthAwarePaginator
+    {
+        $filters = Validation::getFilters($request->get(QueryParam::FILTERS_KEY));
+        $perPage = Validation::getPerPage($request->get(QueryParam::PAGINATION_KEY));
+        $sort = $request->get(QueryParam::ORDER_BY_KEY);
+        $authorsId = [];
+        if (isset($filters['author'])) {
+            $authorsId = $this->authorRepository->findAllByName($filters['author'])->pluck('id')->toArray();
+        }
+        return $this->entityRepository->findAllPortalPaginated($filters, $perPage, $authorsId, $sort,
+                                                               ['id', 'title', 'status', 'image']);
     }
 
     /**
