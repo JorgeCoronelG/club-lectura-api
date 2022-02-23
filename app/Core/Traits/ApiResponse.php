@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 /**
  * @author JorgeCoronelG
@@ -19,6 +20,14 @@ trait ApiResponse
     private function successResponse(ResourceCollection | array $data, int $code): JsonResponse
     {
         return response()->json($data, $code);
+    }
+
+    /**
+     * Función que retorna una respuesta JSON con contenido de algún archivo
+     */
+    protected function fileResponse(string $pathFile, array $headers = []): BinaryFileResponse
+    {
+        return response()->file($pathFile, $headers);
     }
 
     /**
