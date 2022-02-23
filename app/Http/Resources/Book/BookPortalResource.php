@@ -6,7 +6,6 @@ use App\Helpers\Enum\Path;
 use App\Helpers\File;
 use App\Http\Resources\Author\AuthorResource;
 use App\Http\Resources\LiterarySubgender\LiterarySubgenderResource;
-use App\Models\FormFields\BookFields;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookPortalResource extends JsonResource
@@ -14,7 +13,7 @@ class BookPortalResource extends JsonResource
     /**
      * Transform the resource into an array.
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,
@@ -23,7 +22,7 @@ class BookPortalResource extends JsonResource
             'noPages' => $this->when(!is_null($this->no_pages), $this->no_pages),
             'language' => $this->when(!is_null($this->language), $this->language),
             'review' => $this->when(!is_null($this->review), $this->review),
-            'image' => $this->image,
+            'image' => File::getExposedPath(Path::BOOK_IMAGES->value, $this->image),
             'status' => $this->status,
             'authors' => AuthorResource::collection($this->authors),
             'literarySubgender' => LiterarySubgenderResource::make($this->whenLoaded('literarySubgender'))

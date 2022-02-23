@@ -27,7 +27,7 @@ class BookFactory extends Factory
             'edition' => $this->faker->randomDigitNot(0),
             'image' => (mt_rand(0,1))
                 ? $this->faker->image(File::getFilePublicPath(Path::BOOK_IMAGES->value), 600, 900, fullPath: false)
-                : null,
+                : BookFields::IMAGE_DEFAULT,
             'copy' => $this->faker->randomDigitNot(0),
             'language' => $this->faker->randomElement(LanguageBook::getAllLanguages()),
             'status' => $this->faker->randomElement(StatusBook::getAllStatus())

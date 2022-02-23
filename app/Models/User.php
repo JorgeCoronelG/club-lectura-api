@@ -34,6 +34,8 @@ class User extends Authenticatable implements IScopeFilter
         'email_verified_at'
     ];
 
+    public array $allowedSorts = [];
+
     public function isVerified(): bool
     {
         return $this->verified;

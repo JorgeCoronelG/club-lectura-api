@@ -15,6 +15,8 @@ class Donation extends Model implements IScopeFilter
 
     protected $fillable = ['donation_date'];
 
+    public array $allowedSorts = [];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withTimestamps();
