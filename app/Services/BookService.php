@@ -9,10 +9,13 @@ use App\Core\BaseService;
 use App\Core\Contracts\IBaseRepository;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
+use App\Helpers\Enum\Path;
 use App\Helpers\Enum\QueryParam;
+use App\Helpers\File;
 use App\Helpers\Validation;
 use App\Models\Book;
 use App\Models\Enums\StatusBook;
+use App\Models\FormFields\BookFields;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -64,6 +67,16 @@ class BookService extends BaseService implements IBookService
             throw new CustomErrorException(Message::MODEL_NOT_FOUND_EXCEPTION, Response::HTTP_NOT_FOUND);
         }
         return $book;
+    }
+
+    public function findImage(string $img): string
+    {
+        $book = $this->entityRepository->findByImage($img);
+        if (is_null($book)) {
+            return File::getFilePublicPath(Path::BOOK_IMAGES->value, BookFields::IMAGE_DEFAULT);
+        } else {
+            return File::getFilePublicPath(Path::BOOK_IMAGES->value, $book->image);
+        }
     }
 
     public function findMostRead(int $records = 10): Collection

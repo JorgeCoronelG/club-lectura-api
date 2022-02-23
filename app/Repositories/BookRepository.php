@@ -57,6 +57,11 @@ class BookRepository extends BaseRepository implements IBookRepository
         return $this->entity->with(['authors', 'literarySubgender.literaryGender'])->findOrFail($id);
     }
 
+    public function findByImage(String $img): Book|null
+    {
+        return $this->entity->where('image', $img)->first();
+    }
+
     public function findRecordsLatest(int $records = 10): Collection
     {
         return $this->entity

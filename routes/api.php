@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\BookPortalController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -13,12 +14,19 @@ Route::prefix('v1')->group(function () {
         });
 
     Route::controller(BookController::class)
-        ->prefix('portal/books')
+        ->prefix('books')
         ->name('books.')
         ->group(function () {
-            Route::get('', 'findAllPortal')->name('find.all.portal');
+            Route::get('/image/{img}', 'findImage')->name('find.image');
+        });
+
+    Route::controller(BookPortalController::class)
+        ->prefix('portal/books')
+        ->name('books.portal.')
+        ->group(function () {
+            Route::get('', 'findAllPortal')->name('find.all');
             Route::get('/latest', 'findLatest')->name('find.latest');
             Route::get('/most-read', 'findMostRead')->name('find.most.read');
-            Route::get('/detail/{id}', 'findOnePortal')->name('find.one.portal');
+            Route::get('/detail/{id}', 'findOnePortal')->name('find.one');
         });
 });

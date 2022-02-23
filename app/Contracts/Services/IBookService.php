@@ -19,5 +19,7 @@ interface IBookService extends IBaseService
 
     public function findByIdPortal(int $id): Book;
 
+    public function findImage(string $img): string;
+
     public function findMostRead(int $records = 10): Collection;
 }
