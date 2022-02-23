@@ -54,4 +54,11 @@ class File
             ? Path::STORAGE_PUBLIC->value.$path.$filename
             : Path::STORAGE_PUBLIC->value.$path;
     }
+
+    public static function getExposedPath(string $path, string $filename = null): string
+    {
+        return (!is_null($filename))
+            ? Path::STORAGE->value.$path.$filename
+            : Path::STORAGE->value.$path;
+    }
 }
