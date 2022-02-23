@@ -69,16 +69,6 @@ class BookService extends BaseService implements IBookService
         return $book;
     }
 
-    public function findImage(string $img): string
-    {
-        $book = $this->entityRepository->findByImage($img);
-        if (is_null($book)) {
-            return File::getFilePublicPath(Path::BOOK_IMAGES->value, BookFields::IMAGE_DEFAULT);
-        } else {
-            return File::getFilePublicPath(Path::BOOK_IMAGES->value, $book->image);
-        }
-    }
-
     public function findMostRead(int $records = 10): Collection
     {
         return $this->entityRepository->findMostRead($records);

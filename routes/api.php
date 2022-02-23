@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\BookPortalController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,13 +10,6 @@ Route::prefix('v1')->group(function () {
         ->name('auth')
         ->group(function () {
             Route::post('/login', 'login')->name('login');
-        });
-
-    Route::controller(BookController::class)
-        ->prefix('books')
-        ->name('books.')
-        ->group(function () {
-            Route::get('/image/{img}', 'findImage')->name('find.image');
         });
 
     Route::controller(BookPortalController::class)

@@ -23,7 +23,5 @@ interface IBookRepository extends IBaseRepository
 
     public function findByIdPortal(int $id): Book;
 
-    public function findByImage(String $img): Book|null;
-
     public function findMostRead(int $records = 10): Collection;
 }
