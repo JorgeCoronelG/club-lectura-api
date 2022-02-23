@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->date('birthday');
             $table->tinyInteger('gender');
             $table->string('photo', UserFields::PHOTO_LENGTH)
+                ->nullable()
                 ->index();
             $table->tinyInteger('status');
             $table->boolean('verified')
