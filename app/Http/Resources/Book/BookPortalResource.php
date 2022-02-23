@@ -23,9 +23,7 @@ class BookPortalResource extends JsonResource
             'noPages' => $this->when(!is_null($this->no_pages), $this->no_pages),
             'language' => $this->when(!is_null($this->language), $this->language),
             'review' => $this->when(!is_null($this->review), $this->review),
-            'image' => is_null($this->image)
-                ? File::getFilePublicPath(Path::BOOK_IMAGES->value, BookFields::IMAGE_DEFAULT)
-                : File::getFilePublicPath(Path::BOOK_IMAGES->value, $this->image),
+            'image' => $this->image,
             'status' => $this->status,
             'authors' => AuthorResource::collection($this->authors),
             'literarySubgender' => LiterarySubgenderResource::make($this->whenLoaded('literarySubgender'))
