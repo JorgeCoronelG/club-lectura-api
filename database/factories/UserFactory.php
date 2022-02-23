@@ -31,7 +31,7 @@ class UserFactory extends Factory
                 : Gender::Female->value,
             'photo' => (mt_rand(0,1))
                 ? $this->faker->image(File::getFilePublicPath(Path::USER_IMAGES->value), 500, 500, fullPath: false)
-                : UserFields::PHOTO_DEFAULT,
+                : null,
             'status' => StatusUser::Active->value,
             'verified' => $verified = $this->faker->randomElement([UserFields::VERIFIED, UserFields::NOT_VERIFIED]),
             'verification_token' => User::generateVerificationToken(),
