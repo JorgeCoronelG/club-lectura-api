@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BookPortalController;
+use App\Http\Controllers\Api\LiteraryGenderController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -21,5 +22,12 @@ Route::prefix('v1')->group(function () {
             Route::get('/most-read', 'findMostRead')->name('find.most.read');
             Route::get('/detail/{id}', 'findOnePortal')->name('find.one')
                 ->where('id', '[0-9]+');
+        });
+
+    Route::controller(LiteraryGenderController::class)
+        ->prefix('literary-gender')
+        ->name('literary-gender.')
+        ->group(function () {
+            Route::get('/find-all', 'findAll')->name('find.all');
         });
 });
