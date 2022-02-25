@@ -9,13 +9,10 @@ use App\Core\BaseService;
 use App\Core\Contracts\IBaseRepository;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
-use App\Helpers\Enum\Path;
 use App\Helpers\Enum\QueryParam;
-use App\Helpers\File;
 use App\Helpers\Validation;
 use App\Models\Book;
 use App\Models\Enums\StatusBook;
-use App\Models\FormFields\BookFields;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -72,5 +69,10 @@ class BookService extends BaseService implements IBookService
     public function findMostRead(int $records = 10): Collection
     {
         return $this->entityRepository->findMostRead($records);
+    }
+
+    public function getMinMaxPages(): Book
+    {
+        return $this->entityRepository->getMinMaxPages();
     }
 }

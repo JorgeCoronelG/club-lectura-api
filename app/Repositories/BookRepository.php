@@ -79,4 +79,11 @@ class BookRepository extends BaseRepository implements IBookRepository
             ->limit($records)
             ->get();
     }
+
+    public function getMinMaxPages(): Book
+    {
+        return $this->entity
+            ->selectRaw('MIN(no_pages) as min_pages, MAX(no_pages) as max_pages')
+            ->first();
+    }
 }

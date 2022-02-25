@@ -8,6 +8,7 @@ use App\Http\Resources\Book\BookPortalCollection;
 use App\Http\Resources\Book\BookPortalResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class BookPortalController extends BaseApiController
 {
@@ -40,5 +41,14 @@ class BookPortalController extends BaseApiController
     {
         $booksMostRead = $this->bookService->findMostRead();
         return $this->showAll(new BookPortalCollection($booksMostRead));
+    }
+
+    public function getMaxMinPages(): JsonResponse
+    {
+        $book = $this->bookService->getMinMaxPages();
+        return $this->successResponse(['data' => [
+            'minPages' => $book->min_pages,
+            'maxPages' => $book->max_pages
+        ]], Response::HTTP_OK);
     }
 }

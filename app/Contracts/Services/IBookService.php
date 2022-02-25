@@ -20,4 +20,6 @@ interface IBookService extends IBaseService
     public function findByIdPortal(int $id): Book;
 
     public function findMostRead(int $records = 10): Collection;
+
+    public function getMinMaxPages(): Book;
 }

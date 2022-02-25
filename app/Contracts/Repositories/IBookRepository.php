@@ -24,4 +24,6 @@ interface IBookRepository extends IBaseRepository
     public function findByIdPortal(int $id): Book;
 
     public function findMostRead(int $records = 10): Collection;
+
+    public function getMinMaxPages(): Book;
 }

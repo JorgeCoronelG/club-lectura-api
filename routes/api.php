@@ -18,6 +18,7 @@ Route::prefix('v1')->group(function () {
         ->name('books.portal.')
         ->group(function () {
             Route::get('', 'findAllPortal')->name('find.all');
+            Route::get('/min-max-pages', 'getMaxMinPages')->name('min.max');
             Route::get('/latest', 'findLatest')->name('find.latest');
             Route::get('/most-read', 'findMostRead')->name('find.most.read');
             Route::get('/detail/{id}', 'findOnePortal')->name('find.one')
