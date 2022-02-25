@@ -2,16 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Contracts\IScopeFilter;
+use App\Models\Traits\Sortable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class LiteraryGender extends Model
+class LiteraryGender extends Model implements IScopeFilter
 {
+    use Sortable;
+
     protected $fillable = ['name'];
 
-    public function literarySubgender(): HasOne
+    public array $allowedSorts = [];
+
+    public function literarySubgenders(): HasMany
     {
-        return $this->hasOne(LiterarySubgender::class);
+        return $this->hasMany(LiterarySubgender::class);
+    }
+
+    public function scopeFilter(Builder $query, array $params = []): Builder
+    {
+        return $query;
     }
 }
