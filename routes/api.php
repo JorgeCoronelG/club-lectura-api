@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function () {
             Route::get('', 'findAllPortal')->name('find.all');
             Route::get('/latest', 'findLatest')->name('find.latest');
             Route::get('/most-read', 'findMostRead')->name('find.most.read');
-            Route::get('/detail/{id}', 'findOnePortal')->name('find.one');
+            Route::get('/detail/{id}', 'findOnePortal')->name('find.one')
+                ->where('id', '[0-9]+');
         });
 });
