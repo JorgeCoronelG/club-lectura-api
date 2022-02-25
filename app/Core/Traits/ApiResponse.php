@@ -17,7 +17,7 @@ trait ApiResponse
     /**
      * Función que retorna una respuesta JSON exitosa
      */
-    private function successResponse(ResourceCollection | array $data, int $code): JsonResponse
+    protected function successResponse(ResourceCollection | array $data, int $code): JsonResponse
     {
         return response()->json($data, $code);
     }
