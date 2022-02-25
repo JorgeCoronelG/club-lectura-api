@@ -6,6 +6,7 @@ use App\Contracts\Repositories\ILiteraryGenderRepository;
 use App\Core\BaseRepository;
 use App\Models\LiteraryGender;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 
@@ -24,5 +25,14 @@ class LiteraryGenderRepository extends BaseRepository implements ILiteraryGender
     public function __construct(LiteraryGender $literaryGender)
     {
         $this->entity = $literaryGender;
+    }
+
+    public function findAll(array $filter = [], string $sort = null, array $columns = ['*']): Collection
+    {
+        return $this->entity
+            ->with('literarySubgenders')
+            ->filter($filter)
+            ->applySort($sort)
+            ->get($columns);
     }
 }
