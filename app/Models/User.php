@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements IScopeFilter
 {
-    use HasApiTokens, HasFactory, Notifiable, HasApiTokens, Sortable;
+    use HasApiTokens, HasFactory, Notifiable, Sortable;
 
     protected $fillable = [
         'name',
