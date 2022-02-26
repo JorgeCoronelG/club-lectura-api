@@ -27,7 +27,6 @@ class LiterarySubgenderSeeder extends Seeder
     public function run()
     {
         $this->literarySubgenderRepository->create(['name' => 'Cuento', 'literary_gender_id' => 1]);
-        $this->literarySubgenderRepository->create(['name' => 'Cuento', 'literary_gender_id' => 1]);
         $this->literarySubgenderRepository->create(['name' => 'Epopeya', 'literary_gender_id' => 1]);
         $this->literarySubgenderRepository->create(['name' => 'Novela', 'literary_gender_id' => 1]);
         $this->literarySubgenderRepository->create(['name' => 'Poema épico', 'literary_gender_id' => 1]);
