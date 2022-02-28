@@ -47,6 +47,7 @@ class BookRepository extends BaseRepository implements IBookRepository
         }
         return $this->entity
             ->with('authors')
+            ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
             ->filterPortal($filters)
             ->applySort($sort)
             ->paginate($limit, $columns);
