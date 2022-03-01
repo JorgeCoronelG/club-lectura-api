@@ -13,4 +13,6 @@ use App\Models\User;
 interface IAuthService extends IBaseService
 {
     public function login(string $email, string $password): string;
+
+    public function restorePassword(string $email): void;
 }

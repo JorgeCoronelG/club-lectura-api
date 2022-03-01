@@ -11,6 +11,7 @@ Route::prefix('v1')->group(function () {
         ->name('auth')
         ->group(function () {
             Route::post('/login', 'login')->name('login');
+            Route::post('/restore-password', 'restorePassword')->name('restore.password');
         });
 
     Route::controller(BookPortalController::class)
