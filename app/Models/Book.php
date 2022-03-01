@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Contracts\IScopeFilter;
+use App\Models\Enums\StatusBook;
 use App\Models\Traits\Sortable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,14 +46,16 @@ class Book extends Model implements IScopeFilter
         return $query;
     }
 
-    public function scopeFilterPortal(Builder $query, array $params = []): Builder
+    public function scopeFilterPortal(Builder $query, bool $existAuthors, array $params = []): Builder
     {
+        $query->whereIn('status', [StatusBook::Available, StatusBook::OnLoan]);
+
         if(empty($params)) {
             return $query;
         }
 
-        if (isset($params['searchGeneral']) && trim($params['searchGeneral']) !== '') {
-            $query->orWhere('title', 'LIKE', "%${params['searchGeneral']}%");
+        if (!$existAuthors && isset($params['searchGeneral']) && trim($params['searchGeneral']) !== '') {
+            $query->where('title', 'LIKE', "%${params['searchGeneral']}%");
         }
         if (isset($params['language'])) {
             $query->whereIn('language', $params['language']);

@@ -43,12 +43,13 @@ class BookRepository extends BaseRepository implements IBookRepository
             $this->entity = $this->entity
                 ->whereHas('authors', function (Builder $query) use ($authorsId) {
                     $query->whereIn('author_id', $authorsId);
-                });
+                })
+                ->orWhere('title', 'LIKE', "%${filters['searchGeneral']}%");
         }
+
         return $this->entity
             ->with('authors')
-            ->whereIn('status', [StatusBook::Available, StatusBook::OnLoan])
-            ->filterPortal($filters)
+            ->filterPortal(!empty($authorsId), $filters)
             ->applySort($sort)
             ->paginate($limit, $columns);
     }
