@@ -61,7 +61,7 @@ class Book extends Model implements IScopeFilter
             $query->whereIn('language', $params['language']);
         }
         if (isset($params['literarySubgender'])) {
-            $query->whereIn('subgender', $params['literarySubgender']);
+            $query->whereIn('literary_subgender_id', $params['literarySubgender']);
         }
         if (isset($params['status'])) {
             $query->whereIn('status', $params['status']);
