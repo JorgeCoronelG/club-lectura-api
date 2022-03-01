@@ -22,7 +22,7 @@ class Message
     public const NOT_FOUND_HTTP_EXCEPTION = 'No se encontró la URL especificada.';
     public const METHOD_NOT_ALLOWED_HTTP_EXCEPTION = 'Método no válido.';
     public const QUERY_EXCEPTION_1451 = 'No se puede eliminar el recurso porque está relacionado con algún otro.';
-    public const INTERNAL_SERVER_ERROR = 'Ocurrió algo inesperado. Intente mas tarde.';
+    public const INTERNAL_SERVER_ERROR = 'Ocurrió algo inesperado. Consulte al administrador.';
     public const THROTTLE_REQUESTS_EXCEPTION = 'Muchos intentos realizados.';
 
     // Mensajes de asunto de correo electrónico
