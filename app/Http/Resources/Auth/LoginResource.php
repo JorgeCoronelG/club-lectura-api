@@ -23,8 +23,8 @@ class LoginResource extends JsonResource
             'id' => $this->user->id,
             'code' => $this->user->code,
             'name' => $this->user->name,
-            'paternal_surname' => $this->user->paternal_surname,
-            'maternal_surname' => $this->user->maternal_surname,
+            'paternalSurname' => $this->user->paternal_surname,
+            'maternalSurname' => $this->user->maternal_surname,
             'email' => $this->user->email,
             'roles' => RoleResource::collection($this->user->roles),
             'token' => $this->user->token
