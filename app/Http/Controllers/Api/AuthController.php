@@ -36,8 +36,8 @@ class AuthController extends BaseApiController
     public function login(LoginRequest $request): JsonResponse
     {
         $userDTO = $request->toDTO();
-        $token = $this->authService->login($userDTO->email, $userDTO->password);
-        return $this->showOne(new LoginResource($token));
+        $user = $this->authService->login($userDTO->email, $userDTO->password);
+        return $this->showOne(new LoginResource($user));
     }
 
     /**

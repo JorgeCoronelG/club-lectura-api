@@ -15,6 +15,7 @@ use App\Notifications\Auth\RestorePasswordNotification;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -37,14 +38,16 @@ class AuthService extends BaseService implements IAuthService
     /**
      * @throws CustomErrorException
      */
-    public function login(string $email, string $password): string
+    public function login(string $email, string $password): User
     {
         $user = $this->checkAccount($email, $password);
-        return $user->createToken($email)->plainTextToken;
+        $token = $user->createToken($email)->plainTextToken;
+        return $user->setAttribute('token', $token);
     }
 
     /**
      * @throws CustomErrorException
+     * @throws UnknownProperties
      */
     public function restorePassword(string $email): void
     {

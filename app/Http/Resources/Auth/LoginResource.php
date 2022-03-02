@@ -2,19 +2,17 @@
 
 namespace App\Http\Resources\Auth;
 
+use App\Http\Resources\Role\RoleResource;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LoginResource extends JsonResource
 {
-    private readonly string $token;
-
     /**
-     * @param string $token
+     * @param User $user
      */
-    public function __construct(string $token)
-    {
-        $this->token = $token;
-    }
+    public function __construct(public User $user)
+    {}
 
     /**
      * Transform the resource into an array.
@@ -22,7 +20,14 @@ class LoginResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'token' => $this->token
+            'id' => $this->user->id,
+            'code' => $this->user->code,
+            'name' => $this->user->name,
+            'paternal_surname' => $this->user->paternal_surname,
+            'maternal_surname' => $this->user->maternal_surname,
+            'email' => $this->user->email,
+            'roles' => RoleResource::collection($this->user->roles),
+            'token' => $this->user->token
         ];
     }
 }
