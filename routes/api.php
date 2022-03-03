@@ -40,6 +40,7 @@ Route::prefix('v1')->group(function () {
            ->name('auth')
            ->group(function () {
                Route::get('/logout', 'logout')->name('logout');
+               Route::get('/user', 'getUser')->name('user');
            });
     });
 });

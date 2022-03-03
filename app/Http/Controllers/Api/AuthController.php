@@ -7,6 +7,7 @@ use App\Core\BaseApiController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
 use App\Http\Resources\Auth\LoginResource;
+use App\Http\Resources\Auth\UserResource;
 use App\Models\FormFields\RoleFields;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -27,8 +28,14 @@ class AuthController extends BaseApiController
     public function __construct(IAuthService $authService)
     {
         $this->middleware('permission:'.implode(',', RoleFields::getAllRoles()))
-            ->only(['logout']);
+            ->only(['getUser', 'logout']);
         $this->authService = $authService;
+    }
+
+    public function getUser(): JsonResponse
+    {
+        $user = $this->authService->getUser(auth()->id());
+        return $this->showOne(new UserResource($user));
     }
 
     /**

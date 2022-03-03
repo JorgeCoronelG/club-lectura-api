@@ -30,4 +30,9 @@ class UserRepository extends BaseRepository implements IUserRepository
     {
         return $this->entity->where('email', $email)->firstOrFail();
     }
+
+    public function findById(int $id): User
+    {
+        return $this->entity->with('roles')->findOrFail($id);
+    }
 }
