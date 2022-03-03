@@ -32,4 +32,14 @@ Route::prefix('v1')->group(function () {
         ->group(function () {
             Route::get('/find-all', 'findAll')->name('find.all');
         });
+
+    // Rutas con autenticación
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+       Route::controller(AuthController::class)
+           ->prefix('auth')
+           ->name('auth')
+           ->group(function () {
+               Route::get('/logout', 'logout')->name('logout');
+           });
+    });
 });

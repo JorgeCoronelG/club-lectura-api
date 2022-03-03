@@ -7,6 +7,7 @@ use App\Core\BaseApiController;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
 use App\Http\Resources\Auth\LoginResource;
+use App\Models\FormFields\RoleFields;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
@@ -25,8 +26,8 @@ class AuthController extends BaseApiController
      */
     public function __construct(IAuthService $authService)
     {
-        /*$this->middleware('permission:'.implode(',', RoleFields::getAllRoles()))
-            ->only(['logout']);*/
+        $this->middleware('permission:'.implode(',', RoleFields::getAllRoles()))
+            ->only(['logout']);
         $this->authService = $authService;
     }
 
@@ -38,6 +39,12 @@ class AuthController extends BaseApiController
         $userDTO = $request->toDTO();
         $token = $this->authService->login($userDTO->email, $userDTO->password);
         return $this->showOne(new LoginResource($token));
+    }
+
+    public function logout(): Response
+    {
+        auth()->user()->currentAccessToken()->delete();
+        return $this->noContentResponse();
     }
 
     /**
