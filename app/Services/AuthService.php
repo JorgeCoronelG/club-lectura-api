@@ -38,11 +38,10 @@ class AuthService extends BaseService implements IAuthService
     /**
      * @throws CustomErrorException
      */
-    public function login(string $email, string $password): User
+    public function login(string $email, string $password): string
     {
         $user = $this->checkAccount($email, $password);
-        $token = $user->createToken($email)->plainTextToken;
-        return $user->setAttribute('token', $token);
+        return $user->createToken($email)->plainTextToken;
     }
 
     /**
