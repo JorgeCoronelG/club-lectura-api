@@ -14,6 +14,7 @@ class UserFields
     final const EMAIL_MAX_LENGTH = 120;
     final const PASSWORD_MIN_LENGTH = 8;
     final const PASSWORD_MAX_LENGTH = 50;
+    final const RESTORE_PASSWORD_LENGTH = 15;
     final const PHONE_LENGTH = 10;
     final const PHOTO_LENGTH = 50;
     final const PHOTO_DEFAULT = 'default_user.png';

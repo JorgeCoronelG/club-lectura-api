@@ -7,10 +7,15 @@ use App\Contracts\Services\IAuthService;
 use App\Core\BaseService;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
+use App\Models\Dto\UserDTO;
 use App\Models\Enums\StatusUser;
+use App\Models\FormFields\UserFields;
 use App\Models\User;
+use App\Notifications\Auth\RestorePasswordNotification;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,13 +35,39 @@ class AuthService extends BaseService implements IAuthService
         $this->userRepository = $userRepository;
     }
 
+    public function getUser(int $id): User
+    {
+        return $this->userRepository->findById($id);
+    }
+
     /**
      * @throws CustomErrorException
      */
     public function login(string $email, string $password): string
     {
         $user = $this->checkAccount($email, $password);
-        return $user->createToken($email)->plainTextToken;
+        return $user->createToken('api-token')->plainTextToken;
+    }
+
+    /**
+     * @throws CustomErrorException
+     * @throws UnknownProperties
+     */
+    public function restorePassword(string $email): void
+    {
+        $user = $this->userRepository->findByEmail($email);
+        if ($user->status === StatusUser::Inactive->value) {
+            throw new CustomErrorException(Message::USER_INACTIVE, Response::HTTP_BAD_REQUEST);
+        }
+        if (!$user->isVerified()) {
+            throw new CustomErrorException(Message::USER_NOT_VERIFIED, Response::HTTP_BAD_REQUEST);
+        }
+
+        $newPassword = Str::random(UserFields::RESTORE_PASSWORD_LENGTH);
+        $userDTO = new UserDTO(password: bcrypt($newPassword));
+
+        $user = $this->userRepository->update($user->id, $userDTO->only('password')->toArray());
+        $user->notify(new RestorePasswordNotification($user, $newPassword));
     }
 
     /**

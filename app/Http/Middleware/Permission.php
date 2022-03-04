@@ -29,8 +29,9 @@ class Permission
 
         foreach ($roles as $role) {
             foreach (auth()->user()->roles as $rol) {
-                if ($rol->id === $role) {
+                if ($rol->id == $role) {
                     $existRole = true;
+                    break 2;
                 }
             }
         }
