@@ -8,4 +8,6 @@ namespace App\Helpers\Enum;
  */
 enum CacheKey: string
 {
+    case BOOK_PORTAL_FIND_LATEST = 'BOOK_PORTAL.FIND_LATEST';
+    case BOOK_PORTAL_MOST_READ = 'BOOK_PORTAL.MOST_READ';
 }

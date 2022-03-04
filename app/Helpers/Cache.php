@@ -30,6 +30,6 @@ class Cache
 
     public static function getKey(string $key): string
     {
-        return strtoupper($key.'KEY');
+        return strtoupper($key.'.KEY');
     }
 }

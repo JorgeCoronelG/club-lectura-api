@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\Services\IBookService;
 use App\Core\BaseApiController;
+use App\Helpers\Cache;
+use App\Helpers\Enum\CacheKey;
 use App\Http\Resources\Book\BookPortalCollection;
 use App\Http\Resources\Book\BookPortalResource;
 use Illuminate\Http\JsonResponse;
@@ -31,15 +33,21 @@ class BookPortalController extends BaseApiController
         return $this->showOne(new BookPortalResource($book));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function findLatest(): JsonResponse
     {
-        $booksLatest = $this->bookService->findRecordsLatest();
+        $booksLatest = Cache::apply(CacheKey::BOOK_PORTAL_FIND_LATEST->value, now()->addDay(), $this->bookService->findRecordsLatest());
         return $this->showAll(new BookPortalCollection($booksLatest));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function findMostRead(): JsonResponse
     {
-        $booksMostRead = $this->bookService->findMostRead();
+        $booksMostRead = Cache::apply(CacheKey::BOOK_PORTAL_MOST_READ->value, now()->addDay(), $this->bookService->findMostRead());
         return $this->showAll(new BookPortalCollection($booksMostRead));
     }
 
