@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\Auth;
 
+use App\Helpers\Enum\Path;
+use App\Helpers\File;
 use App\Http\Resources\Role\RoleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,7 +21,7 @@ class UserResource extends JsonResource
             'paternalSurname' => $this->paternal_surname,
             'maternalSurname' => $this->maternal_surname,
             'email' => $this->email,
-            'photo' => $this->photo,
+            'photo' => File::getExposedPath(Path::USER_IMAGES->value, $this->photo),
             'roles' => RoleResource::collection($this->roles)
         ];
     }
