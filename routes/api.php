@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\BookPortalController;
 use App\Http\Controllers\Api\LiteraryGenderController;
 use Illuminate\Support\Facades\Route;
@@ -42,5 +43,7 @@ Route::prefix('v1')->group(function () {
                Route::get('/logout', 'logout')->name('logout');
                Route::get('/user', 'getUser')->name('user');
            });
+
+       Route::apiResource('authors',AuthorController::class);
     });
 });
