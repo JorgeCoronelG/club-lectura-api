@@ -17,6 +17,7 @@ class CreateAuthorsTable extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
             $table->string('name', AuthorFields::NAME_MAX_LENGTH)
+                ->unique()
                 ->index();
             $table->timestamps();
         });
