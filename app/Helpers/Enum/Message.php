@@ -15,6 +15,7 @@ class Message
     public const USER_NOT_VERIFIED = 'Usuario no verificado.';
     public const USER_INACTIVE = 'El usuario está inactivo.';
     public const INVALID_QUERY_PARAMETER = 'Parámetro de consulta inválido.';
+    public const INVALID_ID_PARAMETER_WITH_ID_BODY = 'El id es diferente al id del parámetro de ruta.';
 
     // Mensajes de excepciones
     public const AUTHENTICATION_EXCEPTION = 'No autenticado.';
