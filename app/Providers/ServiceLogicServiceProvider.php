@@ -12,7 +12,8 @@ class ServiceLogicServiceProvider extends ServiceProvider
     protected array $services = [
         'IAuthService' => 'AuthService',
         'IBookService' => 'BookService',
-        'ILiteraryGenderService' => 'LiteraryGenderService'
+        'ILiteraryGenderService' => 'LiteraryGenderService',
+        'IAuthorService' => 'AuthorService'
     ];
 
     /**
