@@ -36,6 +36,6 @@ class RestorePasswordRequest extends FormRequest implements IReturnDto
      */
     public function toDTO(): UserDTO
     {
-        return new UserDTO(email: $this->email);
+        return new UserDTO(email: trim($this->email));
     }
 }
