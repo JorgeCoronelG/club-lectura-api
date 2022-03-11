@@ -15,7 +15,7 @@ class Author extends Model implements IScopeFilter
 
     protected $fillable = ['name'];
 
-    public array $allowedSorts = ['name'];
+    public array $allowedSorts = ['id', 'name'];
 
     public function scopeFilter(Builder $query, array $params = []): Builder
     {
