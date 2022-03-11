@@ -16,11 +16,9 @@ class CreateBookLoanTable extends Migration
         Schema::create('book_loan', function (Blueprint $table) {
             $table->foreignId('book_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->foreignId('loan_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });

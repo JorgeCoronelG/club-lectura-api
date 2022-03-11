@@ -20,8 +20,7 @@ class CreateLiterarySubgendersTable extends Migration
             $table->foreign('literary_gender_id')
                 ->references('id')
                 ->on('literary_genders')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }

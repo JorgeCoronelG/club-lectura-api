@@ -16,11 +16,9 @@ class CreateDonationUserTable extends Migration
         Schema::create('donation_user', function (Blueprint $table) {
             $table->foreignId('donation_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->foreignId('user_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->text('reason')
                 ->nullable();

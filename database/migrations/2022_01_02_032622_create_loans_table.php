@@ -21,7 +21,6 @@ class CreateLoansTable extends Migration
                 ->nullable();
             $table->foreignId('user_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });
