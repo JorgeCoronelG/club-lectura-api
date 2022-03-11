@@ -9,7 +9,7 @@ class AuthorResource extends JsonResource
     /**
      * Transform the resource into an array.
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'id' => $this->id,

@@ -15,6 +15,7 @@ class Message
     public const USER_NOT_VERIFIED = 'Usuario no verificado.';
     public const USER_INACTIVE = 'El usuario está inactivo.';
     public const INVALID_QUERY_PARAMETER = 'Parámetro de consulta inválido.';
+    public const INVALID_ID_PARAMETER_WITH_ID_BODY = 'El id es diferente al id del parámetro de ruta.';
 
     // Mensajes de excepciones
     public const AUTHENTICATION_EXCEPTION = 'No autenticado.';
@@ -22,7 +23,7 @@ class Message
     public const AUTHORIZATION_EXCEPTION = 'No tiene permisos para ejecutar esta acción.';
     public const NOT_FOUND_HTTP_EXCEPTION = 'No se encontró la URL especificada.';
     public const METHOD_NOT_ALLOWED_HTTP_EXCEPTION = 'Método no válido.';
-    public const QUERY_EXCEPTION_1451 = 'No se puede eliminar el recurso porque está relacionado con algún otro.';
+    public const QUERY_EXCEPTION_1451 = 'No se puede eliminar el registro porque está relacionado con algún otro.';
     public const INTERNAL_SERVER_ERROR = 'Ocurrió algo inesperado. Consulte al administrador.';
     public const THROTTLE_REQUESTS_EXCEPTION = 'Muchos intentos realizados.';
 

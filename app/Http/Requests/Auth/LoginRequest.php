@@ -38,8 +38,8 @@ class LoginRequest extends FormRequest implements IReturnDto
     public function toDTO(): UserDTO
     {
         return new UserDTO(
-            email: $this->email,
-            password: $this->password
+            email: trim($this->email),
+            password: trim($this->password)
         );
     }
 }
