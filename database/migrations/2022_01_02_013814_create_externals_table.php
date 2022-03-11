@@ -16,7 +16,6 @@ class CreateExternalsTable extends Migration
         Schema::create('externals', function (Blueprint $table) {
             $table->foreignId('user_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });
