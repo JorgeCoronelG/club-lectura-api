@@ -20,7 +20,6 @@ class CreateFinesTable extends Migration
             $table->tinyInteger('status');
             $table->foreignId('loan_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });

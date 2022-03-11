@@ -33,14 +33,12 @@ class CreateBooksTable extends Migration
             $table->tinyInteger('status');
             $table->foreignId('donation_id')
                 ->constrained()
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->unsignedSmallInteger('literary_subgender_id');
             $table->foreign('literary_subgender_id')
                 ->references('id')
                 ->on('literary_subgenders')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }
