@@ -44,6 +44,9 @@ Route::prefix('v1')->group(function () {
                Route::get('/user', 'getUser')->name('user');
            });
 
-       Route::apiResource('authors',AuthorController::class);
+       Route::apiResources([
+           'authors' => AuthorController::class,
+           'literary-genders' => LiteraryGenderController::class
+       ]);
     });
 });
