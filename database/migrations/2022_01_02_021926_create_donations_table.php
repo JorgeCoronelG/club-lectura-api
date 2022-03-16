@@ -15,6 +15,7 @@ class CreateDonationsTable extends Migration
     {
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
             $table->date('donation_date');
             $table->timestamps();
         });

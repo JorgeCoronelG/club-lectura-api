@@ -17,8 +17,7 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('code', BookFields::CODE_LENGTH)
-                ->nullable();
+            $table->string('code')->nullable();
             $table->string('isbn', IsbnBook::ISBN_NEW_LENGTH->value);
             $table->string('title', BookFields::TITLE_MAX_LENGTH);
             $table->text('review')

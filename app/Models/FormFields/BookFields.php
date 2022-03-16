@@ -4,7 +4,6 @@ namespace App\Models\FormFields;
 
 class BookFields
 {
-    final const CODE_LENGTH = 15;
     final const CODE_INITIAL = 'LIB-';
     final const TITLE_MIN_LENGTH = 2;
     final const TITLE_MAX_LENGTH = 150;

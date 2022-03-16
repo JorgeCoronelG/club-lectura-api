@@ -16,8 +16,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('code', UserFields::CODE_LENGTH)
-                ->nullable();
+            $table->string('code')->nullable();
             $table->string('name', UserFields::NAME_MAX_LENGTH);
             $table->string('paternal_surname', UserFields::LAST_NAME_MAX_LENGTH);
             $table->string('maternal_surname', UserFields::LAST_NAME_MAX_LENGTH);

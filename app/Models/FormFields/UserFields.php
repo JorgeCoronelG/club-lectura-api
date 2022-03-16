@@ -4,7 +4,6 @@ namespace App\Models\FormFields;
 
 class UserFields
 {
-    final const CODE_LENGTH = 15;
     final const CODE_INITIAL = 'CLUB/LECT-';
     final const NAME_MIN_LENGTH = 3;
     final const NAME_MAX_LENGTH = 120;
