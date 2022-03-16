@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Contracts\Repositories\IUserRepository;
 use App\Models\Donation;
+use App\Models\FormFields\DonationFields;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -37,6 +38,9 @@ class DonationSeeder extends Seeder
 
         $users->each(function (User $user) use ($reasons) {
             $donation = Donation::factory()->create();
+
+            $donation->code = DonationFields::CODE_INITIAL.$donation->id;
+            $donation->save();
 
             $user->donations()->attach($donation->id, ['reason' => $reasons[array_rand($reasons)]]);
         });
