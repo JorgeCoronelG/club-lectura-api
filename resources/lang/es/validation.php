@@ -192,5 +192,7 @@ return [
         'title'                 => 'título',
         'username'              => 'usuario',
         'year'                  => 'año',
+        // Custom
+        'literaryGenderId'      => 'Género literario'
     ],
 ];

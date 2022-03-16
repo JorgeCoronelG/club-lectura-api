@@ -15,6 +15,7 @@ class LiterarySubgenderResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'literaryGenderId' => $this->literary_gender_id,
             'literaryGender' => LiteraryGenderResource::make($this->whenLoaded('literaryGender'))
         ];
     }

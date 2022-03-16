@@ -8,6 +8,7 @@ use App\Models\LiterarySubgender;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @author jcgonzalez
@@ -24,5 +25,18 @@ class LiterarySubgenderRepository extends BaseRepository implements ILiterarySub
     public function __construct(LiterarySubgender $literarySubgender)
     {
         $this->entity = $literarySubgender;
+    }
+
+    public function findAllPaginated(array $filters, int $limit, string $sort = null, array $columns = ['*']): LengthAwarePaginator {
+        return $this->entity
+            ->filter($filters)
+            ->orWhereHas('literaryGender', function (Builder $query) use ($filters) {
+                if (isset($filters['literaryGender']) && trim($filters['literaryGender']) !== '') {
+                    $query->where('name', 'LIKE', "%${filters['literaryGender']}%");
+                }
+            })
+            ->with('literaryGender')
+            ->applySort($sort)
+            ->paginate($limit, $columns);
     }
 }

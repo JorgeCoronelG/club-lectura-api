@@ -14,7 +14,7 @@ class LiteraryGender extends Model implements IScopeFilter
 
     protected $fillable = ['name'];
 
-    public array $allowedSorts = [];
+    public array $allowedSorts = ['id', 'name'];
 
     public function literarySubgenders(): HasMany
     {
@@ -23,6 +23,14 @@ class LiteraryGender extends Model implements IScopeFilter
 
     public function scopeFilter(Builder $query, array $params = []): Builder
     {
+        if (empty($params)) {
+            return $query;
+        }
+
+        if (isset($params['name']) && trim($params['name']) !== '') {
+            $query->where('name', 'LIKE', "%${params['name']}%");
+        }
+
         return $query;
     }
 }
