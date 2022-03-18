@@ -31,9 +31,7 @@ class UserAdminSeeder extends Seeder
     {
         $admin = $this->userRepository->create([
             'code' => UserFields::CODE_INITIAL.'1',
-            'name' => 'Jorge',
-            'paternal_surname' => 'Coronel',
-            'maternal_surname' => 'González',
+            'complete_name' => 'Jorge Coronel González',
             'email' => 'tprog.jorge.coronel@outlook.com',
             'password' => bcrypt('Jorge32079.'),
             'phone' => '4423178052',
@@ -50,9 +48,7 @@ class UserAdminSeeder extends Seeder
 
         $admin = $this->userRepository->create([
             'code' => UserFields::CODE_INITIAL.'2',
-            'name' => 'Nancy',
-            'paternal_surname' => 'Oviedo',
-            'maternal_surname' => 'López',
+            'complete_name' => 'Nancy Oviedo López',
             'email' => 'isc.nancy.oviedo@hotmail.com',
             'password' => bcrypt('password'),
             'phone' => '4421010101',
