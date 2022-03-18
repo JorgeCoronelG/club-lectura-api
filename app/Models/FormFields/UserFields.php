@@ -5,10 +5,8 @@ namespace App\Models\FormFields;
 class UserFields
 {
     final const CODE_INITIAL = 'CLUB/LECT-';
-    final const NAME_MIN_LENGTH = 3;
-    final const NAME_MAX_LENGTH = 120;
-    final const LAST_NAME_MIN_LENGTH = 3;
-    final const LAST_NAME_MAX_LENGTH = 120;
+    final const COMPLETE_NAME_MIN_LENGTH = 3;
+    final const COMPLETE_NAME_MAX_LENGTH = 150;
     final const EMAIL_MIN_LENGTH = 10;
     final const EMAIL_MAX_LENGTH = 120;
     final const PASSWORD_MIN_LENGTH = 8;
