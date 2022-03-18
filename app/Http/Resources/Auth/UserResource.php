@@ -17,9 +17,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'code' => $this->code,
-            'name' => $this->name,
-            'paternalSurname' => $this->paternal_surname,
-            'maternalSurname' => $this->maternal_surname,
+            'completeName' => $this->complete_name,
             'email' => $this->email,
             'photo' => File::getExposedPath(Path::USER_IMAGES->value, $this->photo),
             'roles' => RoleResource::collection($this->roles)
