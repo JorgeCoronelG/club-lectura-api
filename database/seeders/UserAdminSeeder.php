@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Contracts\Repositories\IExternalRepository;
 use App\Contracts\Repositories\IUserRepository;
 use App\Helpers\Enum\Gender;
+use App\Models\Academic;
 use App\Models\Enums\StatusUser;
+use App\Models\Enums\TypeAcademic;
 use App\Models\FormFields\RoleFields;
 use App\Models\FormFields\UserFields;
 use App\Models\User;
@@ -61,6 +63,6 @@ class UserAdminSeeder extends Seeder
             'email_verified_at' => now()
         ]);
         $admin->roles()->attach([RoleFields::Admin->value, RoleFields::Reader->value]);
-        $this->externalRepository->create(['user_id' => $admin->id]);
+        Academic::factory(['user_id' => $admin->id, 'type' => TypeAcademic::Teacher->value])->create();
     }
 }
