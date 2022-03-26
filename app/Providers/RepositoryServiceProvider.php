@@ -19,7 +19,9 @@ class RepositoryServiceProvider extends ServiceProvider
         'IAuthorRepository' => 'AuthorRepository',
         'IBookRepository' => 'BookRepository',
         'ILoanRepository' => 'LoanRepository',
-        'IFineRepository' => 'FineRepository'
+        'IFineRepository' => 'FineRepository',
+        'IStudentRepository' => 'StudentRepository',
+        'IAcademicRepository' => 'AcademicRepository'
     ];
 
     /**

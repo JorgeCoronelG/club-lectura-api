@@ -3,16 +3,16 @@
 namespace App\Contracts\Repositories;
 
 use App\Core\Contracts\IBaseRepository;
-use App\Models\External;
+use App\Models\Academic;
 
 /**
  * @author jcgonzalez
  * @version 1.0
- * Created 08/01/2022
+ * Created 26/03/2022
  *
- * @method External create(array $data)
+ * @method Academic create(array $data)
  */
-interface IExternalRepository extends IBaseRepository
+interface IAcademicRepository extends IBaseRepository
 {
     //
 }
