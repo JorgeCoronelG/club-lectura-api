@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\BookPortalController;
 use App\Http\Controllers\Api\LiteraryGenderController;
 use App\Http\Controllers\Api\LiterarySubgenderController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
@@ -48,7 +49,8 @@ Route::prefix('v1')->group(function () {
        Route::apiResources([
            'authors' => AuthorController::class,
            'literary-genders' => LiteraryGenderController::class,
-           'literary-subgenders' => LiterarySubgenderController::class
+           'literary-subgenders' => LiterarySubgenderController::class,
+           'users' => UserController::class
        ]);
     });
 });
