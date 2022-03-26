@@ -20,13 +20,8 @@ class UserDTO extends DataTransferObject
 
     public ?string $code;
 
-    private ?string $name;
-
-    #[MapTo('paternal_surname')]
-    private ?string $paternalSurname;
-
-    #[MapTo('maternal_surname')]
-    private ?string $maternalSurname;
+    #[MapTo('complete_name')]
+    public ?string $completeName;
 
     public ?string $email;
 
@@ -54,4 +49,12 @@ class UserDTO extends DataTransferObject
 
     #[CastWith(ArrayCaster::class, itemType: RoleDTO::class)]
     public ?array $roles;
+
+    public ?int $type;
+
+    public ?StudentDTO $studentDTO;
+
+    public ?AcademicDTO $academicDTO;
+
+    public ?ExternalDTO $externalDTO;
 }
