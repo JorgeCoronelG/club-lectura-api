@@ -19,9 +19,8 @@ class User extends Authenticatable implements IScopeFilter
     use HasApiTokens, HasFactory, Notifiable, Sortable;
 
     protected $fillable = [
-        'name',
-        'paternal_surname',
-        'maternal_surname',
+        'code',
+        'complete_name',
         'email',
         'password',
         'phone',
@@ -34,7 +33,7 @@ class User extends Authenticatable implements IScopeFilter
         'email_verified_at'
     ];
 
-    public array $allowedSorts = [];
+    public array $allowedSorts = ['id', 'code', 'complete_name', 'email'];
 
     public function isVerified(): bool
     {
@@ -48,6 +47,20 @@ class User extends Authenticatable implements IScopeFilter
 
     public function scopeFilter(Builder $query, array $params = []): Builder
     {
+        if (empty($params)) {
+            return $query;
+        }
+
+        if (isset($params['code']) && trim($params['code']) !== '') {
+            $query->orWhere('code', 'LIKE', "%${params['code']}%");
+        }
+        if (isset($params['completeName']) && trim($params['completeName']) !== '') {
+            $query->orWhere('completeName', 'LIKE', "%${params['completeName']}%");
+        }
+        if (isset($params['email']) && trim($params['email']) !== '') {
+            $query->orWhere('email', 'LIKE', "%${params['email']}%");
+        }
+
         return $query;
     }
 
