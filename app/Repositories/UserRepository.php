@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @author jcgonzalez
@@ -26,13 +27,21 @@ class UserRepository extends BaseRepository implements IUserRepository
         $this->entity = $user;
     }
 
-    public function findByEmail(string $email): User
-    {
-        return $this->entity->where('email', $email)->firstOrFail();
+    public function findAllPaginated(array $filters, int $limit, string $sort = null, array $columns = ['*'] ): LengthAwarePaginator {
+        return $this->entity
+            ->filter($filters)
+            ->with(['roles', 'student', 'academic', 'external'])
+            ->applySort($sort)
+            ->paginate($limit, $columns);
     }
 
     public function findById(int $id): User
     {
-        return $this->entity->with('roles')->findOrFail($id);
+        return $this->entity->with(['roles', 'student', 'academic', 'external'])->findOrFail($id);
+    }
+
+    public function findByEmail(string $email): User
+    {
+        return $this->entity->where('email', $email)->firstOrFail();
     }
 }
