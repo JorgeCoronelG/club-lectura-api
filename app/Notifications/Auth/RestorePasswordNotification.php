@@ -28,7 +28,7 @@ class RestorePasswordNotification extends Notification
         return (new MailMessage)
             ->subject(Message::RESTORE_PASSWORD)
             ->markdown('mail.auth.restore-password', [
-                'name' => $this->user->name,
+                'name' => $this->user->complete_name,
                 'newPassword' => $this->newPassword
             ]);
     }
