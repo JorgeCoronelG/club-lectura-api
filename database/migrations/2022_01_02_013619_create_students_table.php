@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->tinyInteger('turn');
             $table->foreignId('user_id')
                 ->constrained()
+                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });
