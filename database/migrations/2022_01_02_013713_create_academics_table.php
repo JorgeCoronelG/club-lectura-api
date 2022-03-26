@@ -19,6 +19,7 @@ class CreateAcademicsTable extends Migration
             $table->tinyInteger('type');
             $table->foreignId('user_id')
                 ->constrained()
+                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });
