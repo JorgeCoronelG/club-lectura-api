@@ -139,9 +139,14 @@ return [
     |
     */
 
-    'custom'               => [
-        'email'    => [
-            'unique' => 'El :attribute ya ha sido registrado.',
+    'custom' => [
+        'roles.*.id' => [
+            'required' => 'El usuario debe tener al menos un rol asignado.',
+            'integer' => 'El identificador del rol debe ser un número entero.',
+            'distinct' => 'Cada rol debe tener un identificador único.'
+        ],
+        'birthday' => [
+            'before' => 'El campo :attribute debe ser una fecha menor o igual a la actual.',
         ]
     ],
 
@@ -157,10 +162,14 @@ return [
     */
 
     'attributes' => [
+        'academic.registration' => 'Matrícula',
+        'academic.type'         => 'Tipo de académico',
         'address'               => 'dirección',
         'age'                   => 'edad',
+        'birthday'              => 'Fecha de nacimiento',
         'body'                  => 'contenido',
         'city'                  => 'ciudad',
+        'completeName'          => 'Nombre completo',
         'content'               => 'contenido',
         'country'               => 'país',
         'current_password'      => 'contraseña actual',
@@ -170,8 +179,9 @@ return [
         'email'                 => 'Correo electrónico',
         'excerpt'               => 'extracto',
         'first_name'            => 'nombre',
-        'gender'                => 'género',
+        'gender'                => 'Género',
         'hour'                  => 'hora',
+        'literaryGenderId'      => 'Género literario',
         'last_name'             => 'apellido',
         'message'               => 'mensaje',
         'minute'                => 'minuto',
@@ -180,19 +190,21 @@ return [
         'name'                  => 'Nombre',
         'password'              => 'Contraseña',
         'password_confirmation' => 'confirmación de la contraseña',
-        'phone'                 => 'teléfono',
-        'photo'                 => 'foto',
+        'phone'                 => 'Teléfono',
+        'photo'                 => 'Foto',
         'price'                 => 'precio',
         'role'                  => 'rol',
+        'roles'                 => 'Roles',
         'second'                => 'segundo',
         'sex'                   => 'sexo',
+        'student.group'         => 'Grupo',
+        'student.turn'          => 'Turno',
         'subject'               => 'asunto',
         'terms'                 => 'términos',
         'time'                  => 'hora',
         'title'                 => 'título',
+        'type'                  => 'Tipo',
         'username'              => 'usuario',
         'year'                  => 'año',
-        // Custom
-        'literaryGenderId'      => 'Género literario'
     ],
 ];
