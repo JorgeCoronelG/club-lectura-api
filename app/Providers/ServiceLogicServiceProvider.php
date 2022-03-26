@@ -14,7 +14,8 @@ class ServiceLogicServiceProvider extends ServiceProvider
         'IBookService' => 'BookService',
         'ILiteraryGenderService' => 'LiteraryGenderService',
         'ILiterarySubgenderService' => 'LiterarySubgenderService',
-        'IAuthorService' => 'AuthorService'
+        'IAuthorService' => 'AuthorService',
+        'IUserService' => 'UserService'
     ];
 
     /**
