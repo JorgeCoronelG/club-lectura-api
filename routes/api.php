@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\BookPortalController;
 use App\Http\Controllers\Api\LiteraryGenderController;
 use App\Http\Controllers\Api\LiterarySubgenderController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,13 @@ Route::prefix('v1')->group(function () {
            ->group(function () {
                Route::get('/logout', 'logout')->name('logout');
                Route::get('/user', 'getUser')->name('user');
+           });
+
+       Route::controller(RoleController::class)
+           ->prefix('roles')
+           ->name('roles')
+           ->group(function () {
+               Route::get('/find-all', 'findAll')->name('find.all');
            });
 
        Route::apiResources([
