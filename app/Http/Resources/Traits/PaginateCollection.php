@@ -26,10 +26,10 @@ trait PaginateCollection
                 'next' => $collection->nextPageUrl(),
             ],
             'meta' => [
-                'current_page' => $collection->currentPage(),
+                'currentPage' => $collection->currentPage(),
                 'from' => $collection->firstItem(),
-                'last_page' => $collection->lastPage(),
-                'per_page' => $collection->perPage(),
+                'lastPage' => $collection->lastPage(),
+                'perPage' => $collection->perPage(),
                 'to' => $collection->lastItem(),
                 'total' => $collection->total(),
             ]
