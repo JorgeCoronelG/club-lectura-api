@@ -10,6 +10,7 @@ use App\Http\Requests\LiterarySubgender\StoreLiterarySubgenderRequest;
 use App\Http\Requests\LiterarySubgender\UpdateLiterarySubgenderRequest;
 use App\Http\Resources\LiterarySubgender\LiterarySubgenderCollection;
 use App\Http\Resources\LiterarySubgender\LiterarySubgenderResource;
+use App\Models\FormFields\RoleFields;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -23,6 +24,8 @@ class LiterarySubgenderController extends BaseApiController
      */
     public function __construct(ILiterarySubgenderService $literarySubgenderService)
     {
+        $this->middleware('permission:'.implode(',', [RoleFields::Admin->value, RoleFields::Capturist->value]))
+            ->only('store', 'update', 'destroy');
         $this->literarySubgenderService = $literarySubgenderService;
     }
 

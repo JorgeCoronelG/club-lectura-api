@@ -10,6 +10,7 @@ use App\Http\Requests\LiteraryGender\StoreLiteraryGenderRequest;
 use App\Http\Requests\LiteraryGender\UpdateLiteraryGenderRequest;
 use App\Http\Resources\LiteraryGender\LiteraryGenderCollection;
 use App\Http\Resources\LiteraryGender\LiteraryGenderResource;
+use App\Models\FormFields\RoleFields;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,8 @@ class LiteraryGenderController extends BaseApiController
      */
     public function __construct(ILiteraryGenderService $literaryGenderService)
     {
+        $this->middleware('permission:'.implode(',', [RoleFields::Admin->value, RoleFields::Capturist->value]))
+            ->only('store', 'update', 'destroy');
         $this->literaryGenderService = $literaryGenderService;
     }
 

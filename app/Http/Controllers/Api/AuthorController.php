@@ -10,6 +10,7 @@ use App\Http\Requests\Author\StoreAuthorRequest;
 use App\Http\Requests\Author\UpdateAuthorRequest;
 use App\Http\Resources\Author\AuthorCollection;
 use App\Http\Resources\Author\AuthorResource;
+use App\Models\FormFields\RoleFields;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,8 @@ class AuthorController extends BaseApiController
      */
     public function __construct(IAuthorService $authorService)
     {
+        $this->middleware('permission:'.implode(',', [RoleFields::Admin->value, RoleFields::Capturist->value]))
+            ->only('store', 'update', 'destroy');
         $this->authorService = $authorService;
     }
 
