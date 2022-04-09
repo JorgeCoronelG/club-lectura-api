@@ -55,7 +55,7 @@ class User extends Authenticatable implements IScopeFilter
             $query->orWhere('code', 'LIKE', "%${params['code']}%");
         }
         if (isset($params['completeName']) && trim($params['completeName']) !== '') {
-            $query->orWhere('completeName', 'LIKE', "%${params['completeName']}%");
+            $query->orWhere('complete_name', 'LIKE', "%${params['completeName']}%");
         }
         if (isset($params['email']) && trim($params['email']) !== '') {
             $query->orWhere('email', 'LIKE', "%${params['email']}%");
