@@ -9,17 +9,17 @@
         "fruitcake/laravel-cors": "^2.2.0",
         "guzzlehttp/guzzle": "^7.4.1",
         "intervention/image": "2.7.1",
-        "laravel/framework": "^9.8",
+        "laravel/framework": "^9.10",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.7.0",
         "spatie/data-transfer-object": "3.7.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.19",
-        "laravel/sail": "^1.13.6",
+        "laravel/sail": "^1.14",
         "mockery/mockery": "^1.5.0",
         "nunomaduro/collision": "^6.2",
-        "phpunit/phpunit": "^9.5.18",
+        "phpunit/phpunit": "^9.5.20",
         "spatie/laravel-ignition": "^1.0.9"
     },
     "autoload": {
