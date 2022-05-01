@@ -49,7 +49,7 @@ class BookRepository extends BaseRepository implements IBookRepository
 
         return $this->entity
             ->with('authors')
-            ->filterPortal(!empty($authorsId), $filters)
+            ->filterPortal($filters)
             ->applySort($sort)
             ->paginate($limit, $columns);
     }
