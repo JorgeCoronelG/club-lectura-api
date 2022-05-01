@@ -46,7 +46,7 @@ class Book extends Model implements IScopeFilter
         return $query;
     }
 
-    public function scopeFilterPortal(Builder $query, bool $existAuthors, array $params = []): Builder
+    public function scopeFilterPortal(Builder $query, array $params = []): Builder
     {
         $query->whereIn('status', [StatusBook::Available, StatusBook::OnLoan]);
 
@@ -54,9 +54,6 @@ class Book extends Model implements IScopeFilter
             return $query;
         }
 
-        if (!$existAuthors && isset($params['searchGeneral']) && trim($params['searchGeneral']) !== '') {
-            $query->where('title', 'LIKE', "%${params['searchGeneral']}%");
-        }
         if (isset($params['language'])) {
             $query->whereIn('language', $params['language']);
         }
