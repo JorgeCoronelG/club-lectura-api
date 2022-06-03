@@ -39,22 +39,33 @@ class StoreUserRequest extends FormRequest implements IReturnDto
      */
     public function rules(): array
     {
-        return [
+        $validationArray = [
             'completeName' => ['required', 'min:'.UserFields::COMPLETE_NAME_MIN_LENGTH, 'max:'.UserFields::COMPLETE_NAME_MAX_LENGTH],
             'email' => ['required', 'email:dns', 'max:'.UserFields::EMAIL_MAX_LENGTH, 'unique:users'],
             'phone' => ['required', 'min:'.UserFields::PHONE_LENGTH, 'max:'.UserFields::PHONE_LENGTH, 'regex:'.Validation::PHONE_REGEX],
-            'birthday' => ['required', 'date_format:'.Validation::FORMAT_DATE_YMD, 'before:now'],
+            'birthday' => ['required', 'before:now'],
             'gender' => ['required', Rule::in(Gender::getAllGenders())],
             'roles' => ['required', 'array'],
             'roles.*.id' => ['required', 'integer', 'distinct'],
-            'type' => ['bail', 'required', Rule::in(TypeUser::getAllTypes())],
-            'student.group' => [Rule::requiredIf($this->type === TypeUser::Student->value), 'min:'.StudentFields::GROUP_MIN_LENGTH,
-                'max:'.StudentFields::GROUP_MAX_LENGTH],
-            'student.turn' => [Rule::requiredIf($this->type === TypeUser::Student->value), Rule::in(TurnStudent::getAllTurns())],
-            'academic.registration' => [Rule::requiredIf($this->type === TypeUser::Academic->value),
-                'min:'.AcademicFields::REGISTRATION_MIN_LENGTH, 'max:'.AcademicFields::REGISTRATION_MAX_LENGTH],
-            'academic.type' => [Rule::requiredIf($this->type === TypeUser::Academic->value), Rule::in(TypeAcademic::getAllTypes())],
+            'type' => ['bail', 'required', Rule::in(TypeUser::getAllTypes())]
         ];
+
+        if ($this->type === TypeUser::Student->value) {
+            return array_merge($validationArray, [
+                'student.group' => ['required', 'min:'.StudentFields::GROUP_MIN_LENGTH, 'max:'.StudentFields::GROUP_MAX_LENGTH],
+                'student.turn' => ['required', Rule::in(TurnStudent::getAllTurns())]
+            ]);
+        }
+
+        if ($this->type === TypeUser::Academic->value) {
+            return array_merge($validationArray, [
+                'academic.registration' => ['required', 'min:'.AcademicFields::REGISTRATION_MIN_LENGTH,
+                    'max:'.AcademicFields::REGISTRATION_MAX_LENGTH],
+                'academic.type' => ['required', Rule::in(TypeAcademic::getAllTypes())]
+            ]);
+        }
+
+        return $validationArray;
     }
 
     /**
