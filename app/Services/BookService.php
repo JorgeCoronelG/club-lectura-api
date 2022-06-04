@@ -66,6 +66,11 @@ class BookService extends BaseService implements IBookService
         return $book;
     }
 
+    public function findRecordsLatest(int $records = 10): Collection
+    {
+        return $this->entityRepository->findRecordsLatest($records);
+    }
+
     public function findMostRead(int $records = 10): Collection
     {
         return $this->entityRepository->findMostRead($records);

@@ -62,11 +62,6 @@ class BaseService implements IBaseService
         return $this->entityRepository->findRandoms($records);
     }
 
-    public function findRecordsLatest(int $records = 10): Collection
-    {
-        return $this->entityRepository->findRecordsLatest($records);
-    }
-
     public function update(int $id, DataTransferObject $dto): Model
     {
         return $this->entityRepository->update($id, $dto->toArray());
