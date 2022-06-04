@@ -63,8 +63,8 @@ class DatabaseSeeder extends Seeder
         Loan::flushEventListeners();
         Fine::flushEventListeners();
 
-        $this->deleteFiles(Path::USER_IMAGES->value);
-        $this->deleteFiles(Path::BOOK_IMAGES->value);
+        /*$this->deleteFiles(Path::USER_IMAGES->value);
+        $this->deleteFiles(Path::BOOK_IMAGES->value);*/
 
         $this->call(RoleSeeder::class);
         $this->call(UserAdminSeeder::class);
