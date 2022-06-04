@@ -24,7 +24,8 @@ class BookPortalResource extends JsonResource
             'review' => $this->when(!is_null($this->review), $this->review),
             'image' => File::getExposedPath(Path::BOOK_IMAGES->value, $this->image),
             'status' => $this->status,
-            'authors' => AuthorResource::collection($this->authors),
+            'authors' => AuthorResource::collection($this->whenLoaded('authors')),
+            'allAuthors' => $this->authors->implode('name', ', '),
             'literarySubgender' => LiterarySubgenderResource::make($this->whenLoaded('literarySubgender'))
         ];
     }
