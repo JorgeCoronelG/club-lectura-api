@@ -3,8 +3,6 @@
 namespace Database\Factories;
 
 use App\Helpers\Enum\Gender;
-use App\Helpers\Enum\Path;
-use App\Helpers\File;
 use App\Helpers\Validation;
 use App\Models\Enums\StatusUser;
 use App\Models\FormFields\UserFields;
@@ -13,6 +11,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory
 {
+    /**
+     * @throws \Exception
+     */
     public function definition(): array
     {
         $gender = $this->faker->randomElement(['male', 'female']);
@@ -25,9 +26,9 @@ class UserFactory extends Factory
             'gender' => ($gender === 'male')
                 ? Gender::Male->value
                 : Gender::Female->value,
-            'photo' => (mt_rand(0,1))
+            'photo' => /*(random_int(0,1))
                 ? $this->faker->image(File::getFilePublicPath(Path::USER_IMAGES->value), 500, 500, fullPath: false)
-                : UserFields::PHOTO_DEFAULT,
+                :*/ UserFields::PHOTO_DEFAULT,
             'status' => StatusUser::Active->value,
             'verified' => $verified = $this->faker->randomElement([UserFields::VERIFIED, UserFields::NOT_VERIFIED]),
             'verification_token' => User::generateVerificationToken(),

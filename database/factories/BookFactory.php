@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Helpers\Enum\Path;
-use App\Helpers\File;
 use App\Models\Enums\ConditionBook;
 use App\Models\Enums\IsbnBook;
 use App\Models\Enums\LanguageBook;
@@ -13,6 +11,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BookFactory extends Factory
 {
+    /**
+     * @throws \Exception
+     */
     public function definition(): array
     {
         return [
@@ -25,9 +26,9 @@ class BookFactory extends Factory
             'condition' => $this->faker->randomElement(ConditionBook::getAllConditions()),
             'price' => $this->faker->randomFloat(2, 50, 1500),
             'edition' => $this->faker->randomDigitNot(0),
-            'image' => (mt_rand(0,1))
+            'image' => /*(random_int(0,1))
                 ? $this->faker->image(File::getFilePublicPath(Path::BOOK_IMAGES->value), 600, 900, fullPath: false)
-                : BookFields::IMAGE_DEFAULT,
+                :*/ BookFields::IMAGE_DEFAULT,
             'copy' => $this->faker->randomDigitNot(0),
             'language' => $this->faker->randomElement(LanguageBook::getAllLanguages()),
             'status' => $this->faker->randomElement(StatusBook::getAllStatus())
