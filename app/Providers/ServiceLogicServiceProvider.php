@@ -10,7 +10,8 @@ class ServiceLogicServiceProvider extends ServiceProvider
     public const IMPLEMENT_SERVICE_NAMESPACE = 'App\Services\\';
 
     protected array $services = [
-        'AuthServiceInterface' => 'AuthService'
+        'AuthServiceInterface' => 'AuthService',
+        'AutorServiceInterface' => 'AutorService',
     ];
 
     /**
