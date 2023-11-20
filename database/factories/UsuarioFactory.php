@@ -18,7 +18,7 @@ class UsuarioFactory extends Factory
     {
         return [
             'nombre_completo' => fake()->name(),
-            'correo' => fake()->safeEmail(),
+            'correo' => fake()->companyEmail(),
             'contrasenia' => bcrypt('password'),
             'telefono' => fake()->numerify('##########'),
             'fecha_nacimiento' => fake()->dateTimeBetween('-50 years', '-15 years'),
