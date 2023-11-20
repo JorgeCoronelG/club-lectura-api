@@ -15,18 +15,11 @@ class Permission
      * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
      * @throws AuthorizationException
      */
-    public function handle(Request $request, Closure $next, ...$roleIds): Response
+    public function handle(Request $request, Closure $next, ...$rolIds): Response
     {
-        $hasPermission = false;
-        $roleId = auth()->user()->role->id;
-        foreach ($roleIds as $id) {
-            if ($roleId === $id) {
-                $hasPermission = true;
-                break;
-            }
-        }
+        $rolId = auth()->user()->rol_id;
 
-        if (!$hasPermission) {
+        if (!in_array($rolId, $rolIds)) {
             throw new AuthorizationException();
         }
 
