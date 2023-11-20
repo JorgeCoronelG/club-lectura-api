@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('autores', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre_completo', 150);
+            $table->string('nombre', 150);
             $table->timestamp('creado_en')
                 ->useCurrent();
             $table->timestamp('actualizado_en')
