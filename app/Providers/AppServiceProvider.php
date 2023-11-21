@@ -24,6 +24,5 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Model::preventLazyLoading(!app()->isProduction());
-        JsonResource::withoutWrapping();
     }
 }

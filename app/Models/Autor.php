@@ -32,6 +32,14 @@ class Autor extends Model implements ScopeFilterInterface
 
     public function scopeFilter(Builder $query, array $params = []): Builder
     {
+        if (empty($params)) {
+            return $query;
+        }
+
+        if (isset($params['nombre']) && trim($params['nombre']) !== '') {
+            $query->orWhere('nombre', 'LIKE', "%{$params['nombre']}%");
+        }
+
         return $query;
     }
 }

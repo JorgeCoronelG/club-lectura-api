@@ -6,10 +6,9 @@ use App\Contracts\Services\AutorServiceInterface;
 use App\Core\BaseApiController;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
-use App\Helpers\Enum\QueryParam;
-use App\Helpers\Validation;
 use App\Http\Requests\Autor\ActualizarAutorRequest;
 use App\Http\Requests\Autor\GuardarAutorRequest;
+use App\Http\Resources\Autor\AutorCollection;
 use App\Http\Resources\Autor\AutorResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,15 +24,11 @@ class AutorController extends BaseApiController
         $this->autorService = $autorService;
     }
 
-    /**
-     * @throws CustomErrorException
-     */
     public function index(Request $request): JsonResponse
     {
-        $filters = Validation::getFilters($request->get(QueryParam::FILTERS_KEY));
-        $sort = $request->get(QueryParam::ORDER_BY_KEY);
-        $autores = $this->autorService->findAll($filters, $sort);
-        return $this->showAll(AutorResource::collection($autores));
+
+        $autores = $this->autorService->findAllPaginated($request);
+        return $this->showAll(new AutorCollection($autores, true));
     }
 
     public function store(GuardarAutorRequest $request): JsonResponse

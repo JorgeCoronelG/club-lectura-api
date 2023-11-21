@@ -58,6 +58,6 @@ trait ApiResponse
      */
     protected function showOne(JsonResource $resource, int $code = 200): JsonResponse
     {
-        return $this->successResponse($resource, $code);
+        return $this->successResponse(['data' => $resource], $code);
     }
 }
