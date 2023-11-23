@@ -11,6 +11,7 @@ class Externo extends Model
     use HasFactory;
 
     protected $table = 'externos';
+    protected $primaryKey = 'usuario_id';
     protected $fillable = ['usuario_id'];
     public $timestamps = false;
 

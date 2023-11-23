@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Contracts\Repositories\UsuarioRepositoryInterface;
 use App\Contracts\Services\AuthServiceInterface;
-use App\Core\BaseService;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
 use App\Models\Data\UsuarioData;
@@ -15,7 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthService extends BaseService implements AuthServiceInterface
+class AuthService implements AuthServiceInterface
 {
     protected UsuarioRepositoryInterface $usuarioRepository;
 

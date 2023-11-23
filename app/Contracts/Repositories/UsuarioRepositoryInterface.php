@@ -6,6 +6,7 @@ use App\Core\Contracts\BaseRepositoryInterface;
 use App\Models\Usuario;
 
 /**
+ * @method Usuario create(array $data)
  * @method Usuario findById(int $id, array $columns = ['*'])
  */
 interface UsuarioRepositoryInterface extends BaseRepositoryInterface

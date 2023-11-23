@@ -36,10 +36,9 @@ class ExternoSeeder extends Seeder
                 'rol_id' => RolEnum::LECTOR->value
             ])
             ->each(function (Usuario $usuario) {
-                Externo::query()
-                    ->create([
-                        'usuario_id' => $usuario->id
-                    ]);
+                $usuario->externo()->create([
+                    'usuario_id' => $usuario->id
+                ]);
             });
     }
 }

@@ -12,6 +12,7 @@ class RepositoryServiceProvider extends ServiceProvider
     protected array $repositories = [
         'UsuarioRepositoryInterface' => 'UsuarioRepository',
         'AutorRepositoryInterface' => 'AutorRepository',
+        'CatalogoOpcionRepositoryInterface' => 'CatalogoOpcionRepository',
     ];
 
     /**

@@ -28,15 +28,18 @@ class UsuarioSeederAdmin extends Seeder
             ->first()
             ->id;
 
-        Usuario::query()->create([
-            'nombre_completo' => 'Jorge Coronel González',
-            'correo' => 'tprog.jorge.coronel@outlook.com',
-            'contrasenia' => bcrypt('password'),
-            'telefono' => '4423178052',
-            'fecha_nacimiento' => '1998-08-29',
-            'sexo_id' => $hombreId,
-            'estatus_id' => $activoId,
-            'rol_id' => RolEnum::ADMINISTRADOR->value
-        ]);
+        $usuario = Usuario::query()
+            ->create([
+                'nombre_completo' => 'Jorge Coronel González',
+                'correo' => 'tprog.jorge.coronel@outlook.com',
+                'contrasenia' => bcrypt('password'),
+                'telefono' => '4423178052',
+                'fecha_nacimiento' => '1998-08-29',
+                'sexo_id' => $hombreId,
+                'estatus_id' => $activoId,
+                'rol_id' => RolEnum::ADMINISTRADOR->value
+            ]);
+
+        $usuario->externo()->create(['usuario_id' => $usuario->id]);
     }
 }

@@ -19,7 +19,8 @@ return new class extends Migration
 
             $table->foreign('usuario_id')
                 ->references('id')
-                ->on('usuarios');
+                ->on('usuarios')
+                ->cascadeOnDelete();
             $table->foreign('tipo_id')
                 ->references('id')
                 ->on('catalogo_opciones');

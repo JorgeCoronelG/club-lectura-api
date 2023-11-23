@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('usuarios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre_completo');
-            $table->string('correo', 150);
+            $table->string('correo', 150)
+                ->unique();
             $table->string('contrasenia');
             $table->string('telefono', 10);
             $table->date('fecha_nacimiento');

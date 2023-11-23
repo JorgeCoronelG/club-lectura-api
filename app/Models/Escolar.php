@@ -11,6 +11,7 @@ class Escolar extends Model
     use HasFactory;
 
     protected $table = 'escolares';
+    protected $primaryKey = 'usuario_id';
     protected $fillable = [
         'usuario_id',
         'matricula',

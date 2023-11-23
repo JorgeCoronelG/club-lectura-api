@@ -2,12 +2,11 @@
 
 namespace App\Contracts\Services;
 
-use App\Core\Contracts\BaseServiceInterface;
 use App\Models\Data\UsuarioData;
 use App\Models\Usuario;
 use Illuminate\Support\Collection;
 
-interface AuthServiceInterface extends BaseServiceInterface
+interface AuthServiceInterface
 {
     public function login(UsuarioData $usuarioData): Collection;
 

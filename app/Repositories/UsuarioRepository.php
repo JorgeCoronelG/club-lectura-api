@@ -32,7 +32,14 @@ class UsuarioRepository extends BaseRepository implements UsuarioRepositoryInter
     public function findById(int $id, array $columns = ['*']): Usuario
     {
         return $this->entity
-            ->with(['estatus', 'sexo', 'rol'])
+            ->with([
+                'estatus',
+                'sexo',
+                'rol',
+                'externo',
+                'alumno',
+                'escolar'
+            ])
             ->findOrFail($id, $columns);
     }
 }

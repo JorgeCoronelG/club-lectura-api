@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AutorController;
+use App\Http\Controllers\Api\UsuarioController;
 use App\Models\Enum\RolEnum;
 
 Route::controller(AuthController::class)
@@ -22,6 +23,13 @@ Route::middleware('auth:sanctum')
             });
 
         Route::apiResource('autores',AutorController::class)
+            ->middleware(
+                'permission:'
+                .RolEnum::ADMINISTRADOR->value.','
+                .RolEnum::CAPTURISTA->value
+            );
+
+        Route::apiResource('usuarios', UsuarioController::class)
             ->middleware(
                 'permission:'
                 .RolEnum::ADMINISTRADOR->value.','

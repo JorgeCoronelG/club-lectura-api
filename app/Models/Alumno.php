@@ -11,6 +11,7 @@ class Alumno extends Model
     use HasFactory;
 
     protected $table = 'alumnos';
+    protected $primaryKey = 'usuario_id';
     protected $fillable = [
         'usuario_id',
         'grupo',
