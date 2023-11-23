@@ -24,6 +24,7 @@ class Submenu extends Model
         'menu_id' => 'integer',
         'estatus' => 'boolean'
     ];
+    public $timestamps = false;
 
     public function usuarios(): BelongsToMany
     {

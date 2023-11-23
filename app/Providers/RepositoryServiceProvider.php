@@ -13,6 +13,8 @@ class RepositoryServiceProvider extends ServiceProvider
         'UsuarioRepositoryInterface' => 'UsuarioRepository',
         'AutorRepositoryInterface' => 'AutorRepository',
         'CatalogoOpcionRepositoryInterface' => 'CatalogoOpcionRepository',
+        'MenuRepositoryInterface' => 'MenuRepository',
+        'SubmenuRepositoryInterface' => 'SubmenuRepository',
     ];
 
     /**

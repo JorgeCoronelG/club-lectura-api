@@ -12,7 +12,8 @@ class ServiceLogicServiceProvider extends ServiceProvider
     protected array $services = [
         'AuthServiceInterface' => 'AuthService',
         'AutorServiceInterface' => 'AutorService',
-        'UsuarioServiceInterface' => 'UsuarioService'
+        'UsuarioServiceInterface' => 'UsuarioService',
+        'MenuServiceInterface' => 'MenuService',
     ];
 
     /**

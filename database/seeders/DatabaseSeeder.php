@@ -19,5 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ExternoSeeder::class);
         $this->call(EscolarSeeder::class);
         $this->call(AlumnoSeeder::class);
+        $this->call(MenuSeeder::class);
+        $this->call(MenuUsuarioSeeder::class);
     }
 }

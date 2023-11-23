@@ -26,6 +26,7 @@ class Menu extends Model
         'estatus' => 'boolean',
         'rol_id' => 'integer'
     ];
+    public $timestamps = false;
 
     public function rol(): BelongsTo
     {

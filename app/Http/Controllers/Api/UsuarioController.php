@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Contracts\Services\MenuServiceInterface;
 use App\Contracts\Services\UsuarioServiceInterface;
 use App\Core\BaseApiController;
 use App\Http\Requests\Usuario\GuardarUsuarioRequest;
@@ -14,10 +15,14 @@ use Illuminate\Http\Response;
 class UsuarioController extends BaseApiController
 {
     private UsuarioServiceInterface $usuarioService;
+    private MenuServiceInterface $menuService;
 
-    public function __construct(UsuarioServiceInterface $usuarioService)
-    {
+    public function __construct(
+        UsuarioServiceInterface $usuarioService,
+        MenuServiceInterface $menuService
+    ) {
         $this->usuarioService = $usuarioService;
+        $this->menuService = $menuService;
     }
 
     public function index(Request $request): JsonResponse
@@ -29,6 +34,7 @@ class UsuarioController extends BaseApiController
     public function store(GuardarUsuarioRequest $request): JsonResponse
     {
         $usuario = $this->usuarioService->create($request->toData());
+        $this->menuService->crearMenuPorDefecto($usuario);
         return $this->showOne(UsuarioResource::make($usuario));
     }
 

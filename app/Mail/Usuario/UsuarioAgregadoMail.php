@@ -43,6 +43,7 @@ class UsuarioAgregadoMail extends Mailable
         return new Content(
             markdown: 'mails.usuarios.nuevo-usuario',
             with: [
+                'nombreCompleto' => $this->usuario->nombre_completo,
                 'contrasenia' => $this->contrasenia
             ]
         );
