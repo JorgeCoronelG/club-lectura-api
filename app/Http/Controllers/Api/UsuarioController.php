@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Api;
 use App\Contracts\Services\MenuServiceInterface;
 use App\Contracts\Services\UsuarioServiceInterface;
 use App\Core\BaseApiController;
+use App\Exceptions\CustomErrorException;
+use App\Helpers\Enum\Message;
+use App\Http\Requests\Usuario\ActualizarUsuarioRequest;
 use App\Http\Requests\Usuario\GuardarUsuarioRequest;
 use App\Http\Resources\Usuario\UsuarioCollection;
 use App\Http\Resources\Usuario\UsuarioResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as HttpCodes;
 
 class UsuarioController extends BaseApiController
 {
@@ -45,11 +49,24 @@ class UsuarioController extends BaseApiController
     }
 
     /**
-     * Update the specified resource in storage.
+     * @throws CustomErrorException
      */
-    public function update(Request $request, string $id)
+    public function update(ActualizarUsuarioRequest $request, int $id): JsonResponse
     {
-        //
+        $usuarioData = $request->toData();
+
+        if ($id !== $usuarioData->id) {
+            throw new CustomErrorException(Message::INVALID_ID_PARAMETER_WITH_ID_BODY, HttpCodes::HTTP_BAD_REQUEST);
+        }
+
+        $rolIdAnterior = $this->usuarioService->findById($id, ['rol_id'])->rol_id;
+        $usuario = $this->usuarioService->update($id, $request->toData());
+
+        if ($rolIdAnterior !== $usuario->rol_id) {
+            $this->menuService->cambiarMenuPorRol($usuario);
+        }
+
+        return $this->showOne(UsuarioResource::make($usuario));
     }
 
     public function destroy(int $id): Response

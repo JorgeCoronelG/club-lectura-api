@@ -8,4 +8,6 @@ use App\Models\Usuario;
 interface MenuServiceInterface extends BaseServiceInterface
 {
     public function crearMenuPorDefecto(Usuario $usuario): void;
+
+    public function cambiarMenuPorRol(Usuario $usuario): void;
 }

@@ -8,6 +8,7 @@ use App\Models\Usuario;
 
 /**
  * @method Usuario create(UsuarioData $data)
+ * @method Usuario update(int $id, UsuarioData $data)
  */
 interface UsuarioServiceInterface extends BaseServiceInterface
 {

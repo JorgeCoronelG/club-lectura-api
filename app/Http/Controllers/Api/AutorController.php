@@ -43,6 +43,9 @@ class AutorController extends BaseApiController
         return $this->showOne(AutorResource::make($autor));
     }
 
+    /**
+     * @throws CustomErrorException
+     */
     public function update(ActualizarAutorRequest $request, int $id): JsonResponse
     {
         $autorData = $request->toData();

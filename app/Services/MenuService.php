@@ -36,4 +36,12 @@ class MenuService extends BaseService implements MenuServiceInterface
         $usuario->menus()->attach($menus);
         $usuario->submenus()->attach($submenus);
     }
+
+    public function cambiarMenuPorRol(Usuario $usuario): void
+    {
+        $usuario->menus()->detach();
+        $usuario->submenus()->detach();
+
+        $this->crearMenuPorDefecto($usuario);
+    }
 }

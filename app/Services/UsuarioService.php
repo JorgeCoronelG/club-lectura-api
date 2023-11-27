@@ -64,4 +64,58 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
 
         return $usuario;
     }
+
+    public function update(int $id, Data|UsuarioData $data): Usuario
+    {
+        $usuarioAnterior = $this->entityRepository->findById($id);
+        $usuarioActualizado = $this->entityRepository->update(
+            $id,
+            $data
+                ->only('nombreCompleto', 'correo', 'telefono', 'fechaNacimiento', 'sexoId', 'rolId')
+                ->toArray()
+        );
+
+        if (isset($data->alumno)) {
+            if (isset($usuarioAnterior->alumno)) {
+                $usuarioActualizado->alumno()->update(
+                    $data->alumno
+                        ->only('grupo', 'matricula')
+                        ->toArray()
+                );
+                return $usuarioActualizado;
+            }
+
+            $usuarioAnterior->externo()->delete();
+            $usuarioAnterior->escolar()->delete();
+            $data->alumno->usuarioId = $usuarioActualizado->id;
+            $usuarioActualizado->alumno()->create($data->escolar->toArray());
+            return $usuarioActualizado;
+        }
+
+        if (isset($data->escolar)) {
+            if (isset($usuarioAnterior->escolar)) {
+                $usuarioActualizado->escolar()->update(
+                    $data->escolar
+                        ->only('matricula', 'tipoId')
+                        ->toArray()
+                );
+                return $usuarioActualizado;
+            }
+
+            $usuarioAnterior->alumno()->delete();
+            $usuarioAnterior->externo()->delete();
+            $data->escolar->usuarioId = $usuarioActualizado->id;
+            $usuarioActualizado->escolar()->create($data->escolar->toArray());
+            return $usuarioActualizado;
+        }
+
+        if (isset($usuarioAnterior->externo)) {
+            return $usuarioActualizado;
+        }
+
+        $usuarioAnterior->escolar()->delete();
+        $usuarioAnterior->alumno()->delete();
+        $usuarioActualizado->externo()->create(['usuario_id' => $usuarioActualizado->id]);
+        return $usuarioActualizado;
+    }
 }
