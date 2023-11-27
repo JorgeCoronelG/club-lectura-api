@@ -6,12 +6,15 @@ use App\Contracts\Repositories\UsuarioRepositoryInterface;
 use App\Contracts\Services\AuthServiceInterface;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
+use App\Mail\Auth\RestablecerContraseniaMail;
 use App\Models\Data\UsuarioData;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthService implements AuthServiceInterface
@@ -61,4 +64,18 @@ class AuthService implements AuthServiceInterface
         return $usuario;
     }
 
+    public function restablecerContrasenia(UsuarioData $usuarioData): void
+    {
+        $usuario = $this->usuarioRepository->buscarPorCorreo($usuarioData->correo);
+
+        if ($usuario->estatus->opcion_id !== EstatusUsuarioEnum::ACTIVO->value) {
+            throw new CustomErrorException('El usuario no está activo', Response::HTTP_BAD_REQUEST);
+        }
+
+        $contraseniaNueva = Str::random(10);
+        $usuarioData->contrasenia = bcrypt($contraseniaNueva);
+
+        $usuario = $this->usuarioRepository->update($usuario->id, $usuarioData->only('correo')->toArray());
+        Mail::to($usuario->correo)->send(new RestablecerContraseniaMail($usuario, $contraseniaNueva));
+    }
 }

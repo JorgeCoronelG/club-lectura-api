@@ -11,6 +11,7 @@ Route::controller(AuthController::class)
     ->name('auth.')
     ->group(function () {
         Route::post('/login', 'login')->name('login');
+        Route::patch('/restablecer-contrasenia', 'restablecerContrasenia')->name('restablecer-contrasenia');
     });
 
 Route::middleware('auth:sanctum')

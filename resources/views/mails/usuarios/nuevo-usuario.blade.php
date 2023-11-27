@@ -5,10 +5,10 @@ Tu correo fue registrado en el sistema del club de lectura. Para poder acceder a
 
 Ingresa tu correo y la contraseña temporal es: <strong>{{ $contrasenia }}</strong>
 
-<x-mail::subcopy>
-Nota: dentro del sistema puedes cambiar la contraseña.
-</x-mail::subcopy>
-
-Gracias,
+Atentamente,
 {{ config('app.name') }}
+
+<x-mail::subcopy>
+Nota: Te recordamos que puedes cambiar tu contraseña en tu perfil dentro de la plataforma.
+</x-mail::subcopy>
 </x-mail::message>
