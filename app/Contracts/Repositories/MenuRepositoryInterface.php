@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface MenuRepositoryInterface extends BaseRepositoryInterface
 {
-    public function obtenerTodosPorRolId(int $rolId): Collection;
+    public function findAllByRolId(int $rolId): Collection;
 }

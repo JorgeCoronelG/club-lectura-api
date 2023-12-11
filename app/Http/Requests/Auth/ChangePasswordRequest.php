@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Autor;
+namespace App\Http\Requests\Auth;
 
 use App\Core\Contracts\ReturnDataInterface;
-use App\Models\Data\AutorData;
+use App\Models\Data\UsuarioData;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ActualizarAutorRequest extends FormRequest implements ReturnDataInterface
+class ChangePasswordRequest extends FormRequest implements ReturnDataInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,21 +24,24 @@ class ActualizarAutorRequest extends FormRequest implements ReturnDataInterface
     public function rules(): array
     {
         return [
-            'id' => ['required', 'integer'],
-            'nombre' => ['required', 'min:5', 'max:150']
+            'contraseniaActual' => ['required', 'min:6', 'max:100'],
+            'contrasenia' => ['required', 'min:6', 'max:100'],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'id' => 'Identificador',
-            'nombre' => 'Nombre'
+            'contraseniaActual' => 'Contraseña actual',
+            'contrasenia' => 'Contraseña',
         ];
     }
 
-    public function toData(): AutorData
+    public function toData(): UsuarioData
     {
-        return AutorData::from($this->all());
+        return UsuarioData::from([
+            'contraseniaActual' => $this->contraseniaActual,
+            'contrasenia' => bcrypt($this->contrasenia),
+        ]);
     }
 }

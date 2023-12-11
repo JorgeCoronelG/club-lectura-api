@@ -7,5 +7,5 @@ use App\Models\CatalogoOpcion;
 
 interface CatalogoOpcionRepositoryInterface extends BaseRepositoryInterface
 {
-    public function buscarPorOpcionIdYCatalogoId(int $opcionId, int $catalogoId): CatalogoOpcion;
+    public function findByOpcionIdAndCatalogoId(int $opcionId, int $catalogoId): CatalogoOpcion;
 }

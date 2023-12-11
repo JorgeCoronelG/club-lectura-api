@@ -18,7 +18,7 @@ class CatalogoOpcionRepository extends BaseRepository implements CatalogoOpcionR
         $this->entity = $catalogoOpcion;
     }
 
-    public function buscarPorOpcionIdYCatalogoId(int $opcionId, int $catalogoId): CatalogoOpcion
+    public function findByOpcionIdAndCatalogoId(int $opcionId, int $catalogoId): CatalogoOpcion
     {
         return $this->entity
             ->where('opcion_id', $opcionId)

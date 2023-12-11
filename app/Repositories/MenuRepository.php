@@ -19,7 +19,7 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
         $this->entity = $menu;
     }
 
-    public function obtenerTodosPorRolId(int $rolId): Collection
+    public function findAllByRolId(int $rolId): Collection
     {
         return $this->entity
             ->where('rol_id', $rolId)

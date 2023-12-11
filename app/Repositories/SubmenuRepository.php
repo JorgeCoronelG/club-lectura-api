@@ -19,7 +19,7 @@ class SubmenuRepository extends BaseRepository implements SubmenuRepositoryInter
         $this->entity = $submenu;
     }
 
-    public function obtenerTodosPorRolId(int $rolId): Collection
+    public function findAllByRolId(int $rolId): Collection
     {
         return $this->entity
             ->join('menus', 'menus.id', '=', 'submenus.menu_id')

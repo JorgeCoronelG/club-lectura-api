@@ -7,7 +7,7 @@ use App\Contracts\Repositories\UsuarioRepositoryInterface;
 use App\Contracts\Services\UsuarioServiceInterface;
 use App\Core\BaseService;
 use App\Core\Contracts\BaseRepositoryInterface;
-use App\Mail\Usuario\UsuarioAgregadoMail;
+use App\Mail\Usuario\UserCreatedMail;
 use App\Models\Data\UsuarioData;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
@@ -32,7 +32,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
     public function create(Data|UsuarioData $data): Usuario
     {
         $estatusId = $this->catalogoOpcionRepository
-            ->buscarPorOpcionIdYCatalogoId(EstatusUsuarioEnum::ACTIVO->value, CatalogoEnum::ESTATUS_USUARIO->value)
+            ->findByOpcionIdAndCatalogoId(EstatusUsuarioEnum::ACTIVO->value, CatalogoEnum::ESTATUS_USUARIO->value)
             ->id;
         $contrasenia = Str::random(8);
 
@@ -45,7 +45,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             $data->escolar->usuarioId = $usuario->id;
 
             $usuario->escolar()->create($data->escolar->toArray());
-            Mail::to($usuario->correo)->send(new UsuarioAgregadoMail($usuario, $contrasenia));
+            Mail::to($usuario->correo)->send(new UserCreatedMail($usuario, $contrasenia));
 
             return $usuario;
         }
@@ -54,13 +54,13 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             $data->alumno->usuarioId = $usuario->id;
 
             $usuario->alumno()->create($data->alumno->toArray());
-            Mail::to($usuario->correo)->send(new UsuarioAgregadoMail($usuario, $contrasenia));
+            Mail::to($usuario->correo)->send(new UserCreatedMail($usuario, $contrasenia));
 
             return $usuario;
         }
 
         $usuario->externo()->create(['usuario_id' => $usuario->id]);
-        Mail::to($usuario->correo)->send(new UsuarioAgregadoMail($usuario, $contrasenia));
+        Mail::to($usuario->correo)->send(new UserCreatedMail($usuario, $contrasenia));
 
         return $usuario;
     }

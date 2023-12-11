@@ -22,14 +22,14 @@ class MenuService extends BaseService implements MenuServiceInterface
         $this->submenuRepository = $submenuRepository;
     }
 
-    public function crearMenuPorDefecto(Usuario $usuario): void
+    public function createDefaultMenu(Usuario $usuario): void
     {
         $menus = $this->entityRepository
-            ->obtenerTodosPorRolId($usuario->rol_id)
+            ->findAllByRolId($usuario->rol_id)
             ->pluck('id')
             ->toArray();
         $submenus = $this->submenuRepository
-            ->obtenerTodosPorRolId($usuario->rol_id)
+            ->findAllByRolId($usuario->rol_id)
             ->pluck('id')
             ->toArray();
 
@@ -37,11 +37,11 @@ class MenuService extends BaseService implements MenuServiceInterface
         $usuario->submenus()->attach($submenus);
     }
 
-    public function cambiarMenuPorRol(Usuario $usuario): void
+    public function changeMenuByRol(Usuario $usuario): void
     {
         $usuario->menus()->detach();
         $usuario->submenus()->detach();
 
-        $this->crearMenuPorDefecto($usuario);
+        $this->createDefaultMenu($usuario);
     }
 }

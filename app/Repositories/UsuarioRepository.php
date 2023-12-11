@@ -21,7 +21,7 @@ class UsuarioRepository extends BaseRepository implements UsuarioRepositoryInter
         $this->entity = $usuario;
     }
 
-    public function buscarPorCorreo(string $correo): Usuario
+    public function findByCorreo(string $correo): Usuario
     {
         return $this->entity
             ->where('correo', $correo)

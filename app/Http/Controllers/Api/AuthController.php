@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Contracts\Services\AuthServiceInterface;
 use App\Core\BaseApiController;
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\RestablecerContraseniaRequest;
+use App\Http\Requests\Auth\RestorePasswordRequest;
 use App\Http\Resources\Auth\LoginResource;
 use App\Http\Resources\Usuario\UsuarioResource;
 use Illuminate\Http\JsonResponse;
@@ -26,15 +27,21 @@ class AuthController extends BaseApiController
         return $this->showOne(LoginResource::make($data));
     }
 
-    public function obtenerUsuario(): JsonResponse
+    public function findUser(): JsonResponse
     {
-        $usuario = $this->authService->obtenerUsuario(auth()->id());
+        $usuario = $this->authService->findUser(auth()->id());
         return $this->showOne(UsuarioResource::make($usuario));
     }
 
-    public function restablecerContrasenia(RestablecerContraseniaRequest $request): Response
+    public function restorePassword(RestorePasswordRequest $request): Response
     {
-        $this->authService->restablecerContrasenia($request->toData());
+        $this->authService->restorePassword($request->toData());
+        return $this->noContentResponse();
+    }
+
+    public function changePassword(ChangePasswordRequest $request): Response
+    {
+        $this->authService->changePassword(auth()->id(), $request->toData());
         return $this->noContentResponse();
     }
 }

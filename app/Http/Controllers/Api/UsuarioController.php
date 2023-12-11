@@ -7,8 +7,8 @@ use App\Contracts\Services\UsuarioServiceInterface;
 use App\Core\BaseApiController;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
-use App\Http\Requests\Usuario\ActualizarUsuarioRequest;
-use App\Http\Requests\Usuario\GuardarUsuarioRequest;
+use App\Http\Requests\Usuario\UpdateUsuarioRequest;
+use App\Http\Requests\Usuario\StoreUsuarioRequest;
 use App\Http\Resources\Usuario\UsuarioCollection;
 use App\Http\Resources\Usuario\UsuarioResource;
 use Illuminate\Http\JsonResponse;
@@ -35,10 +35,10 @@ class UsuarioController extends BaseApiController
         return $this->showAll(new UsuarioCollection($usuarios, true));
     }
 
-    public function store(GuardarUsuarioRequest $request): JsonResponse
+    public function store(StoreUsuarioRequest $request): JsonResponse
     {
         $usuario = $this->usuarioService->create($request->toData());
-        $this->menuService->crearMenuPorDefecto($usuario);
+        $this->menuService->createDefaultMenu($usuario);
         return $this->showOne(UsuarioResource::make($usuario));
     }
 
@@ -51,7 +51,7 @@ class UsuarioController extends BaseApiController
     /**
      * @throws CustomErrorException
      */
-    public function update(ActualizarUsuarioRequest $request, int $id): JsonResponse
+    public function update(UpdateUsuarioRequest $request, int $id): JsonResponse
     {
         $usuarioData = $request->toData();
 
@@ -63,7 +63,7 @@ class UsuarioController extends BaseApiController
         $usuario = $this->usuarioService->update($id, $request->toData());
 
         if ($rolIdAnterior !== $usuario->rol_id) {
-            $this->menuService->cambiarMenuPorRol($usuario);
+            $this->menuService->changeMenuByRol($usuario);
         }
 
         return $this->showOne(UsuarioResource::make($usuario));

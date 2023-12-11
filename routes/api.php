@@ -11,7 +11,7 @@ Route::controller(AuthController::class)
     ->name('auth.')
     ->group(function () {
         Route::post('/login', 'login')->name('login');
-        Route::patch('/restablecer-contrasenia', 'restablecerContrasenia')->name('restablecer-contrasenia');
+        Route::patch('/restore-password', 'restorePassword')->name('restablecer-contrasenia');
     });
 
 Route::middleware('auth:sanctum')
@@ -20,7 +20,8 @@ Route::middleware('auth:sanctum')
             ->prefix('auth')
             ->name('auth.')
             ->group(function () {
-               Route::get('/usuario', 'obtenerUsuario')->name('usuario');
+               Route::get('/user', 'findUser')->name('usuario');
+               Route::patch('/change-password', 'changePassword')->name('cambiar-contrasenia');
             });
 
         Route::apiResource('autores',AutorController::class)

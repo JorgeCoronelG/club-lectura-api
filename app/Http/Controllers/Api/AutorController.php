@@ -6,8 +6,8 @@ use App\Contracts\Services\AutorServiceInterface;
 use App\Core\BaseApiController;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\Enum\Message;
-use App\Http\Requests\Autor\ActualizarAutorRequest;
-use App\Http\Requests\Autor\GuardarAutorRequest;
+use App\Http\Requests\Autor\UpdateAutorRequest;
+use App\Http\Requests\Autor\StoreAutorRequest;
 use App\Http\Resources\Autor\AutorCollection;
 use App\Http\Resources\Autor\AutorResource;
 use Illuminate\Http\JsonResponse;
@@ -31,7 +31,7 @@ class AutorController extends BaseApiController
         return $this->showAll(new AutorCollection($autores, true));
     }
 
-    public function store(GuardarAutorRequest $request): JsonResponse
+    public function store(StoreAutorRequest $request): JsonResponse
     {
         $autor = $this->autorService->create($request->toData());
         return $this->showOne(AutorResource::make($autor));
@@ -46,7 +46,7 @@ class AutorController extends BaseApiController
     /**
      * @throws CustomErrorException
      */
-    public function update(ActualizarAutorRequest $request, int $id): JsonResponse
+    public function update(UpdateAutorRequest $request, int $id): JsonResponse
     {
         $autorData = $request->toData();
         if ($id !== $autorData->id) {

@@ -10,7 +10,9 @@ interface AuthServiceInterface
 {
     public function login(UsuarioData $usuarioData): Collection;
 
-    public function obtenerUsuario(int $id): Usuario;
+    public function findUser(int $id): Usuario;
 
-    public function restablecerContrasenia(UsuarioData $usuarioData): void;
+    public function restorePassword(UsuarioData $usuarioData): void;
+
+    public function changePassword(int $usuarioId, UsuarioData $usuarioData): void;
 }

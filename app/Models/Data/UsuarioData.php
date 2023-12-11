@@ -26,6 +26,8 @@ class UsuarioData extends Data
         public ?ExternoData $externo,
         public ?EscolarData $escolar,
         public ?AlumnoData $alumno,
+
+        public ?string $contraseniaActual,
     ) {
         //
     }

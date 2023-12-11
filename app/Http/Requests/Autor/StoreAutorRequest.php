@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Autor;
 
 use App\Core\Contracts\ReturnDataInterface;
-use App\Models\Data\UsuarioData;
+use App\Models\Data\AutorData;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class RestablecerContraseniaRequest extends FormRequest implements ReturnDataInterface
+class StoreAutorRequest extends FormRequest implements ReturnDataInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,23 +24,19 @@ class RestablecerContraseniaRequest extends FormRequest implements ReturnDataInt
     public function rules(): array
     {
         return [
-            'correo' => [
-                'required',
-                'email:dns',
-                'max:150',
-            ]
+            'nombre' => ['required', 'min:5', 'max:150']
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'correo' => 'Correo electrónico'
+            'nombre' => 'Nombre'
         ];
     }
 
-    public function toData(): UsuarioData
+    public function toData(): AutorData
     {
-        return UsuarioData::from($this->all());
+        return AutorData::from($this->all());
     }
 }

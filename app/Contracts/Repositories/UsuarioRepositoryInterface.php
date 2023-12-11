@@ -12,5 +12,5 @@ use App\Models\Usuario;
  */
 interface UsuarioRepositoryInterface extends BaseRepositoryInterface
 {
-    public function buscarPorCorreo(string $correo): Usuario;
+    public function findByCorreo(string $correo): Usuario;
 }

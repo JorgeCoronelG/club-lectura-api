@@ -8,7 +8,7 @@ use App\Models\Enum\CatalogoEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ActualizarUsuarioRequest extends FormRequest implements ReturnDataInterface
+class StoreUsuarioRequest extends FormRequest implements ReturnDataInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,14 +26,12 @@ class ActualizarUsuarioRequest extends FormRequest implements ReturnDataInterfac
     public function rules(): array
     {
         $rules = [
-            'id' => ['required', 'integer', 'bail'],
             'nombreCompleto' => ['required', 'min:5', 'max:150'],
             'correo' => [
                 'required',
                 'email:dns',
                 'max:150',
                 Rule::unique('usuarios', 'correo')
-                    ->ignore($this->id, 'id')
             ],
             'telefono' => ['required', 'min:10', 'max:10'],
             'fechaNacimiento' => ['required', 'date', 'date_format:Y-m-d', 'before:now'],
@@ -78,11 +76,9 @@ class ActualizarUsuarioRequest extends FormRequest implements ReturnDataInterfac
 
         return $rules;
     }
-
     public function attributes(): array
     {
         return [
-            'id' => 'id',
             'nombreCompleto' => 'Nombre completo',
             'correo' => 'Correo',
             'telefono' => 'Teléfono',

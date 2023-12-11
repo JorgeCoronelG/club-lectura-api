@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Auth;
+namespace App\Mail\Usuario;
 
 use App\Models\Usuario;
 use Illuminate\Bus\Queueable;
@@ -10,7 +10,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RestablecerContraseniaMail extends Mailable
+class UserCreatedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,8 +18,8 @@ class RestablecerContraseniaMail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        private Usuario $usuario,
-        public string $nuevaContrasenia,
+        protected Usuario $usuario,
+        public string $contrasenia
     ) {
         //
     }
@@ -31,7 +31,7 @@ class RestablecerContraseniaMail extends Mailable
     {
         return new Envelope(
             from: new Address(config('mail.from.address'), config('mail.from.name')),
-            subject: 'Nueva contraseña',
+            subject: 'Registro de usuario al sistema de club de lectura',
         );
     }
 
@@ -41,11 +41,11 @@ class RestablecerContraseniaMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mails.auth.restablecer-contrasenia',
+            markdown: 'mails.usuarios.nuevo-usuario',
             with: [
                 'nombreCompleto' => $this->usuario->nombre_completo,
-                'contrasenia' => $this->nuevaContrasenia
-            ],
+                'contrasenia' => $this->contrasenia
+            ]
         );
     }
 }
