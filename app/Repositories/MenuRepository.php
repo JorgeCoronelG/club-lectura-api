@@ -27,4 +27,24 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
             ->orderBy('orden')
             ->get();
     }
+
+    public function getPathRouteNavigationByUserId(int $userId): Collection
+    {
+        $submenusQuery = $this->entity
+            ->selectRaw('CONCAT(m.path_ruta, s.path_ruta) AS path_ruta')
+            ->from('submenus AS s')
+            ->join('menus AS m', 's.menu_id', '=', 'm.id')
+            ->join('submenu_usuarios AS su', 'su.submenu_id', '=', 's.id')
+            ->where('usuario_id', $userId);
+
+        return $this->entity
+            ->select(['m.path_ruta'])
+            ->from('menus AS m')
+            ->leftJoin('submenus AS s','s.menu_id', '=', 'm.id')
+            ->join('menu_usuario AS mu', 'mu.menu_id', '=', 'm.id')
+            ->whereNull('s.id')
+            ->where('mu.usuario_id', $userId)
+            ->unionAll($submenusQuery)
+            ->get();
+    }
 }

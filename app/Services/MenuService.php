@@ -22,26 +22,32 @@ class MenuService extends BaseService implements MenuServiceInterface
         $this->submenuRepository = $submenuRepository;
     }
 
-    public function createDefaultMenu(Usuario $usuario): void
+    public function createDefaultMenu(Usuario $user): void
     {
         $menus = $this->entityRepository
-            ->findAllByRolId($usuario->rol_id)
+            ->findAllByRolId($user->rol_id)
             ->pluck('id')
             ->toArray();
         $submenus = $this->submenuRepository
-            ->findAllByRolId($usuario->rol_id)
+            ->findAllByRolId($user->rol_id)
             ->pluck('id')
             ->toArray();
 
-        $usuario->menus()->attach($menus);
-        $usuario->submenus()->attach($submenus);
+        $user->menus()->attach($menus);
+        $user->submenus()->attach($submenus);
     }
 
-    public function changeMenuByRol(Usuario $usuario): void
+    public function changeMenuByRol(Usuario $user): void
     {
-        $usuario->menus()->detach();
-        $usuario->submenus()->detach();
+        $user->menus()->detach();
+        $user->submenus()->detach();
 
-        $this->createDefaultMenu($usuario);
+        $this->createDefaultMenu($user);
+    }
+
+    public function hasPermissionToUrl(int $userId, string $pathUrl): bool
+    {
+        $paths = $this->entityRepository->getPathRouteNavigationByUserId($userId);
+        return $paths->where('path_ruta', '=', $pathUrl)->count() > 0;
     }
 }

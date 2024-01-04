@@ -7,7 +7,9 @@ use App\Models\Usuario;
 
 interface MenuServiceInterface extends BaseServiceInterface
 {
-    public function createDefaultMenu(Usuario $usuario): void;
+    public function createDefaultMenu(Usuario $user): void;
 
-    public function changeMenuByRol(Usuario $usuario): void;
+    public function changeMenuByRol(Usuario $user): void;
+
+    public function hasPermissionToUrl(int $userId, string $pathUrl): bool;
 }
