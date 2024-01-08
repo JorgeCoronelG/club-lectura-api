@@ -12,7 +12,7 @@ Route::controller(AuthController::class)
     ->name('auth.')
     ->group(function () {
         Route::post('/login', 'login')->name('login');
-        Route::patch('/restore-password', 'restorePassword')->name('restablecer-contrasenia');
+        Route::patch('/restore-password', 'restorePassword')->name('restore-password');
     });
 
 Route::middleware('auth:sanctum')
@@ -21,11 +21,11 @@ Route::middleware('auth:sanctum')
             ->prefix('auth')
             ->name('auth.')
             ->group(function () {
-               Route::get('/user', 'findUser')->name('usuario');
-               Route::patch('/change-password', 'changePassword')->name('cambiar-contrasenia');
+               Route::get('/user', 'findUser')->name('users');
+               Route::patch('/change-password', 'changePassword')->name('change-password');
             });
 
-        Route::apiResource('autores',AutorController::class)
+        Route::apiResource('autors',AutorController::class)
             ->middleware(
                 'permission:'.
                 RolEnum::ADMINISTRADOR->value.','.
@@ -46,7 +46,7 @@ Route::middleware('auth:sanctum')
                     );
             });
 
-        Route::apiResource('usuarios', UsuarioController::class)
+        Route::apiResource('users', UsuarioController::class)
             ->middleware(
                 'permission:'
                 .RolEnum::ADMINISTRADOR->value.','
