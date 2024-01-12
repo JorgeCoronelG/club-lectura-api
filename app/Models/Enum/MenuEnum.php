@@ -8,7 +8,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/usuarios',
             'etiqueta' => 'Usuarios',
-            'icono' => 'N/A',
+            'icono' => 'mat:group',
             'orden' => 1,
             'rol_id' => RolEnum::ADMINISTRADOR->value,
             'submenus' => [
@@ -27,7 +27,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/autores',
             'etiqueta' => 'Autores',
-            'icono' => 'N/A',
+            'icono' => 'mat:face',
             'orden' => 2,
             'rol_id' => RolEnum::ADMINISTRADOR->value,
             'submenus' => []
@@ -35,7 +35,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/libros',
             'etiqueta' => 'Libros',
-            'icono' => 'N/A',
+            'icono' => 'mat:library_books',
             'orden' => 3,
             'rol_id' => RolEnum::ADMINISTRADOR->value,
             'submenus' => [
@@ -49,7 +49,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/donaciones',
             'etiqueta' => 'Donaciones',
-            'icono' => 'N/A',
+            'icono' => 'mat:volunteer_activism',
             'orden' => 4,
             'rol_id' => RolEnum::ADMINISTRADOR->value,
             'submenus' => []
@@ -57,7 +57,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/prestamos',
             'etiqueta' => 'Préstamos',
-            'icono' => 'N/A',
+            'icono' => 'mat:published_with_changes',
             'orden' => 5,
             'rol_id' => RolEnum::ADMINISTRADOR->value,
             'submenus' => [
@@ -74,7 +74,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/usuarios',
             'etiqueta' => 'Usuarios',
-            'icono' => 'N/A',
+            'icono' => 'mat:group',
             'orden' => 1,
             'rol_id' => RolEnum::CAPTURISTA->value,
             'submenus' => [
@@ -88,7 +88,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/autores',
             'etiqueta' => 'Autores',
-            'icono' => 'N/A',
+            'icono' => 'mat:face',
             'orden' => 2,
             'rol_id' => RolEnum::CAPTURISTA->value,
             'submenus' => []
@@ -96,7 +96,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/libros',
             'etiqueta' => 'Libros',
-            'icono' => 'N/A',
+            'icono' => 'mat:library_books',
             'orden' => 3,
             'rol_id' => RolEnum::CAPTURISTA->value,
             'submenus' => [
@@ -110,7 +110,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/donaciones',
             'etiqueta' => 'Donaciones',
-            'icono' => 'N/A',
+            'icono' => 'mat:volunteer_activism',
             'orden' => 4,
             'rol_id' => RolEnum::CAPTURISTA->value,
             'submenus' => []
@@ -118,7 +118,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/prestamos',
             'etiqueta' => 'Préstamos',
-            'icono' => 'N/A',
+            'icono' => 'mat:published_with_changes',
             'orden' => 5,
             'rol_id' => RolEnum::CAPTURISTA->value,
             'submenus' => [
@@ -135,7 +135,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/prestamos',
             'etiqueta' => 'Préstamos',
-            'icono' => 'N/A',
+            'icono' => 'mat:published_with_changes',
             'orden' => 1,
             'rol_id' => RolEnum::LECTOR->value,
             'submenus' => [
@@ -149,7 +149,7 @@ class MenuEnum
         [
             'path_ruta' => '/dashboard/libros',
             'etiqueta' => 'Libros',
-            'icono' => 'N/A',
+            'icono' => 'mat:library_books',
             'orden' => 2,
             'rol_id' => RolEnum::LECTOR->value,
             'submenus' => [

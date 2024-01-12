@@ -12,4 +12,6 @@ interface MenuServiceInterface extends BaseServiceInterface
     public function changeMenuByRol(Usuario $user): void;
 
     public function hasPermissionToUrl(int $userId, string $pathUrl): bool;
+
+    public function getNavigationMenu(int $userId): \Illuminate\Support\Collection;
 }

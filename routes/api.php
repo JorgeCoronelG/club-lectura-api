@@ -33,17 +33,17 @@ Route::middleware('auth:sanctum')
             );
 
         Route::controller(MenuController::class)
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value.','.
+                RolEnum::LECTOR->value.','
+            )
             ->prefix('navigation')
             ->name('navigation.')
             ->group(function () {
-                Route::get('/has-permission', 'hasPermissionToUrl')
-                    ->name('has-permission')
-                    ->middleware(
-                        'permission:'.
-                        RolEnum::ADMINISTRADOR->value.','.
-                        RolEnum::CAPTURISTA->value.','.
-                        RolEnum::LECTOR->value.','
-                    );
+                Route::get('/has-permission', 'hasPermissionToUrl')->name('has-permission');
+                Route::get('/navigation', 'getNavigationMenu')->name('navigation');
             });
 
         Route::apiResource('users', UsuarioController::class)

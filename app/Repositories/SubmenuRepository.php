@@ -28,4 +28,15 @@ class SubmenuRepository extends BaseRepository implements SubmenuRepositoryInter
             ->orderBy('submenus.orden')
             ->get(['submenus.*']);
     }
+
+    public function findByUserId(int $userId): Collection
+    {
+        return $this->entity
+            ->select(['submenus.*'])
+            ->join('submenu_usuarios', 'submenus.id', '=', 'submenu_usuarios.submenu_id')
+            ->where('submenu_usuarios.usuario_id', $userId)
+            ->where('estatus', true)
+            ->orderBy('orden')
+            ->get();
+    }
 }

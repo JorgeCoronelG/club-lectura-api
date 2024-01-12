@@ -31,7 +31,7 @@ class MenuSeeder extends Seeder
 
                 $submenus = [];
                 foreach ($menu['submenus'] as $submenu) {
-                    $submenus = array_merge($submenu, [
+                    $submenus[] = array_merge($submenu, [
                         'menu_id' => $menuId
                     ]);
                 }

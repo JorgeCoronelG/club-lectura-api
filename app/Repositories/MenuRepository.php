@@ -41,10 +41,21 @@ class MenuRepository extends BaseRepository implements MenuRepositoryInterface
             ->select(['m.path_ruta'])
             ->from('menus AS m')
             ->leftJoin('submenus AS s','s.menu_id', '=', 'm.id')
-            ->join('menu_usuario AS mu', 'mu.menu_id', '=', 'm.id')
+            ->join('menu_usuarios AS mu', 'mu.menu_id', '=', 'm.id')
             ->whereNull('s.id')
             ->where('mu.usuario_id', $userId)
             ->unionAll($submenusQuery)
+            ->get();
+    }
+
+    public function findByUserId(int $userId): Collection
+    {
+        return $this->entity
+            ->select(['menus.*'])
+            ->join('menu_usuarios', 'menus.id', '=', 'menu_usuarios.menu_id')
+            ->where('menu_usuarios.usuario_id', $userId)
+            ->where('estatus', true)
+            ->orderBy('orden')
             ->get();
     }
 }
