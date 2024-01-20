@@ -6,7 +6,7 @@ class MenuEnum
 {
     const ADMIN = [
         [
-            'path_ruta' => '/dashboard/usuarios',
+            'path_ruta' => '/usuarios',
             'etiqueta' => 'Usuarios',
             'icono' => 'mat:group',
             'orden' => 1,
@@ -25,7 +25,7 @@ class MenuEnum
             ]
         ],
         [
-            'path_ruta' => '/dashboard/autores',
+            'path_ruta' => '/autores',
             'etiqueta' => 'Autores',
             'icono' => 'mat:face',
             'orden' => 2,
@@ -33,7 +33,7 @@ class MenuEnum
             'submenus' => []
         ],
         [
-            'path_ruta' => '/dashboard/libros',
+            'path_ruta' => '/libros',
             'etiqueta' => 'Libros',
             'icono' => 'mat:library_books',
             'orden' => 3,
@@ -47,7 +47,7 @@ class MenuEnum
             ]
         ],
         [
-            'path_ruta' => '/dashboard/donaciones',
+            'path_ruta' => '/donaciones',
             'etiqueta' => 'Donaciones',
             'icono' => 'mat:volunteer_activism',
             'orden' => 4,
@@ -55,7 +55,7 @@ class MenuEnum
             'submenus' => []
         ],
         [
-            'path_ruta' => '/dashboard/prestamos',
+            'path_ruta' => '/prestamos',
             'etiqueta' => 'Préstamos',
             'icono' => 'mat:published_with_changes',
             'orden' => 5,
@@ -72,7 +72,7 @@ class MenuEnum
 
     const CAPTURISTA = [
         [
-            'path_ruta' => '/dashboard/usuarios',
+            'path_ruta' => '/usuarios',
             'etiqueta' => 'Usuarios',
             'icono' => 'mat:group',
             'orden' => 1,
@@ -86,7 +86,7 @@ class MenuEnum
             ]
         ],
         [
-            'path_ruta' => '/dashboard/autores',
+            'path_ruta' => '/autores',
             'etiqueta' => 'Autores',
             'icono' => 'mat:face',
             'orden' => 2,
@@ -94,7 +94,7 @@ class MenuEnum
             'submenus' => []
         ],
         [
-            'path_ruta' => '/dashboard/libros',
+            'path_ruta' => '/libros',
             'etiqueta' => 'Libros',
             'icono' => 'mat:library_books',
             'orden' => 3,
@@ -108,7 +108,7 @@ class MenuEnum
             ]
         ],
         [
-            'path_ruta' => '/dashboard/donaciones',
+            'path_ruta' => '/donaciones',
             'etiqueta' => 'Donaciones',
             'icono' => 'mat:volunteer_activism',
             'orden' => 4,
@@ -116,7 +116,7 @@ class MenuEnum
             'submenus' => []
         ],
         [
-            'path_ruta' => '/dashboard/prestamos',
+            'path_ruta' => '/prestamos',
             'etiqueta' => 'Préstamos',
             'icono' => 'mat:published_with_changes',
             'orden' => 5,
@@ -133,7 +133,7 @@ class MenuEnum
 
     const LECTOR = [
         [
-            'path_ruta' => '/dashboard/prestamos',
+            'path_ruta' => '/prestamos',
             'etiqueta' => 'Préstamos',
             'icono' => 'mat:published_with_changes',
             'orden' => 1,
@@ -147,7 +147,7 @@ class MenuEnum
             ]
         ],
         [
-            'path_ruta' => '/dashboard/libros',
+            'path_ruta' => '/libros',
             'etiqueta' => 'Libros',
             'icono' => 'mat:library_books',
             'orden' => 2,
