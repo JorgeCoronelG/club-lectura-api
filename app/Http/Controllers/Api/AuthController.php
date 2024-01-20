@@ -44,4 +44,11 @@ class AuthController extends BaseApiController
         $this->authService->changePassword(auth()->id(), $request->toData());
         return $this->noContentResponse();
     }
+
+    public function logout(): Response
+    {
+        $user = $this->authService->findUser(auth()->id());
+        $user->tokens()->delete();
+        return $this->noContentResponse();
+    }
 }

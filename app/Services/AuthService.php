@@ -33,6 +33,7 @@ class AuthService implements AuthServiceInterface
     public function login(UsuarioData $usuarioData): Collection
     {
         $usuario = $this->checkAccount($usuarioData->correo, $usuarioData->contrasenia);
+        $usuario->tokens()->delete();
         $token = $usuario->createToken('api-token')->plainTextToken;
         return collect($usuario)->put('token', $token);
     }

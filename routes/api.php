@@ -21,7 +21,9 @@ Route::middleware('auth:sanctum')
             ->prefix('auth')
             ->name('auth.')
             ->group(function () {
-               Route::get('/user', 'findUser')->name('users');
+               Route::get('/user', 'findUser')->name('find-user');
+               Route::get('/logout', 'logout')->name('logout');
+
                Route::patch('/change-password', 'changePassword')->name('change-password');
             });
 
