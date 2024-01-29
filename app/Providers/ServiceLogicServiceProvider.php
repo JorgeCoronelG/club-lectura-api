@@ -14,6 +14,7 @@ class ServiceLogicServiceProvider extends ServiceProvider
         'AutorServiceInterface' => 'AutorService',
         'UsuarioServiceInterface' => 'UsuarioService',
         'MenuServiceInterface' => 'MenuService',
+        'CatalogoOpcionServiceInterface' => 'CatalogoOpcionService'
     ];
 
     /**

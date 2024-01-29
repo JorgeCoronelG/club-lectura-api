@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AutorController;
+use App\Http\Controllers\Api\CatalogoOpcionController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Models\Enum\RolEnum;
@@ -33,6 +34,13 @@ Route::middleware('auth:sanctum')
                 RolEnum::ADMINISTRADOR->value.','.
                 RolEnum::CAPTURISTA->value
             );
+
+        Route::controller(CatalogoOpcionController::class)
+            ->prefix('options-catalog')
+            ->name('options-catalog.')
+            ->group(function () {
+                Route::get('catalog-id/{catalogoId}', 'findByCatalogoId')->name('find-by-catalog-id');
+            });
 
         Route::controller(MenuController::class)
             ->middleware(
