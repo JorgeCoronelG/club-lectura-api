@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Helpers\Enum\Path;
+use App\Core\Enum\Path;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 

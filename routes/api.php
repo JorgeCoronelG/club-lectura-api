@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')
                Route::patch('/change-password', 'changePassword')->name('change-password');
             });
 
-        Route::apiResource('autors',AutorController::class)
+        Route::apiResource('authors',AutorController::class)
             ->middleware(
                 'permission:'.
                 RolEnum::ADMINISTRADOR->value.','.

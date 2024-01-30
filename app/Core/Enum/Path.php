@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Enum;
+namespace App\Core\Enum;
 
 enum Path: string
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Enum;
+namespace App\Core\Enum;
 
 class QueryParam
 {
@@ -16,7 +16,6 @@ class QueryParam
     const FILTERS_KEY = 'q';
     const FILTERS_FIELD_KEY = 'filters';
     const FIELD_KEY = 'field';
-    const TYPE_KEY = 'type';
     const VALUE_KEY = 'value';
-    const VALIDATION_KEY = 'validation';
+    const OPERATOR_SQL_KEY = 'operator';
 }

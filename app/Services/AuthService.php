@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Contracts\Repositories\UsuarioRepositoryInterface;
 use App\Contracts\Services\AuthServiceInterface;
+use App\Core\Enum\Message;
 use App\Exceptions\CustomErrorException;
-use App\Helpers\Enum\Message;
 use App\Mail\Auth\RestorePasswordMail;
 use App\Models\Data\UsuarioData;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
