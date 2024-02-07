@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AutorController;
 use App\Http\Controllers\Api\CatalogoOpcionController;
 use App\Http\Controllers\Api\MenuController;
+use App\Http\Controllers\Api\RolController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Models\Enum\RolEnum;
 
@@ -54,6 +55,18 @@ Route::middleware('auth:sanctum')
             ->group(function () {
                 Route::get('/has-permission', 'hasPermissionToUrl')->name('has-permission');
                 Route::get('/navigation', 'getNavigationMenu')->name('navigation');
+            });
+
+        Route::controller(RolController::class)
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value.','
+            )
+            ->prefix('roles')
+            ->name('roles.')
+            ->group(function () {
+                Route::get('/find-all', 'findAll')->name('find-all');
             });
 
         Route::apiResource('users', UsuarioController::class)

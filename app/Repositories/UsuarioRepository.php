@@ -8,6 +8,7 @@ use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UsuarioRepository extends BaseRepository implements UsuarioRepositoryInterface
 {
@@ -41,5 +42,23 @@ class UsuarioRepository extends BaseRepository implements UsuarioRepositoryInter
                 'escolar'
             ])
             ->findOrFail($id, $columns);
+    }
+
+    public function findAllPaginated(
+        array $filters,
+        int $limit,
+        string $sort = null,
+        array $columns = ['*']
+    ): LengthAwarePaginator
+    {
+        return $this->entity
+            ->with([
+                'sexo',
+                'estatus',
+                'rol'
+            ])
+            ->filter($filters)
+            ->applySort($sort)
+            ->paginate($limit, $columns);
     }
 }

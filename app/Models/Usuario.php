@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Core\Contracts\ScopeFilterInterface;
+use App\Core\Traits\AdvancedFilter;
 use App\Core\Traits\Sortable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,7 +16,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Authenticatable implements ScopeFilterInterface
 {
-    use HasApiTokens, HasFactory, Notifiable, Sortable;
+    use HasApiTokens, HasFactory, Notifiable, Sortable, AdvancedFilter;
 
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
@@ -85,36 +85,5 @@ class Usuario extends Authenticatable implements ScopeFilterInterface
     public function submenus(): BelongsToMany
     {
         return $this->belongsToMany(Submenu::class, 'submenu_usuarios', 'usuario_id', 'submenu_id');
-    }
-
-    public function scopeFilter(Builder $query, array $params = []): Builder
-    {
-        if (empty($params)) {
-            return $query;
-        }
-
-        if (isset($params['nombre_completo']) && trim($params['nombre_completo']) !== '') {
-            $query->orWhere('nombre_completo', 'LIKE', "%{$params['nombre_completo']}%");
-        }
-        if (isset($params['correo']) && trim($params['correo']) !== '') {
-            $query->orWhere('correo', 'LIKE', "%{$params['correo']}%");
-        }
-        if (isset($params['telefono']) && trim($params['telefono']) !== '') {
-            $query->orWhere('telefono', 'LIKE', "%{$params['telefono']}%");
-        }
-        if (isset($params['fecha_nacimiento']) && trim($params['fecha_nacimiento']) !== '') {
-            $query->orWhere('fecha_nacimiento', $params['fecha_nacimiento']);
-        }
-        if (isset($params['sexo_id']) && trim($params['sexo_id']) !== '') {
-            $query->orWhere('sexo_id', $params['sexo_id']);
-        }
-        if (isset($params['estatus_id']) && trim($params['estatus_id']) !== '') {
-            $query->orWhere('estatus_id', $params['estatus_id']);
-        }
-        if (isset($params['rol_id']) && trim($params['rol_id']) !== '') {
-            $query->orWhere('rol_id', $params['rol_id']);
-        }
-
-        return $query;
     }
 }

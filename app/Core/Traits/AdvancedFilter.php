@@ -8,7 +8,21 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait AdvancedFilter
 {
-    public function filterAdvanced(Builder $query, Filter $filter): Builder
+    /**
+     * @param Builder $query
+     * @param Filter[] $filters
+     * @return Builder
+     */
+    public function scopeFilter(Builder $query, array $filters = []): Builder
+    {
+        foreach ($filters as $filter) {
+            $this->filterAdvanced($query, $filter);
+        }
+
+        return $query;
+    }
+
+    private function filterAdvanced(Builder $query, Filter $filter): Builder
     {
         if (OperatorSql::CONTAIN === $filter->operator) {
             $query->orWhere($filter->field, 'LIKE', "%$filter->value%");

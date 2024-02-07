@@ -15,6 +15,7 @@ class RepositoryServiceProvider extends ServiceProvider
         'CatalogoOpcionRepositoryInterface' => 'CatalogoOpcionRepository',
         'MenuRepositoryInterface' => 'MenuRepository',
         'SubmenuRepositoryInterface' => 'SubmenuRepository',
+        'RolRepositoryInterface' => 'RolRepository',
     ];
 
     /**

@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Core\Traits\AdvancedFilter;
+use App\Core\Traits\Sortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Rol extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable, AdvancedFilter;
 
     protected $table = 'roles';
 
@@ -18,6 +20,8 @@ class Rol extends Model
     protected $casts = [
         'id' => 'integer'
     ];
+
+    public $allowedSorts = ['id', 'nombre'];
 
     public function usuarios(): HasMany
     {

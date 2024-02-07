@@ -7,7 +7,7 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapOutputName(SnakeCaseMapper::class)]
-class CatalogoOpcion extends Data
+class CatalogoOpcionData extends Data
 {
     public function __construct(
         public ?int $id,
