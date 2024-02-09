@@ -7,7 +7,7 @@ use App\Contracts\Services\AuthServiceInterface;
 use App\Core\Enum\Message;
 use App\Exceptions\CustomErrorException;
 use App\Mail\Auth\RestorePasswordMail;
-use App\Models\Data\UsuarioData;
+use App\Models\Dto\UsuarioDto;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Usuario;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -30,7 +30,7 @@ class AuthService implements AuthServiceInterface
     /**
      * @throws CustomErrorException
      */
-    public function login(UsuarioData $usuarioData): Collection
+    public function login(UsuarioDto $usuarioData): Collection
     {
         $usuario = $this->checkAccount($usuarioData->correo, $usuarioData->contrasenia);
         $usuario->tokens()->delete();
@@ -43,7 +43,7 @@ class AuthService implements AuthServiceInterface
         return $this->usuarioRepository->findById($id);
     }
 
-    public function restorePassword(UsuarioData $usuarioData): void
+    public function restorePassword(UsuarioDto $usuarioData): void
     {
         $usuario = $this->usuarioRepository->findByCorreo($usuarioData->correo);
 
@@ -58,7 +58,7 @@ class AuthService implements AuthServiceInterface
         Mail::to($usuario->correo)->send(new RestorePasswordMail($usuario, $contraseniaNueva));
     }
 
-    public function changePassword(int $usuarioId, UsuarioData $usuarioData): void
+    public function changePassword(int $usuarioId, UsuarioDto $usuarioData): void
     {
         $usuario = $this->usuarioRepository->findById($usuarioId, ['contrasenia']);
 

@@ -6,6 +6,7 @@ use App\Models\CatalogoOpcion;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\SexoUsuarioEnum;
+use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
 use App\Models\Enum\RolEnum;
 use App\Models\Externo;
 use App\Models\Usuario;
@@ -33,7 +34,8 @@ class ExternoSeeder extends Seeder
             ->create([
                 'sexo_id' => $sexoId,
                 'estatus_id' => $activoId,
-                'rol_id' => RolEnum::LECTOR->value
+                'rol_id' => RolEnum::LECTOR->value,
+                'tipo_id' => TipoUsuarioEnum::EXTERNO
             ])
             ->each(function (Usuario $usuario) {
                 $usuario->externo()->create([

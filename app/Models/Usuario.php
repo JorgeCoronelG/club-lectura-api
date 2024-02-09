@@ -31,13 +31,15 @@ class Usuario extends Authenticatable implements ScopeFilterInterface
         'sexo_id',
         'estatus_id',
         'rol_id',
+        'tipo_id',
     ];
     protected $casts = [
         'id' => 'integer',
         'fecha_nacimiento' => 'date',
         'sexo_id' => 'integer',
         'estatus_id' => 'integer',
-        'rol_id' => 'integer'
+        'rol_id' => 'integer',
+        'tipo_id' => 'integer'
     ];
     protected $hidden = ['contrasenia'];
     public $allowedSorts = ['id', 'nombre_completo', 'correo', 'telefono', 'fecha_nacimiento'];
@@ -55,6 +57,11 @@ class Usuario extends Authenticatable implements ScopeFilterInterface
     public function rol(): BelongsTo
     {
         return $this->belongsTo(Rol::class, 'rol_id');
+    }
+
+    public function tipo(): BelongsTo
+    {
+        return $this->belongsTo(CatalogoOpcion::class, 'tipo_id');
     }
 
     public function externo(): HasOne

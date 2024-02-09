@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Core\Contracts\ReturnDataInterface;
-use App\Models\Data\UsuarioData;
+use App\Models\Dto\UsuarioDto;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangePasswordRequest extends FormRequest implements ReturnDataInterface
@@ -37,9 +37,9 @@ class ChangePasswordRequest extends FormRequest implements ReturnDataInterface
         ];
     }
 
-    public function toData(): UsuarioData
+    public function toData(): UsuarioDto
     {
-        return UsuarioData::from([
+        return UsuarioDto::from([
             'contraseniaActual' => $this->contraseniaActual,
             'contrasenia' => bcrypt($this->contrasenia),
         ]);

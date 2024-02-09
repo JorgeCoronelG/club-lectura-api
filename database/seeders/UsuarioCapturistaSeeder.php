@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\CatalogoOpcion;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
+use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
 use App\Models\Enum\RolEnum;
 use App\Models\Usuario;
 use Illuminate\Database\Seeder;
@@ -30,7 +31,8 @@ class UsuarioCapturistaSeeder extends Seeder
         Usuario::factory(2)->create([
             'sexo_id' => $sexoId,
             'estatus_id' => $activoId,
-            'rol_id' => RolEnum::CAPTURISTA->value
+            'rol_id' => RolEnum::CAPTURISTA->value,
+            'tipo_id' => TipoUsuarioEnum::ALUMNO
         ]);
     }
 }

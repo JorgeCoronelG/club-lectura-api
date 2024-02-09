@@ -6,6 +6,7 @@ use App\Models\CatalogoOpcion;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\SexoUsuarioEnum;
+use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
 use App\Models\Enum\RolEnum;
 use App\Models\Usuario;
 use Illuminate\Database\Seeder;
@@ -37,7 +38,8 @@ class UsuarioSeederAdmin extends Seeder
                 'fecha_nacimiento' => '1998-08-29',
                 'sexo_id' => $hombreId,
                 'estatus_id' => $activoId,
-                'rol_id' => RolEnum::ADMINISTRADOR->value
+                'rol_id' => RolEnum::ADMINISTRADOR->value,
+                'tipo_id' => TipoUsuarioEnum::EXTERNO
             ]);
 
         $usuario->externo()->create(['usuario_id' => $usuario->id]);

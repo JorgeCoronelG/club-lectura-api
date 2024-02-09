@@ -18,6 +18,7 @@ class CatalogoSeeder extends Seeder
                 $this->catalogoData('Sexo del usuario'),
                 $this->catalogoData('Tipo de persona escolar'),
                 $this->catalogoData('Turno escolar'),
+                $this->catalogoData('Tipo de usuario'),
             ]);
     }
 

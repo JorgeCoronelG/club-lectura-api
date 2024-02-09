@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\CatalogoOpcion;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
+use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
 use App\Models\Enum\RolEnum;
 use App\Models\Escolar;
 use App\Models\Usuario;
@@ -37,7 +38,8 @@ class EscolarSeeder extends Seeder
             ->create([
                 'sexo_id' => $sexoId,
                 'estatus_id' => $activoId,
-                'rol_id' => RolEnum::LECTOR->value
+                'rol_id' => RolEnum::LECTOR->value,
+                'tipo_id' => TipoUsuarioEnum::ESCOLAR
             ])
             ->each(function (Usuario $usuario) use ($tipoId) {
                 Escolar::factory()

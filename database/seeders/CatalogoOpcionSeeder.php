@@ -7,6 +7,7 @@ use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\SexoUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\TipoEscolarEnum;
+use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\TurnoAlumnoEnum;
 use Illuminate\Database\Seeder;
 
@@ -25,6 +26,8 @@ class CatalogoOpcionSeeder extends Seeder
             ->insert($this->obtenerDataOpciones(TipoEscolarEnum::array(), CatalogoEnum::TIPO_ESCOLAR->value));
         CatalogoOpcion::query()
             ->insert($this->obtenerDataOpciones(TurnoAlumnoEnum::array(), CatalogoEnum::TURNO_ALUMNO->value));
+        CatalogoOpcion::query()
+            ->insert($this->obtenerDataOpciones(TipoUsuarioEnum::array(), CatalogoEnum::TIPO_USUARIO->value));
     }
 
     private function obtenerDataOpciones(array $enum, int $catalogoId): array

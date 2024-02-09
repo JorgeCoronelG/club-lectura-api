@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Autor;
 
 use App\Core\Contracts\ReturnDataInterface;
-use App\Models\Data\AutorData;
+use App\Models\Dto\AutorDto;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAutorRequest extends FormRequest implements ReturnDataInterface
@@ -35,8 +35,8 @@ class StoreAutorRequest extends FormRequest implements ReturnDataInterface
         ];
     }
 
-    public function toData(): AutorData
+    public function toData(): AutorDto
     {
-        return AutorData::from($this->all());
+        return AutorDto::from($this->all());
     }
 }

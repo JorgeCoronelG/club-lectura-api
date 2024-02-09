@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Auth;
 
 use App\Core\Contracts\ReturnDataInterface;
-use App\Models\Data\UsuarioData;
+use App\Models\Dto\UsuarioDto;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RestorePasswordRequest extends FormRequest implements ReturnDataInterface
 {
@@ -40,8 +39,8 @@ class RestorePasswordRequest extends FormRequest implements ReturnDataInterface
         ];
     }
 
-    public function toData(): UsuarioData
+    public function toData(): UsuarioDto
     {
-        return UsuarioData::from($this->all());
+        return UsuarioDto::from($this->all());
     }
 }

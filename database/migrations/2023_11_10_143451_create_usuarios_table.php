@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sexo_id');
             $table->unsignedBigInteger('estatus_id');
             $table->unsignedTinyInteger('rol_id');
+            $table->unsignedBigInteger('tipo_id');
             $table->timestamp('creado_en')
                 ->useCurrent();
             $table->timestamp('actualizado_en')
@@ -37,6 +38,9 @@ return new class extends Migration
             $table->foreign('rol_id')
                 ->references('id')
                 ->on('roles');
+            $table->foreign('tipo_id')
+                ->references('id')
+                ->on('catalogo_opciones');
         });
     }
 

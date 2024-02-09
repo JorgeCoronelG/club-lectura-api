@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Models\Data;
+namespace App\Models\Dto;
 
 use Spatie\LaravelData\Attributes\MapOutputName;
-use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
 #[MapOutputName(SnakeCaseMapper::class)]
-class ExternoData extends Data
+class DonacionUsuarioDto
 {
     public function __construct(
-        public ?int $usuarioId
+        public ?int $donacionId,
+        public ?int $usuarioId,
+        public ?string $referencia,
     ) {
         //
     }

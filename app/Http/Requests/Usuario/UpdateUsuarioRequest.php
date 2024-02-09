@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Usuario;
 
 use App\Core\Contracts\ReturnDataInterface;
-use App\Models\Data\UsuarioData;
+use App\Models\Dto\UsuarioDto;
 use App\Models\Enum\CatalogoEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -98,8 +98,8 @@ class UpdateUsuarioRequest extends FormRequest implements ReturnDataInterface
         ];
     }
 
-    public function toData(): UsuarioData
+    public function toData(): UsuarioDto
     {
-        return UsuarioData::from($this->all());
+        return UsuarioDto::from($this->all());
     }
 }

@@ -12,4 +12,5 @@ enum CatalogoEnum: int
     case SEXO = 2;
     case TIPO_ESCOLAR = 3;
     case TURNO_ALUMNO = 4;
+    case TIPO_USUARIO = 5;
 }

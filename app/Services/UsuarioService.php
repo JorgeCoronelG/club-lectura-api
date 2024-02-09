@@ -8,7 +8,7 @@ use App\Contracts\Services\UsuarioServiceInterface;
 use App\Core\BaseService;
 use App\Core\Contracts\BaseRepositoryInterface;
 use App\Mail\Usuario\UserCreatedMail;
-use App\Models\Data\UsuarioData;
+use App\Models\Dto\UsuarioDto;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Usuario;
@@ -29,7 +29,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
         $this->catalogoOpcionRepository = $catalogoOpcionRepository;
     }
 
-    public function create(Data|UsuarioData $data): Usuario
+    public function create(Data|UsuarioDto $data): Usuario
     {
         $estatusId = $this->catalogoOpcionRepository
             ->findByOpcionIdAndCatalogoId(EstatusUsuarioEnum::ACTIVO->value, CatalogoEnum::ESTATUS_USUARIO->value)
@@ -65,7 +65,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
         return $usuario;
     }
 
-    public function update(int $id, Data|UsuarioData $data): Usuario
+    public function update(int $id, Data|UsuarioDto $data): Usuario
     {
         $usuarioAnterior = $this->entityRepository->findById($id);
         $usuarioActualizado = $this->entityRepository->update(
