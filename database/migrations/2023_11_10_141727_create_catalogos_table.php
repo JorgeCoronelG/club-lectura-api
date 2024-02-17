@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('catalogos', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('id');
             $table->string('nombre', 150);
             $table->timestamp('creado_en')
                 ->useCurrent();
+
+            $table->primary('id');
         });
     }
 

@@ -11,6 +11,7 @@ use App\Mail\Usuario\UserCreatedMail;
 use App\Models\Dto\UsuarioDto;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
+use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -41,7 +42,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
 
         $usuario = $this->entityRepository->create($data->toArray());
 
-        if (isset($data->escolar)) {
+        if ($data->tipoId === TipoUsuarioEnum::ESCOLAR) {
             $data->escolar->usuarioId = $usuario->id;
 
             $usuario->escolar()->create($data->escolar->toArray());
@@ -50,7 +51,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             return $usuario;
         }
 
-        if (isset($data->alumno)) {
+        if ($data->tipoId === TipoUsuarioEnum::ALUMNO) {
             $data->alumno->usuarioId = $usuario->id;
 
             $usuario->alumno()->create($data->alumno->toArray());
@@ -75,7 +76,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
                 ->toArray()
         );
 
-        if (isset($data->alumno)) {
+        if ($data->tipoId === TipoUsuarioEnum::ALUMNO) {
             if (isset($usuarioAnterior->alumno)) {
                 $usuarioActualizado->alumno()->update(
                     $data->alumno
@@ -92,7 +93,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             return $usuarioActualizado;
         }
 
-        if (isset($data->escolar)) {
+        if ($data->tipoId === TipoUsuarioEnum::ESCOLAR) {
             if (isset($usuarioAnterior->escolar)) {
                 $usuarioActualizado->escolar()->update(
                     $data->escolar

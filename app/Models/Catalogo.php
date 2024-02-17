@@ -11,9 +11,8 @@ class Catalogo extends Model
     use HasFactory;
 
     protected $table = 'catalogos';
-    protected $fillable = [
-        'nombre'
-    ];
+    public $incrementing = false;
+    protected $fillable = ['id', 'nombre'];
     protected $casts = [
         'id' => 'integer'
     ];

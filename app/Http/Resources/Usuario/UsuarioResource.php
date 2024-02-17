@@ -31,6 +31,8 @@ class UsuarioResource extends JsonResource
             'estatus' => CatalogoOpcionResource::make($this->whenLoaded('estatus')),
             'rolId' => $this->rol_id,
             'rol' => RolResource::make($this->whenLoaded('rol')),
+            'tipoId' => $this->tipo_id,
+            'tipo' => CatalogoOpcionResource::make($this->whenLoaded('tipo')),
             'externo' => ExternoResource::make($this->whenLoaded('externo')),
             'escolar' => EscolarResource::make($this->whenLoaded('escolar')),
             'alumno' => AlumnoResource::make($this->whenLoaded('alumno')),

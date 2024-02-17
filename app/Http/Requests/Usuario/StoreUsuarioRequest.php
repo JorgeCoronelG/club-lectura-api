@@ -46,6 +46,12 @@ class StoreUsuarioRequest extends FormRequest implements ReturnDataInterface
                 'integer',
                 Rule::exists('roles', 'id')
             ],
+            'tipoId' => [
+                'required',
+                'integer',
+                Rule::exists('catalogo_opciones', 'id')
+                    ->where('catalogo_id', CatalogoEnum::TIPO_USUARIO->value)
+            ],
         ];
 
         if (isset($this->escolar)) {
@@ -85,6 +91,7 @@ class StoreUsuarioRequest extends FormRequest implements ReturnDataInterface
             'fechaNacimiento' => 'Fecha de nacimiento',
             'sexoId' => 'Género',
             'rolId' => 'Rol',
+            'tipoId' => 'Tipo usuario',
             'escolar' => 'Escolar',
             'escolar.matricula' => 'Matricula',
             'escolar.tipoId' => 'Tipo',
