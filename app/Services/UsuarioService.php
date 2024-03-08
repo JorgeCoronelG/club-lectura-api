@@ -32,17 +32,19 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
 
     public function create(Data|UsuarioDto $data): Usuario
     {
-        $estatusId = $this->catalogoOpcionRepository
+        $contrasenia = Str::random(8);
+        $data->contrasenia = bcrypt($contrasenia);
+        $data->estatusId = $this->catalogoOpcionRepository
             ->findByOpcionIdAndCatalogoId(EstatusUsuarioEnum::ACTIVO->value, CatalogoEnum::ESTATUS_USUARIO->value)
             ->id;
-        $contrasenia = Str::random(8);
-
-        $data->contrasenia = bcrypt($contrasenia);
-        $data->estatusId = $estatusId;
+        $opcionId = $data->tipoId;
+        $data->tipoId = $this->catalogoOpcionRepository
+            ->findByOpcionIdAndCatalogoId($data->tipoId, CatalogoEnum::TIPO_USUARIO->value)
+            ->id;
 
         $usuario = $this->entityRepository->create($data->toArray());
 
-        if ($data->tipoId === TipoUsuarioEnum::ESCOLAR) {
+        if ($opcionId === TipoUsuarioEnum::ESCOLAR->value) {
             $data->escolar->usuarioId = $usuario->id;
 
             $usuario->escolar()->create($data->escolar->toArray());
@@ -51,7 +53,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             return $usuario;
         }
 
-        if ($data->tipoId === TipoUsuarioEnum::ALUMNO) {
+        if ($opcionId === TipoUsuarioEnum::ALUMNO->value) {
             $data->alumno->usuarioId = $usuario->id;
 
             $usuario->alumno()->create($data->alumno->toArray());
@@ -68,15 +70,20 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
 
     public function update(int $id, Data|UsuarioDto $data): Usuario
     {
+        $opcionId = $data->tipoId;
+        $data->tipoId = $this->catalogoOpcionRepository
+            ->findByOpcionIdAndCatalogoId($data->tipoId, CatalogoEnum::TIPO_USUARIO->value)
+            ->id;
+
         $usuarioAnterior = $this->entityRepository->findById($id);
         $usuarioActualizado = $this->entityRepository->update(
             $id,
             $data
-                ->only('nombreCompleto', 'correo', 'telefono', 'fechaNacimiento', 'sexoId', 'rolId')
+                ->only('nombreCompleto', 'correo', 'telefono', 'fechaNacimiento', 'sexoId', 'rolId', 'tipoId')
                 ->toArray()
         );
 
-        if ($data->tipoId === TipoUsuarioEnum::ALUMNO) {
+        if ($opcionId === TipoUsuarioEnum::ALUMNO->value) {
             if (isset($usuarioAnterior->alumno)) {
                 $usuarioActualizado->alumno()->update(
                     $data->alumno
@@ -93,7 +100,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             return $usuarioActualizado;
         }
 
-        if ($data->tipoId === TipoUsuarioEnum::ESCOLAR) {
+        if ($opcionId=== TipoUsuarioEnum::ESCOLAR->value) {
             if (isset($usuarioAnterior->escolar)) {
                 $usuarioActualizado->escolar()->update(
                     $data->escolar

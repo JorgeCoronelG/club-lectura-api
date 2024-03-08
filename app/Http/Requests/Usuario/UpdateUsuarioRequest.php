@@ -51,7 +51,7 @@ class UpdateUsuarioRequest extends FormRequest implements ReturnDataInterface
             'tipoId' => [
                 'required',
                 'integer',
-                Rule::exists('catalogo_opciones', 'id')
+                Rule::exists('catalogo_opciones', 'opcion_id')
                     ->where('catalogo_id', CatalogoEnum::TIPO_USUARIO->value)
             ],
         ];

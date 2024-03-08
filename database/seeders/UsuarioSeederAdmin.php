@@ -28,6 +28,11 @@ class UsuarioSeederAdmin extends Seeder
             ->where('opcion_id', SexoUsuarioEnum::HOMBRE)
             ->first()
             ->id;
+        $tipoId = CatalogoOpcion::query()
+            ->where('catalogo_id', CatalogoEnum::TIPO_USUARIO)
+            ->where('opcion_id', TipoUsuarioEnum::EXTERNO->value)
+            ->first()
+            ->id;
 
         $usuario = Usuario::query()
             ->create([
@@ -39,7 +44,7 @@ class UsuarioSeederAdmin extends Seeder
                 'sexo_id' => $hombreId,
                 'estatus_id' => $activoId,
                 'rol_id' => RolEnum::ADMINISTRADOR->value,
-                'tipo_id' => TipoUsuarioEnum::EXTERNO
+                'tipo_id' => $tipoId
             ]);
 
         $usuario->externo()->create(['usuario_id' => $usuario->id]);

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Catalogo;
+use App\Models\Enum\CatalogoEnum;
 use Illuminate\Database\Seeder;
 
 class CatalogoSeeder extends Seeder
@@ -14,16 +15,19 @@ class CatalogoSeeder extends Seeder
     {
         Catalogo::query()
             ->insert([
-                $this->catalogoData('Estatus del usuario'),
-                $this->catalogoData('Sexo del usuario'),
-                $this->catalogoData('Tipo de persona escolar'),
-                $this->catalogoData('Turno escolar'),
-                $this->catalogoData('Tipo de usuario'),
+                $this->catalogoData(CatalogoEnum::ESTATUS_USUARIO->value,'Estatus del usuario'),
+                $this->catalogoData(CatalogoEnum::SEXO->value,'Sexo del usuario'),
+                $this->catalogoData(CatalogoEnum::TIPO_ESCOLAR->value,'Tipo de persona escolar'),
+                $this->catalogoData(CatalogoEnum::TURNO_ALUMNO->value,'Turno escolar'),
+                $this->catalogoData(CatalogoEnum::TIPO_USUARIO->value,'Tipo de usuario'),
             ]);
     }
 
-    private function catalogoData(string $nombre): array
+    private function catalogoData(int $id, string $nombre): array
     {
-        return ['nombre' => $nombre];
+        return [
+            'id' => $id,
+            'nombre' => $nombre
+        ];
     }
 }

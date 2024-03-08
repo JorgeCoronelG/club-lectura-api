@@ -68,10 +68,4 @@ class UsuarioController extends BaseApiController
 
         return $this->showOne(UsuarioResource::make($usuario));
     }
-
-    public function destroy(int $id): Response
-    {
-        $this->usuarioService->delete($id);
-        return $this->noContentResponse();
-    }
 }

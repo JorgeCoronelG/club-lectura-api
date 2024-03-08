@@ -29,13 +29,18 @@ class ExternoSeeder extends Seeder
             ->inRandomOrder()
             ->first()
             ->id;
+        $tipoId = CatalogoOpcion::query()
+            ->where('catalogo_id', CatalogoEnum::TIPO_USUARIO->value)
+            ->where('opcion_id', TipoUsuarioEnum::EXTERNO->value)
+            ->first()
+            ->id;
 
         Usuario::factory(5)
             ->create([
                 'sexo_id' => $sexoId,
                 'estatus_id' => $activoId,
                 'rol_id' => RolEnum::LECTOR->value,
-                'tipo_id' => TipoUsuarioEnum::EXTERNO
+                'tipo_id' => $tipoId
             ])
             ->each(function (Usuario $usuario) {
                 $usuario->externo()->create([

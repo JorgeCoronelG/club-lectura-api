@@ -27,12 +27,17 @@ class UsuarioCapturistaSeeder extends Seeder
             ->inRandomOrder()
             ->first()
             ->id;
+        $tipoId = CatalogoOpcion::query()
+            ->where('catalogo_id', CatalogoEnum::TIPO_USUARIO->value)
+            ->where('opcion_id', TipoUsuarioEnum::ALUMNO->value)
+            ->first()
+            ->id;
 
         Usuario::factory(2)->create([
             'sexo_id' => $sexoId,
             'estatus_id' => $activoId,
             'rol_id' => RolEnum::CAPTURISTA->value,
-            'tipo_id' => TipoUsuarioEnum::ALUMNO
+            'tipo_id' => $tipoId
         ]);
     }
 }

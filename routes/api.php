@@ -74,5 +74,6 @@ Route::middleware('auth:sanctum')
                 'permission:'
                 .RolEnum::ADMINISTRADOR->value.','
                 .RolEnum::CAPTURISTA->value
-            );
+            )
+            ->except('destroy');
     });

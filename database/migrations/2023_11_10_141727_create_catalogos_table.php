@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('catalogos', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->unsignedBigInteger('id');
             $table->string('nombre', 150);
             $table->timestamp('creado_en')
                 ->useCurrent();

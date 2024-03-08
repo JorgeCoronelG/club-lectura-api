@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('catalogo_opciones', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->bigIncrements('id');
             $table->bigInteger('opcion_id');
             $table->unsignedBigInteger('catalogo_id');
             $table->string('valor', 150);
@@ -21,7 +21,6 @@ return new class extends Migration
             $table->timestamp('creado_en')
                 ->useCurrent();
 
-            $table->primary('id');
             $table->foreign('catalogo_id')
                 ->references('id')
                 ->on('catalogos');

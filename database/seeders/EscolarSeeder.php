@@ -29,6 +29,11 @@ class EscolarSeeder extends Seeder
             ->first()
             ->id;
         $tipoId = CatalogoOpcion::query()
+            ->where('catalogo_id', CatalogoEnum::TIPO_USUARIO->value)
+            ->where('opcion_id', TipoUsuarioEnum::ESCOLAR->value)
+            ->first()
+            ->id;
+        $tipoEscolarId = CatalogoOpcion::query()
             ->where('catalogo_id', CatalogoEnum::TIPO_ESCOLAR->value)
             ->inRandomOrder()
             ->first()
@@ -39,13 +44,13 @@ class EscolarSeeder extends Seeder
                 'sexo_id' => $sexoId,
                 'estatus_id' => $activoId,
                 'rol_id' => RolEnum::LECTOR->value,
-                'tipo_id' => TipoUsuarioEnum::ESCOLAR
+                'tipo_id' => $tipoId
             ])
-            ->each(function (Usuario $usuario) use ($tipoId) {
+            ->each(function (Usuario $usuario) use ($tipoEscolarId) {
                 Escolar::factory()
                     ->create([
                         'usuario_id' => $usuario->id,
-                        'tipo_id' => $tipoId
+                        'tipo_id' => $tipoEscolarId
                     ]);
             });
     }
