@@ -11,4 +11,14 @@ enum RolEnum: int
     case ADMINISTRADOR = 1;
     case CAPTURISTA = 2;
     case LECTOR = 3;
+
+    static function customName(int $case): string
+    {
+        return match ($case) {
+            self::ADMINISTRADOR->value => 'Administrador',
+            self::CAPTURISTA->value => 'Capturista',
+            self::LECTOR->value => 'Lector',
+            default => '',
+        };
+    }
 }

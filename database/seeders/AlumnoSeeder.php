@@ -38,6 +38,11 @@ class AlumnoSeeder extends Seeder
             ->where('opcion_id', TipoUsuarioEnum::ALUMNO->value)
             ->first()
             ->id;
+        $carreraId = CatalogoOpcion::query()
+            ->where('catalogo_id', CatalogoEnum::CARRERAS_EDUCATIVAS->value)
+            ->inRandomOrder()
+            ->first()
+            ->id;
 
         Usuario::factory(5)
             ->create([
@@ -46,11 +51,12 @@ class AlumnoSeeder extends Seeder
                 'rol_id' => RolEnum::LECTOR->value,
                 'tipo_id' => $tipoId
             ])
-            ->each(function (Usuario $usuario) use ($turnoId) {
+            ->each(function (Usuario $usuario) use ($turnoId, $carreraId) {
                 Alumno::factory()
                     ->create([
                         'usuario_id' => $usuario->id,
-                        'turno_id' => $turnoId
+                        'turno_id' => $turnoId,
+                        'carrera_id' => $carreraId
                     ]);
             });
     }

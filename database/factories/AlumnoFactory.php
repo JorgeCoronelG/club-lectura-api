@@ -16,15 +16,8 @@ class AlumnoFactory extends Factory
      */
     public function definition(): array
     {
-        $grupos = [
-            '1-TPROG-AM',
-            '1-TPROG-BM',
-            '1-TPROG-AV',
-            '1-TPROG-BV',
-        ];
-
         return [
-            'grupo' => $grupos[rand(0,3)]
+            'semestre' => random_int(1, 6)
         ];
     }
 }

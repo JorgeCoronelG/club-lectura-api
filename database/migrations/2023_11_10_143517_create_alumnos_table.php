@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('alumnos', function (Blueprint $table) {
             $table->unsignedBigInteger('usuario_id');
-            $table->string('grupo', 15);
+            $table->smallInteger('semestre');
+            $table->unsignedBigInteger('carrera_id');
             $table->unsignedBigInteger('turno_id');
 
             $table->foreign('usuario_id')
@@ -21,6 +22,9 @@ return new class extends Migration
                 ->on('usuarios')
                 ->cascadeOnDelete();
             $table->foreign('turno_id')
+                ->references('id')
+                ->on('catalogo_opciones');
+            $table->foreign('carrera_id')
                 ->references('id')
                 ->on('catalogo_opciones');
         });

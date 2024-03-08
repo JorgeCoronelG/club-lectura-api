@@ -18,4 +18,6 @@ trait EnumToArray
     {
         return array_combine(self::names(), self::values());
     }
+
+    abstract static function customName(int $case): string;
 }
