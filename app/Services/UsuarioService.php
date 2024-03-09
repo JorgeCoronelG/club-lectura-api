@@ -87,7 +87,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             if (isset($usuarioAnterior->alumno)) {
                 $usuarioActualizado->alumno()->update(
                     $data->alumno
-                        ->only('grupo', 'matricula')
+                        ->only('semestre', 'carrera_id', 'turno_id')
                         ->toArray()
                 );
                 return $usuarioActualizado;

@@ -69,8 +69,14 @@ class StoreUsuarioRequest extends FormRequest implements ReturnDataInterface
 
         if (isset($this->alumno)) {
             return array_merge($rules, [
-                'alumno' => ['required', 'array:grupo,turnoId'],
-                'alumno.grupo' => ['required', 'min:5', 'max:15'],
+                'alumno' => ['required', 'array:semestre,carreraId,turnoId'],
+                'alumno.semestre' => ['required', 'min:1', 'max:6'],
+                'alumno.carreraId' => [
+                    'required',
+                    'integer',
+                    Rule::exists('catalogo_opciones', 'id')
+                        ->where('catalogo_id', CatalogoEnum::CARRERAS_EDUCATIVAS->value)
+                ],
                 'alumno.turnoId' => [
                     'required',
                     'integer',
@@ -96,7 +102,8 @@ class StoreUsuarioRequest extends FormRequest implements ReturnDataInterface
             'escolar.matricula' => 'Matricula',
             'escolar.tipoId' => 'Tipo',
             'alumno' => 'Alumno',
-            'alumno.grupo' => 'Grupo',
+            'alumno.semestre' => 'Semestre',
+            'alumno.carreraId' => 'Carrera',
             'alumno.turnoId' => 'Turno',
         ];
     }

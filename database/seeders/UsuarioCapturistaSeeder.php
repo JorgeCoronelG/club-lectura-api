@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Alumno;
 use App\Models\CatalogoOpcion;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
@@ -32,12 +33,31 @@ class UsuarioCapturistaSeeder extends Seeder
             ->where('opcion_id', TipoUsuarioEnum::ALUMNO->value)
             ->first()
             ->id;
+        $turnoId = CatalogoOpcion::query()
+            ->where('catalogo_id', CatalogoEnum::TURNO_ALUMNO->value)
+            ->inRandomOrder()
+            ->first()
+            ->id;
+        $carreraId = CatalogoOpcion::query()
+            ->where('catalogo_id', CatalogoEnum::CARRERAS_EDUCATIVAS->value)
+            ->inRandomOrder()
+            ->first()
+            ->id;
 
-        Usuario::factory(2)->create([
-            'sexo_id' => $sexoId,
-            'estatus_id' => $activoId,
-            'rol_id' => RolEnum::CAPTURISTA->value,
-            'tipo_id' => $tipoId
-        ]);
+        Usuario::factory(2)
+            ->create([
+                'sexo_id' => $sexoId,
+                'estatus_id' => $activoId,
+                'rol_id' => RolEnum::CAPTURISTA->value,
+                'tipo_id' => $tipoId
+            ])
+            ->each(function (Usuario $usuario) use ($turnoId, $carreraId) {
+                Alumno::factory()
+                    ->create([
+                        'usuario_id' => $usuario->id,
+                        'turno_id' => $turnoId,
+                        'carrera_id' => $carreraId
+                    ]);
+            });
     }
 }

@@ -11,7 +11,8 @@ class AlumnoDto extends Data
 {
     public function __construct(
         public ?int $usuarioId,
-        public ?string $grupo,
+        public ?int $semestre,
+        public ?int $carreraId,
         public ?int $turnoId,
     ) {
         //

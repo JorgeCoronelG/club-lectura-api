@@ -14,10 +14,17 @@ class Alumno extends Model
     protected $primaryKey = 'usuario_id';
     protected $fillable = [
         'usuario_id',
-        'grupo',
-        'turno_id'
+        'semestre',
+        'carrera_id',
+        'turno_id',
     ];
     public $timestamps = false;
+    protected $casts = [
+        'usuario_id' => 'integer',
+        'semestre' => 'integer',
+        'carrera_id' => 'integer',
+        'turno_id' => 'integer',
+    ];
 
     public function usuario(): BelongsTo
     {
@@ -27,5 +34,10 @@ class Alumno extends Model
     public function turno(): BelongsTo
     {
         return $this->belongsTo(CatalogoOpcion::class, 'turno_id');
+    }
+
+    public function carrera(): BelongsTo
+    {
+        return $this->belongsTo(CatalogoOpcion::class, 'carrera_id');
     }
 }

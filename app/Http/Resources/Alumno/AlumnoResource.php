@@ -17,7 +17,9 @@ class AlumnoResource extends JsonResource
     {
         return [
             'usuarioId' => $this->usuario_id,
-            'grupo' => $this->grupo,
+            'semestre' => $this->semestre,
+            'carreraId' => $this->carrera_id,
+            'carrera' => CatalogoOpcionResource::make($this->whenLoaded('carrera')),
             'turnoId' => $this->turno_id,
             'turno' => CatalogoOpcionResource::make($this->whenLoaded('turno')),
         ];

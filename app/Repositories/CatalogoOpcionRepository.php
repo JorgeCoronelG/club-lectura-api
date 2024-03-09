@@ -31,6 +31,7 @@ class CatalogoOpcionRepository extends BaseRepository implements CatalogoOpcionR
     {
         return $this->entity
             ->where('catalogo_id', $catalogoId)
+            ->orderBy('valor')
             ->get();
     }
 }
