@@ -19,7 +19,8 @@ class SubmenuResource extends JsonResource
             'pathRuta' => $this['path_ruta'],
             'etiqueta' => $this['etiqueta'],
             'orden' => $this['orden'],
-            'menuId' => $this['menu_id']
+            'menuId' => $this['menu_id'],
+            'isSelected' => $this['is_selected'] ?? null,
         ];
     }
 }

@@ -22,6 +22,7 @@ class MenuResource extends JsonResource
             'etiqueta' => $this['etiqueta'],
             'icono' => $this['icono'],
             'orden' => $this['orden'],
+            'isSelected' => $this['is_selected'] ?? null,
             'submenu' => SubmenuResource::collection($this['submenu'])
         ];
     }

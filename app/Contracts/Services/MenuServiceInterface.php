@@ -14,4 +14,8 @@ interface MenuServiceInterface extends BaseServiceInterface
     public function hasPermissionToUrl(int $userId, string $pathUrl): bool;
 
     public function getNavigationMenu(int $userId): \Illuminate\Support\Collection;
+
+    public function getNavigationByUserId(int $userId):\Illuminate\Support\Collection;
+
+    public function syncNavigation(int $userId, array $menuIds, array $submenuIds): void;
 }

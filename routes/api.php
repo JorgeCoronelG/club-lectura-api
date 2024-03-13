@@ -55,6 +55,12 @@ Route::middleware('auth:sanctum')
             ->group(function () {
                 Route::get('/has-permission', 'hasPermissionToUrl')->name('has-permission');
                 Route::get('/navigation', 'getNavigationMenu')->name('navigation');
+                Route::get('/user/{userId}', 'getNavigationByUserId')
+                    ->name('user')
+                    ->middleware('permission:'.RolEnum::ADMINISTRADOR->value);
+                Route::put('/permission/{userId}', 'syncNavigation')
+                    ->name('permission')
+                    ->middleware('permission:'.RolEnum::ADMINISTRADOR->value);
             });
 
         Route::controller(RolController::class)
