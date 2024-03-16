@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('libros', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('clave');
-            $table->string('isbn', 15);
+            $table->string('clave')
+                ->nullable();
+            $table->string('isbn', 18);
             $table->string('titulo', 150);
             $table->tinyText('resenia')
                 ->nullable();
@@ -26,7 +27,8 @@ return new class extends Migration
             $table->tinyInteger('num_copia');
             $table->unsignedBigInteger('idioma_id');
             $table->unsignedBigInteger('estatus_id');
-            $table->unsignedBigInteger('donacion_id');
+            $table->unsignedBigInteger('donacion_id')
+                ->nullable();
             $table->unsignedBigInteger('genero_id');
             $table->timestamp('creado_en')
                 ->useCurrent();

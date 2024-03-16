@@ -11,6 +11,9 @@ class Libro extends Model
 {
     use HasFactory;
 
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
+
     protected $table = 'libros';
     protected $fillable = [
         'clave',

@@ -41,4 +41,11 @@ class File
             ? Path::STORAGE->value.$path.$filename
             : Path::STORAGE->value.$path;
     }
+
+    public static function storagePath(string $path, string $filename = null): string
+    {
+        return (!is_null($filename))
+            ? storage_path('app/public/').$path.$filename
+            : storage_path('app/public/').$path;
+    }
 }

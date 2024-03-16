@@ -5,7 +5,10 @@ namespace Database\Seeders;
 use App\Models\CatalogoOpcion;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\CarrerasEducativasEnum;
+use App\Models\Enum\CatalogoOpciones\EstadoFisicoLibroEnum;
+use App\Models\Enum\CatalogoOpciones\EstatusLibroEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
+use App\Models\Enum\CatalogoOpciones\IdiomaLibroEnum;
 use App\Models\Enum\CatalogoOpciones\SexoUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\TipoEscolarEnum;
 use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
@@ -36,6 +39,15 @@ class CatalogoOpcionSeeder extends Seeder
         );
         $this->insertCatalogo(
             CarrerasEducativasEnum::values(), CatalogoEnum::CARRERAS_EDUCATIVAS->value, fn ($case) => CarrerasEducativasEnum::customName($case)
+        );
+        $this->insertCatalogo(
+            EstadoFisicoLibroEnum::values(), CatalogoEnum::ESTADO_FISICO_LIBRO->value, fn ($case) => EstadoFisicoLibroEnum::customName($case)
+        );
+        $this->insertCatalogo(
+            IdiomaLibroEnum::values(), CatalogoEnum::IDIOMA->value, fn ($case) => IdiomaLibroEnum::customName($case)
+        );
+        $this->insertCatalogo(
+            EstatusLibroEnum::values(), CatalogoEnum::ESTATUS_LIBRO->value, fn ($case) => EstatusLibroEnum::customName($case)
         );
     }
 
