@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CatalogoOpcionController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\RolController;
 use App\Http\Controllers\Api\UsuarioController;
+use App\Http\Controllers\Api\LibroController;
 use App\Models\Enum\RolEnum;
 
 Route::controller(AuthController::class)
@@ -75,11 +76,17 @@ Route::middleware('auth:sanctum')
                 Route::get('/find-all', 'findAll')->name('find-all');
             });
 
+        Route::apiResource('books', LibroController::class)
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value.','
+            );
+
         Route::apiResource('users', UsuarioController::class)
             ->middleware(
                 'permission:'
                 .RolEnum::ADMINISTRADOR->value.','
                 .RolEnum::CAPTURISTA->value
-            )
-            ->except('destroy');
+            );
     });

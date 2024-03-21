@@ -2,21 +2,24 @@
 
 namespace App\Models;
 
+use App\Core\Traits\AdvancedFilter;
+use App\Core\Traits\Sortable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Libro extends Model
+class   Libro extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable, AdvancedFilter, SoftDeletes;
 
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
+    const DELETED_AT = 'eliminado_en';
 
     protected $table = 'libros';
     protected $fillable = [
-        'clave',
         'isbn',
         'titulo',
         'resenia',
@@ -41,8 +44,10 @@ class Libro extends Model
         'idioma_id' => 'integer',
         'estatus_id' => 'integer',
         'donacion_id' => 'integer',
-        'genero_id' => 'integer'
+        'genero_id' => 'integer',
     ];
+
+    public array $allowedSorts = ['id', 'clave', 'titulo', 'num_paginas', 'precio'];
 
     public function estadoFisico(): BelongsTo
     {

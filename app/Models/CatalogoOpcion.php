@@ -14,7 +14,8 @@ class CatalogoOpcion extends Model
     protected $table = 'catalogo_opciones';
     protected $fillable = [
         'catalogo_id',
-        'valor'
+        'valor',
+        'clase_css'
     ];
     protected $casts = [
         'id' => 'integer',

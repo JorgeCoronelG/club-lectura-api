@@ -20,16 +20,17 @@ return new class extends Migration
             $table->tinyText('resenia')
                 ->nullable();
             $table->smallInteger('num_paginas');
-            $table->unsignedBigInteger('estado_fisico_id');
             $table->float('precio');
             $table->tinyInteger('edicion');
             $table->string('imagen');
             $table->tinyInteger('num_copia');
+            $table->unsignedBigInteger('estado_fisico_id');
             $table->unsignedBigInteger('idioma_id');
             $table->unsignedBigInteger('estatus_id');
             $table->unsignedBigInteger('donacion_id')
                 ->nullable();
             $table->unsignedBigInteger('genero_id');
+            $table->softDeletes('eliminado_en');
             $table->timestamp('creado_en')
                 ->useCurrent();
             $table->timestamp('actualizado_en')

@@ -16,6 +16,9 @@ return new class extends Migration
             $table->bigInteger('opcion_id');
             $table->unsignedBigInteger('catalogo_id');
             $table->string('valor', 150);
+            $table->string('clase_css')
+                ->nullable()
+                ->default(null);
             $table->boolean('estatus')
                 ->default(true);
             $table->timestamp('creado_en')

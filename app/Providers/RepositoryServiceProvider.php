@@ -16,6 +16,7 @@ class RepositoryServiceProvider extends ServiceProvider
         'MenuRepositoryInterface' => 'MenuRepository',
         'SubmenuRepositoryInterface' => 'SubmenuRepository',
         'RolRepositoryInterface' => 'RolRepository',
+        'LibroRepositoryInterface' => 'LibroRepository',
     ];
 
     /**

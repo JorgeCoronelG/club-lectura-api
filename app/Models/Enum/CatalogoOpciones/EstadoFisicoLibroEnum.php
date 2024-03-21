@@ -21,4 +21,14 @@ enum EstadoFisicoLibroEnum: int
             default => '',
         };
     }
+
+    public static function classCss(int $case): string|null
+    {
+        return match ($case) {
+            self::BUENO->value => 'good-condition',
+            self::MALO->value => 'bad-condition',
+            self::REGULAR->value => 'regular-condition',
+            default => null,
+        };
+    }
 }

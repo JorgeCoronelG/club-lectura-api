@@ -19,6 +19,7 @@ class CatalogoOpcionResource extends JsonResource
             'opcionId' => $this->opcion_id,
             'catalogoId' => $this->catalogo_id,
             'valor' => $this->valor,
+            'claseCss' => $this->clase_css,
             'estatus' => $this->estatus,
         ];
     }

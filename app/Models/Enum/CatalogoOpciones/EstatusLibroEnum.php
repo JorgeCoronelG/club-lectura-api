@@ -21,4 +21,14 @@ enum EstatusLibroEnum: int
             default => '',
         };
     }
+
+    public static function classCss(int $case): string|null
+    {
+        return match ($case) {
+            self::DISPONIBLE->value => 'available-book',
+            self::PRESTADO->value => 'loan-book',
+            self::PERDIDO->value => 'lost-book',
+            default => null,
+        };
+    }
 }

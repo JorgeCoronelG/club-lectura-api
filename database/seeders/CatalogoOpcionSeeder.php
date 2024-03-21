@@ -23,35 +23,47 @@ class CatalogoOpcionSeeder extends Seeder
     public function run(): void
     {
         $this->insertCatalogo(
-            EstatusUsuarioEnum::values(), CatalogoEnum::ESTATUS_USUARIO->value, fn ($case) => EstatusUsuarioEnum::customName($case)
+            EstatusUsuarioEnum::values(),
+            CatalogoEnum::ESTATUS_USUARIO->value,
+            fn (int $case) => EstatusUsuarioEnum::customName($case),
+            fn (int $case) => EstatusUsuarioEnum::classCss($case)
         );
         $this->insertCatalogo(
-            SexoUsuarioEnum::values(), CatalogoEnum::SEXO->value, fn ($case) => SexoUsuarioEnum::customName($case)
+            SexoUsuarioEnum::values(),
+            CatalogoEnum::SEXO->value,
+            fn (int $case) => SexoUsuarioEnum::customName($case),
+            fn (int $case) => SexoUsuarioEnum::classCss($case)
         );
         $this->insertCatalogo(
-            TipoEscolarEnum::values(), CatalogoEnum::TIPO_ESCOLAR->value, fn ($case) => TipoEscolarEnum::customName($case)
+            TipoEscolarEnum::values(), CatalogoEnum::TIPO_ESCOLAR->value, fn (int $case) => TipoEscolarEnum::customName($case)
         );
         $this->insertCatalogo(
-            TurnoAlumnoEnum::values(), CatalogoEnum::TURNO_ALUMNO->value, fn ($case) => TurnoAlumnoEnum::customName($case)
+            TurnoAlumnoEnum::values(), CatalogoEnum::TURNO_ALUMNO->value, fn (int $case) => TurnoAlumnoEnum::customName($case)
         );
         $this->insertCatalogo(
-            TipoUsuarioEnum::values(), CatalogoEnum::TIPO_USUARIO->value, fn ($case) => TipoUsuarioEnum::customName($case)
+            TipoUsuarioEnum::values(), CatalogoEnum::TIPO_USUARIO->value, fn (int $case) => TipoUsuarioEnum::customName($case)
         );
         $this->insertCatalogo(
-            CarrerasEducativasEnum::values(), CatalogoEnum::CARRERAS_EDUCATIVAS->value, fn ($case) => CarrerasEducativasEnum::customName($case)
+            CarrerasEducativasEnum::values(), CatalogoEnum::CARRERAS_EDUCATIVAS->value, fn (int $case) => CarrerasEducativasEnum::customName($case)
         );
         $this->insertCatalogo(
-            EstadoFisicoLibroEnum::values(), CatalogoEnum::ESTADO_FISICO_LIBRO->value, fn ($case) => EstadoFisicoLibroEnum::customName($case)
+            EstadoFisicoLibroEnum::values(),
+            CatalogoEnum::ESTADO_FISICO_LIBRO->value,
+            fn (int $case) => EstadoFisicoLibroEnum::customName($case),
+            fn (int $case) => EstadoFisicoLibroEnum::classCss($case)
         );
         $this->insertCatalogo(
-            IdiomaLibroEnum::values(), CatalogoEnum::IDIOMA->value, fn ($case) => IdiomaLibroEnum::customName($case)
+            IdiomaLibroEnum::values(), CatalogoEnum::IDIOMA->value, fn (int $case) => IdiomaLibroEnum::customName($case)
         );
         $this->insertCatalogo(
-            EstatusLibroEnum::values(), CatalogoEnum::ESTATUS_LIBRO->value, fn ($case) => EstatusLibroEnum::customName($case)
+            EstatusLibroEnum::values(),
+            CatalogoEnum::ESTATUS_LIBRO->value,
+            fn (int $case) => EstatusLibroEnum::customName($case),
+            fn (int $case) => EstatusLibroEnum::classCss($case)
         );
     }
 
-    private function insertCatalogo(array $enum, int $catalogoId, $customNameFn): void
+    private function insertCatalogo(array $enum, int $catalogoId, callable $customNameFn, callable $classCssFn = null): void
     {
         $data = [];
 
@@ -59,7 +71,8 @@ class CatalogoOpcionSeeder extends Seeder
             $data[] = [
                 'opcion_id' => $value,
                 'catalogo_id' => $catalogoId,
-                'valor' => $customNameFn($value)
+                'valor' => $customNameFn($value),
+                'clase_css' => is_null($classCssFn) ? null : $classCssFn($value)
             ];
         }
 
