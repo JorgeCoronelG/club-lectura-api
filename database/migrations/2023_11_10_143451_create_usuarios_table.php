@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('estatus_id');
             $table->unsignedTinyInteger('rol_id');
             $table->unsignedBigInteger('tipo_id');
+            $table->softDeletes('eliminado_en');
             $table->timestamp('creado_en')
                 ->useCurrent();
             $table->timestamp('actualizado_en')

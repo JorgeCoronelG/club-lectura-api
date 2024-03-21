@@ -79,7 +79,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
         $usuarioActualizado = $this->entityRepository->update(
             $id,
             $data
-                ->only('nombreCompleto', 'correo', 'telefono', 'fechaNacimiento', 'sexoId', 'rolId', 'tipoId')
+                ->only('nombreCompleto', 'correo', 'telefono', 'fechaNacimiento', 'sexoId', 'rolId', 'tipoId', 'estatusId')
                 ->toArray()
         );
 
@@ -125,5 +125,12 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
         $usuarioAnterior->alumno()->delete();
         $usuarioActualizado->externo()->create(['usuario_id' => $usuarioActualizado->id]);
         return $usuarioActualizado;
+    }
+
+    public function delete(int $id): void
+    {
+        $user = $this->entityRepository->findById($id);
+        $user->tokens()->delete();
+        parent::delete($id);
     }
 }

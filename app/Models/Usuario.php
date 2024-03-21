@@ -10,16 +10,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Authenticatable implements ScopeFilterInterface
 {
-    use HasApiTokens, HasFactory, Notifiable, Sortable, AdvancedFilter;
+    use HasApiTokens, HasFactory, Notifiable, Sortable, AdvancedFilter, SoftDeletes;
 
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
+    const DELETED_AT = 'eliminado_en';
 
     protected $table = 'usuarios';
     protected $fillable = [

@@ -19,4 +19,13 @@ enum SexoUsuarioEnum: int
             default => '',
         };
     }
+
+    public static function classCss(int $case): string|null
+    {
+        return match ($case) {
+            self::HOMBRE->value => 'man',
+            self::MUJER->value => 'woman',
+            default => null,
+        };
+    }
 }

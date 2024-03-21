@@ -19,4 +19,13 @@ enum EstatusUsuarioEnum: int
             default => '',
         };
     }
+
+    public static function classCss(int $case): string|null
+    {
+        return match ($case) {
+            self::ACTIVO->value => 'active-user',
+            self::INACTIVO->value => 'inactive-user',
+            default => null,
+        };
+    }
 }
