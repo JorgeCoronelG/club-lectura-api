@@ -4,13 +4,16 @@ namespace App\Models;
 
 use App\Core\Traits\AdvancedFilter;
 use App\Core\Traits\Sortable;
+use App\Observers\LibroObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class   Libro extends Model
+#[ObservedBy([LibroObserver::class])]
+class Libro extends Model
 {
     use HasFactory, Sortable, AdvancedFilter, SoftDeletes;
 

@@ -27,7 +27,7 @@ class LibroResource extends JsonResource
             'numPaginas' => $this->num_paginas,
             'precio' => $this->precio,
             'edicion' => $this->edicion,
-            'imagen' => File::getFileStoragePath(Path::BOOK_IMAGES->value.'/', $this->imagen),
+            'imagen' => File::getExposedPath(Path::BOOK_IMAGES->value.'/', $this->imagen),
             'numCopia' => $this->num_copia,
             'autores' => AutorCollection::make($this->whenLoaded('autores')),
             'estadoFisicoId' => $this->estado_fisico_id,

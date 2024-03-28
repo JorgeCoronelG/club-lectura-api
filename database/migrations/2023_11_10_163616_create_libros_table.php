@@ -17,7 +17,7 @@ return new class extends Migration
                 ->nullable();
             $table->string('isbn', 18);
             $table->string('titulo', 150);
-            $table->tinyText('resenia')
+            $table->text('resenia')
                 ->nullable();
             $table->smallInteger('num_paginas');
             $table->float('precio');
