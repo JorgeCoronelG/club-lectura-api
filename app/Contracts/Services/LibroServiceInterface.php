@@ -8,6 +8,7 @@ use App\Models\Libro;
 
 /**
  * @method Libro create(LibroDto $data)
+ * @method Libro update(int $id, LibroDto $data)
  */
 interface LibroServiceInterface extends BaseServiceInterface
 {

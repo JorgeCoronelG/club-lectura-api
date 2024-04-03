@@ -9,7 +9,7 @@ use App\Models\Enum\CatalogoEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreBookRequest extends FormRequest implements ReturnDataInterface
+class UpdateBookRequest extends FormRequest implements ReturnDataInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,13 +27,13 @@ class StoreBookRequest extends FormRequest implements ReturnDataInterface
     public function rules(): array
     {
         return [
+            'id' => ['required', 'integer'],
             'isbn' => ['required', 'min:10', 'max:15'],
             'titulo' => ['required', 'min:2', 'max:150'],
             'resenia' => ['nullable', 'max:65000'],
             'numPaginas' => ['required', 'integer', 'min:1', 'max:5000'],
             'precio' => ['required', 'numeric', 'min:1', 'max:5000', 'decimal:0,2'],
             'edicion' => ['required', 'integer', 'min:1', 'max:127'],
-            'imagenFile' => ['required', 'file', 'image', 'max:5000'],
             'numCopia' => ['required', 'integer', 'min:1', 'max:127'],
             'estadoFisicoId' => [
                 'required',
@@ -70,13 +70,13 @@ class StoreBookRequest extends FormRequest implements ReturnDataInterface
     public function attributes(): array
     {
         return [
+            'id' => 'Identificador',
             'isbn' => 'ISBN',
             'titulo' => 'Título',
             'resenia' => 'Reseña',
             'numPaginas' => 'N° páginas',
             'precio' => 'Precio',
             'edicion' => 'Edición',
-            'imagenFile' => 'Imagen',
             'numCopia' => 'N° copia',
             'estadoFisicoId' => 'Estado físico',
             'idiomaId' => 'Idioma',

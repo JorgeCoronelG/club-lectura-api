@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Contracts\Services\LibroServiceInterface;
 use App\Core\BaseApiController;
 use App\Http\Requests\Book\StoreBookRequest;
+use App\Http\Requests\Book\UpdateBookRequest;
 use App\Http\Resources\Libro\LibroCollection;
 use App\Http\Resources\Libro\LibroResource;
 use Illuminate\Http\JsonResponse;
@@ -29,6 +30,12 @@ class LibroController extends BaseApiController
     public function store(StoreBookRequest $request): JsonResponse
     {
         $libro = $this->libroService->create($request->toData());
+        return $this->showOne(LibroResource::make($libro));
+    }
+
+    public function update(UpdateBookRequest $request, int $id): JsonResponse
+    {
+        $libro = $this->libroService->update($id, $request->toData());
         return $this->showOne(LibroResource::make($libro));
     }
 }

@@ -40,4 +40,17 @@ class LibroService extends BaseService implements LibroServiceInterface
 
         return $book;
     }
+
+    public function update(int $id, LibroDto|Data $data): Libro
+    {
+        $book = $this->entityRepository->update($id, $data->only(
+            'isbn', 'titulo', 'resenia', 'numPaginas', 'precio',
+            'edicion', 'numCopia', 'estadoFisicoId', 'idiomaId', 'estatusId', 'generoId'
+        )->toArray());
+
+        $authorIds = array_map(fn (AutorDto $row) => $row->id, $data->autores);
+        $this->entityRepository->sync($book->id, 'autores', $authorIds);
+
+        return $book;
+    }
 }
