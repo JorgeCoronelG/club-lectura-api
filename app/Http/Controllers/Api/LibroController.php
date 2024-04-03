@@ -29,13 +29,19 @@ class LibroController extends BaseApiController
 
     public function store(StoreBookRequest $request): JsonResponse
     {
-        $libro = $this->libroService->create($request->toData());
-        return $this->showOne(LibroResource::make($libro));
+        $book = $this->libroService->create($request->toData());
+        return $this->showOne(LibroResource::make($book));
     }
 
     public function update(UpdateBookRequest $request, int $id): JsonResponse
     {
-        $libro = $this->libroService->update($id, $request->toData());
-        return $this->showOne(LibroResource::make($libro));
+        $book = $this->libroService->update($id, $request->toData());
+        return $this->showOne(LibroResource::make($book));
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        $book = $this->libroService->findById($id);
+        return $this->showOne(LibroResource::make($book));
     }
 }

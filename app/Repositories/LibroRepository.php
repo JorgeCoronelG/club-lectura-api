@@ -37,4 +37,18 @@ class LibroRepository extends BaseRepository implements LibroRepositoryInterface
             ->applySort()
             ->paginate($limit, $columns);
     }
+
+    public function findById(int $id, array $columns = ['*']): Libro
+    {
+        return $this->entity
+            ->with([
+                'estadoFisico',
+                'idioma',
+                'estatus',
+                'genero',
+                'autores',
+                'donacion',
+            ])
+            ->findOrFail($id, $columns);
+    }
 }

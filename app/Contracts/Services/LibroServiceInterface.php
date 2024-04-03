@@ -9,6 +9,7 @@ use App\Models\Libro;
 /**
  * @method Libro create(LibroDto $data)
  * @method Libro update(int $id, LibroDto $data)
+ * @method Libro findById(int $id, array $columns = ['*'])
  */
 interface LibroServiceInterface extends BaseServiceInterface
 {
