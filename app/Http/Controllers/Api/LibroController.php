@@ -10,6 +10,7 @@ use App\Http\Resources\Libro\LibroCollection;
 use App\Http\Resources\Libro\LibroResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LibroController extends BaseApiController
 {
@@ -43,5 +44,11 @@ class LibroController extends BaseApiController
     {
         $book = $this->libroService->findById($id);
         return $this->showOne(LibroResource::make($book));
+    }
+
+    public function destroy(int $id): Response
+    {
+        $this->libroService->delete($id);
+        return $this->noContentResponse();
     }
 }
