@@ -44,6 +44,13 @@ Route::middleware('auth:sanctum')
                 Route::get('catalog-id/{catalogoId}', 'findByCatalogoId')->name('find-by-catalog-id');
             });
 
+        Route::controller(LibroController::class)
+            ->prefix('books')
+            ->name('books.')
+            ->group(function () {
+                Route::patch('update-image/{id}', 'updateImage')->name('update-image');
+            });
+
         Route::controller(MenuController::class)
             ->middleware(
                 'permission:'.

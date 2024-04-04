@@ -13,5 +13,5 @@ use App\Models\Libro;
  */
 interface LibroServiceInterface extends BaseServiceInterface
 {
-    //
+    public function updateImage(int $id, LibroDto $data): void;
 }

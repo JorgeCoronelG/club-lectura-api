@@ -6,6 +6,7 @@ use App\Contracts\Services\LibroServiceInterface;
 use App\Core\BaseApiController;
 use App\Http\Requests\Book\StoreBookRequest;
 use App\Http\Requests\Book\UpdateBookRequest;
+use App\Http\Requests\Book\UpdateImageBookRequest;
 use App\Http\Resources\Libro\LibroCollection;
 use App\Http\Resources\Libro\LibroResource;
 use Illuminate\Http\JsonResponse;
@@ -49,6 +50,12 @@ class LibroController extends BaseApiController
     public function destroy(int $id): Response
     {
         $this->libroService->delete($id);
+        return $this->noContentResponse();
+    }
+
+    public function updateImage(UpdateImageBookRequest $request, int $id): Response
+    {
+        $this->libroService->updateImage($id, $request->toData());
         return $this->noContentResponse();
     }
 }
