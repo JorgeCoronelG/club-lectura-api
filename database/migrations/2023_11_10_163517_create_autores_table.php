@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('actualizado_en')
                 ->nullable()
                 ->useCurrentOnUpdate();
+            $table->softDeletes('eliminado_en');
         });
     }
 
