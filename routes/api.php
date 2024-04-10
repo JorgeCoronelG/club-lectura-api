@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')
             ->prefix('books')
             ->name('books.')
             ->group(function () {
-                Route::patch('update-image/{id}', 'updateImage')->name('update-image');
+                Route::patch('image/{id}', 'updateImage')->name('image');
             });
 
         Route::controller(MenuController::class)
