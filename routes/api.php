@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpArithmeticTypeCheckInspection */
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\RolController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\LibroController;
+use App\Http\Controllers\Api\GeneroController;
 use App\Models\Enum\RolEnum;
 
 Route::controller(AuthController::class)
@@ -42,6 +43,13 @@ Route::middleware('auth:sanctum')
             ->name('options-catalog.')
             ->group(function () {
                 Route::get('catalog-id/{catalogoId}', 'findByCatalogoId')->name('find-by-catalog-id');
+            });
+        
+        Route::controller(GeneroController::class)
+            ->prefix('genres')
+            ->name('genres.')
+            ->group(function () {
+                Route::get('/find-all', 'findAll')->name('find-all');
             });
 
         Route::controller(LibroController::class)

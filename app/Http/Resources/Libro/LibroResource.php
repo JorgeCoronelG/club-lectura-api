@@ -6,6 +6,7 @@ use App\Core\Enum\Path;
 use App\Helpers\File;
 use App\Http\Resources\Autor\AutorCollection;
 use App\Http\Resources\CatalogoOpcion\CatalogoOpcionResource;
+use App\Http\Resources\Genero\GeneroResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -36,6 +37,8 @@ class LibroResource extends JsonResource
             'idioma' => CatalogoOpcionResource::make($this->whenLoaded('idioma')),
             'estatudId' => $this->estatus_id,
             'estatus' => CatalogoOpcionResource::make($this->whenLoaded('estatus')),
+            'generoId' => $this->genero_id,
+            'genero' => GeneroResource::make($this->whenLoaded('genero')),
             'donacionId' => $this->donacion_id,
         ];
     }
