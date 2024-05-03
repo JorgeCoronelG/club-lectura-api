@@ -31,20 +31,13 @@ Route::middleware('auth:sanctum')
                Route::patch('/change-password', 'changePassword')->name('change-password');
             });
 
-        Route::apiResource('authors',AutorController::class)
-            ->middleware(
-                'permission:'.
-                RolEnum::ADMINISTRADOR->value.','.
-                RolEnum::CAPTURISTA->value
-            );
-
         Route::controller(CatalogoOpcionController::class)
             ->prefix('options-catalog')
             ->name('options-catalog.')
             ->group(function () {
                 Route::get('catalog-id/{catalogoId}', 'findByCatalogoId')->name('find-by-catalog-id');
             });
-        
+
         Route::controller(GeneroController::class)
             ->prefix('genres')
             ->name('genres.')
@@ -90,6 +83,15 @@ Route::middleware('auth:sanctum')
             ->group(function () {
                 Route::get('/find-all', 'findAll')->name('find-all');
             });
+
+        /* API RESOURCES */
+
+        Route::apiResource('authors',AutorController::class)
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value
+            );
 
         Route::apiResource('books', LibroController::class)
             ->middleware(
