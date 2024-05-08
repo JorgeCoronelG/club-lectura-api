@@ -34,7 +34,7 @@ class LibroRepository extends BaseRepository implements LibroRepositoryInterface
                 'genero',
             ])
             ->filter($filters)
-            ->applySort()
+            ->applySort($sort)
             ->paginate($limit, $columns);
     }
 
