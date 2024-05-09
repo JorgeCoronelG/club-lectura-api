@@ -35,7 +35,7 @@ class LibroResource extends JsonResource
             'estadoFisico' => CatalogoOpcionResource::make($this->whenLoaded('estadoFisico')),
             'idiomaId' => $this->idioma_id,
             'idioma' => CatalogoOpcionResource::make($this->whenLoaded('idioma')),
-            'estatudId' => $this->estatus_id,
+            'estatusId' => $this->estatus_id,
             'estatus' => CatalogoOpcionResource::make($this->whenLoaded('estatus')),
             'generoId' => $this->genero_id,
             'genero' => GeneroResource::make($this->whenLoaded('genero')),
