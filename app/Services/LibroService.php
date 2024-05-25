@@ -60,7 +60,11 @@ class LibroService extends BaseService implements LibroServiceInterface
     public function updateImage(int $id, LibroDto $data): void
     {
         $book = $this->entityRepository->findById($id);
-        File::deleteFile(Path::BOOK_IMAGES->value.'/', $book->imagen);
+
+        if ($book->imagen !== Libro::IMAGE_DEFAULT) {
+            File::deleteFile(Path::BOOK_IMAGES->value.'/', $book->imagen);
+        }
+
         $data->imagen = File::uploadImage($data->imagenFile, Path::BOOK_IMAGES->value.'/', File::BOOK_HEIGHT_IMAGE);
         $this->entityRepository->update($id, $data->only('imagen')->toArray());
     }
