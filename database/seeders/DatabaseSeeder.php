@@ -13,7 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->deleteImageBooks();
+        if (env('APP_ENV') === 'local') {
+            $this->deleteImageBooks();
+        }
 
         $this->call(CatalogoSeeder::class);
         $this->call(CatalogoOpcionSeeder::class);
@@ -35,7 +37,7 @@ class DatabaseSeeder extends Seeder
     {
         $files = glob(File::storagePath(Path::BOOK_IMAGES->value).'/*');
         foreach ($files as $file) {
-            if (is_file($file)) {
+            if (is_file($file) && !str_contains($file, 'no-image')) {
                 unlink($file);
             }
         }

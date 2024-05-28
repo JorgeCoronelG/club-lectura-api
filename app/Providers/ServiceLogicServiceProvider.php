@@ -18,6 +18,7 @@ class ServiceLogicServiceProvider extends ServiceProvider
         'RolServiceInterface' => 'RolService',
         'LibroServiceInterface' => 'LibroService',
         'GeneroServiceInterface' => 'GeneroService',
+        'DonationServiceInterface' => 'DonationService',
     ];
 
     /**

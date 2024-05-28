@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('donaciones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('codigo');
             $table->date('fecha_donacion');
             $table->timestamp('creado_en')
                 ->useCurrent();

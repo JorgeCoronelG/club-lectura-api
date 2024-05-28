@@ -18,6 +18,8 @@ class RepositoryServiceProvider extends ServiceProvider
         'RolRepositoryInterface' => 'RolRepository',
         'LibroRepositoryInterface' => 'LibroRepository',
         'GeneroRepositoryInterface' => 'GeneroRepository',
+        'DonationRepositoryInterface' => 'DonationRepository',
+        'DonacionUsuarioRepositoryInterface' => 'DonacionUsuarioRepository',
     ];
 
     /**

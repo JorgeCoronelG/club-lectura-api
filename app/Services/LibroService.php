@@ -29,10 +29,13 @@ class LibroService extends BaseService implements LibroServiceInterface
      */
     public function create(LibroDto|Data $data): Libro
     {
-        $data->imagen = File::uploadImage($data->imagenFile, Path::BOOK_IMAGES->value.'/', File::BOOK_HEIGHT_IMAGE);
+        if ($data->imagen !== Libro::IMAGE_DEFAULT) {
+            $data->imagen = File::uploadImage($data->imagenFile, Path::BOOK_IMAGES->value.'/', File::BOOK_HEIGHT_IMAGE);
+        }
+
         $book = $this->entityRepository->create($data->only(
             'isbn', 'titulo', 'resenia', 'numPaginas', 'precio',
-            'edicion', 'imagen', 'numCopia', 'estadoFisicoId', 'idiomaId', 'estatusId', 'generoId'
+            'edicion', 'imagen', 'numCopia', 'estadoFisicoId', 'idiomaId', 'estatusId', 'generoId', 'donacionId'
         )->toArray());
 
         $authorIds = array_map(fn (AutorDto $row) => $row->id, $data->autores);

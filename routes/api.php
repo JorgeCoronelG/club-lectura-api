@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\RolController;
 use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\LibroController;
 use App\Http\Controllers\Api\GeneroController;
+use App\Http\Controllers\Api\DonationController;
 use App\Models\Enum\RolEnum;
 
 Route::controller(AuthController::class)
@@ -94,6 +95,14 @@ Route::middleware('auth:sanctum')
             );
 
         Route::apiResource('books', LibroController::class)
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value.','
+            );
+
+        Route::apiResource('donations', DonationController::class)
+            ->only('store')
             ->middleware(
                 'permission:'.
                 RolEnum::ADMINISTRADOR->value.','.

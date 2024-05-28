@@ -27,6 +27,7 @@ class UsuarioDto extends Data
         public ?ExternoDto $externo,
         public ?EscolarDto $escolar,
         public ?AlumnoDto  $alumno,
+        public ?DonacionUsuarioDto $donacionUsuario,
 
         public ?string     $contraseniaActual,
     ) {

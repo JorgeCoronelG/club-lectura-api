@@ -11,6 +11,8 @@ class Donacion extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'donaciones';
     protected $fillable = [
         'codigo',

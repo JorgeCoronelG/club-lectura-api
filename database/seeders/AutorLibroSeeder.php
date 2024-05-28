@@ -24,8 +24,6 @@ class AutorLibroSeeder extends Seeder
                     ->pluck('id')
                     ->toArray();
 
-                info(json_encode($autorIds));
-
                 $libro->autores()->attach($autorIds);
             });
     }
