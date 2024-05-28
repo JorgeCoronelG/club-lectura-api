@@ -54,8 +54,8 @@ class AuthService implements AuthServiceInterface
         $contraseniaNueva = Str::random(10);
         $usuarioData->contrasenia = bcrypt($contraseniaNueva);
 
-        $usuario = $this->usuarioRepository->update($usuario->id, $usuarioData->only('correo')->toArray());
-        Mail::to($usuario->correo)->send(new RestorePasswordMail($usuario, $contraseniaNueva));
+        $usuario = $this->usuarioRepository->update($usuario->id, $usuarioData->only('contrasenia')->toArray());
+        Mail::to($usuario->correo)->queue(new RestorePasswordMail($usuario, $contraseniaNueva));
     }
 
     public function changePassword(int $usuarioId, UsuarioDto $usuarioData): void
