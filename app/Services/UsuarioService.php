@@ -48,7 +48,7 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             $data->escolar->usuarioId = $usuario->id;
 
             $usuario->escolar()->create($data->escolar->toArray());
-            Mail::to($usuario->correo)->send(new UserCreatedMail($usuario, $contrasenia));
+            Mail::to($usuario->correo)->queue(new UserCreatedMail($usuario, $contrasenia));
 
             return $usuario;
         }
@@ -57,13 +57,13 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
             $data->alumno->usuarioId = $usuario->id;
 
             $usuario->alumno()->create($data->alumno->toArray());
-            Mail::to($usuario->correo)->send(new UserCreatedMail($usuario, $contrasenia));
+            Mail::to($usuario->correo)->queue(new UserCreatedMail($usuario, $contrasenia));
 
             return $usuario;
         }
 
         $usuario->externo()->create(['usuario_id' => $usuario->id]);
-        Mail::to($usuario->correo)->send(new UserCreatedMail($usuario, $contrasenia));
+        Mail::to($usuario->correo)->queue(new UserCreatedMail($usuario, $contrasenia));
 
         return $usuario;
     }
@@ -132,5 +132,35 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
         $user = $this->entityRepository->findById($id);
         $user->tokens()->delete();
         parent::delete($id);
+    }
+
+    public function createUserDonation(UsuarioDto $data): Usuario
+    {
+        $data->estatusId = $this->catalogoOpcionRepository
+            ->findByOpcionIdAndCatalogoId(EstatusUsuarioEnum::ACTIVO->value, CatalogoEnum::ESTATUS_USUARIO->value)
+            ->id;
+        $opcionId = $data->tipoId;
+        $data->tipoId = $this->catalogoOpcionRepository
+            ->findByOpcionIdAndCatalogoId($data->tipoId, CatalogoEnum::TIPO_USUARIO->value)
+            ->id;
+
+        $usuario = $this->entityRepository->create($data->toArray());
+
+        if ($opcionId === TipoUsuarioEnum::ESCOLAR->value) {
+            $data->escolar->usuarioId = $usuario->id;
+            $usuario->escolar()->create($data->escolar->toArray());
+
+            return $usuario;
+        }
+
+        if ($opcionId === TipoUsuarioEnum::ALUMNO->value) {
+            $data->alumno->usuarioId = $usuario->id;
+            $usuario->alumno()->create($data->alumno->toArray());
+
+            return $usuario;
+        }
+
+        $usuario->externo()->create(['usuario_id' => $usuario->id]);
+        return $usuario;
     }
 }
