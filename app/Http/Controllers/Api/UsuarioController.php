@@ -74,4 +74,10 @@ class UsuarioController extends BaseApiController
         $this->usuarioService->delete($id);
         return $this->noContentResponse();
     }
+
+    public function findAll(): JsonResponse
+    {
+        $users = $this->usuarioService->findAll();
+        return $this->showAll(UsuarioCollection::make($users));
+    }
 }

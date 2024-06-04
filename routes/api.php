@@ -85,6 +85,17 @@ Route::middleware('auth:sanctum')
                 Route::get('/find-all', 'findAll')->name('find-all');
             });
 
+        Route::controller(UsuarioController::class)
+            ->middleware('permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value.','
+            )
+            ->prefix('users')
+            ->name('users.')
+            ->group(function () {
+                Route::get('/find-all', 'findAll')->name('find-all');
+            });
+
         /* API RESOURCES */
 
         Route::apiResource('authors',AutorController::class)
