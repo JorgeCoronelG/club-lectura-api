@@ -75,9 +75,9 @@ class UsuarioController extends BaseApiController
         return $this->noContentResponse();
     }
 
-    public function findAll(): JsonResponse
+    public function findAll(Request $request): JsonResponse
     {
-        $users = $this->usuarioService->findAll();
+        $users = $this->usuarioService->findAll($request);
         return $this->showAll(UsuarioCollection::make($users));
     }
 }

@@ -27,12 +27,13 @@ class BaseService implements BaseServiceInterface
         $this->entityRepository->delete($id);
     }
 
-    public function findAll(
-        array $filter = [],
-        string $sort = null,
-        array $columns = ['*']
-    ): Collection {
-        return $this->entityRepository->findAll($filter, $sort, $columns);
+    /**
+     * @throws CustomErrorException
+     */
+    public function findAll(Request $request, array $columns = ['*']): Collection {
+        $filters = Validation::getFilters($request->get(QueryParam::FILTERS_KEY));
+        $sort = $request->get(QueryParam::ORDER_BY_KEY);
+        return $this->entityRepository->findAll($filters, $sort, $columns);
     }
 
     /**

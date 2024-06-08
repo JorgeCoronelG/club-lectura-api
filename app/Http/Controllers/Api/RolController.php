@@ -6,6 +6,7 @@ use App\Contracts\Services\RolServiceInterface;
 use App\Core\BaseApiController;
 use App\Http\Resources\Rol\RolResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class RolController extends BaseApiController
 {
@@ -16,9 +17,9 @@ class RolController extends BaseApiController
         $this->rolService = $rolService;
     }
 
-    public function findAll(): JsonResponse
+    public function findAll(Request $request): JsonResponse
     {
-        $roles = $this->rolService->findAll();
+        $roles = $this->rolService->findAll($request);
         return $this->showAll(RolResource::collection($roles));
     }
 }
