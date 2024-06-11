@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Contracts\Repositories\CatalogoOpcionRepositoryInterface;
 use App\Contracts\Repositories\DonacionUsuarioRepositoryInterface;
 use App\Contracts\Repositories\DonationRepositoryInterface;
 use App\Contracts\Services\DonationServiceInterface;
@@ -12,6 +13,8 @@ use App\Core\Contracts\BaseRepositoryInterface;
 use App\Http\Requests\Donation\StoreDonationDto;
 use App\Mail\Usuario\UserCreatedMail;
 use App\Models\Donacion;
+use App\Models\Enum\CatalogoEnum;
+use App\Models\Enum\CatalogoOpciones\EstatusLibroEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -21,6 +24,7 @@ class DonationService extends BaseService implements DonationServiceInterface
 {
     protected BaseRepositoryInterface $entityRepository;
     protected DonacionUsuarioRepositoryInterface $donacionUsuarioRepository;
+    protected CatalogoOpcionRepositoryInterface $catalogoOpcionRepository;
 
     protected UsuarioServiceInterface $usuarioService;
     protected LibroServiceInterface $libroService;
@@ -28,12 +32,14 @@ class DonationService extends BaseService implements DonationServiceInterface
     public function __construct(
         DonationRepositoryInterface $entityRepository,
         DonacionUsuarioRepositoryInterface $donacionUsuarioRepository,
+        CatalogoOpcionRepositoryInterface $catalogoOpcionRepository,
 
         UsuarioServiceInterface $usuarioService,
         LibroServiceInterface $libroService,
     ) {
         $this->entityRepository = $entityRepository;
         $this->donacionUsuarioRepository = $donacionUsuarioRepository;
+        $this->catalogoOpcionRepository = $catalogoOpcionRepository;
 
         $this->usuarioService = $usuarioService;
         $this->libroService = $libroService;
@@ -76,6 +82,9 @@ class DonationService extends BaseService implements DonationServiceInterface
             $this->donacionUsuarioRepository->bulkInsert($donationUser);
 
             foreach ($data->books as $book) {
+                $book->estatusId = $this->catalogoOpcionRepository
+                    ->findByOpcionIdAndCatalogoId(EstatusLibroEnum::DISPONIBLE->value, CatalogoEnum::ESTATUS_USUARIO->value)
+                    ->id;
                 $book->donacionId = $donation->id;
                 $this->libroService->create($book);
             }

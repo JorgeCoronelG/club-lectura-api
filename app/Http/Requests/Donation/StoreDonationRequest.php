@@ -129,12 +129,6 @@ class StoreDonationRequest extends FormRequest implements ReturnDataInterface
                 Rule::exists('catalogo_opciones', 'id')
                     ->where('catalogo_id', CatalogoEnum::IDIOMA->value)
             ],
-            'libros.*.estatusId' => [
-                'required',
-                'integer',
-                Rule::exists('catalogo_opciones', 'id')
-                    ->where('catalogo_id', CatalogoEnum::ESTATUS_LIBRO->value)
-            ],
             'libros.*.generoId' => [
                 'required',
                 'integer',
@@ -189,7 +183,6 @@ class StoreDonationRequest extends FormRequest implements ReturnDataInterface
             'libros.*.numCopia' => 'Número de copia del libro #:position',
             'libros.*.estadoFisicoId' => 'Estado físico del libro #:position',
             'libros.*.idiomaId' => 'Idioma del libro #:position',
-            'libros.*.estatusId' => 'Estatus del libro #:position',
             'libros.*.generoId' => 'Genero del libro #:position',
             'libros.*.autores' => 'Autores del libro #:position',
             'libros.*.autores.*.id' => 'Identificador del autor del libro #:position',
