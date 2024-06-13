@@ -80,4 +80,19 @@ class UsuarioController extends BaseApiController
         $users = $this->usuarioService->findAll($request);
         return $this->showAll(UsuarioCollection::make($users));
     }
+
+    public function validateData(Request $request): JsonResponse
+    {
+        if (!is_null($request->get('correo'))) {
+            $user = $this->usuarioService->findByField('correo', strtolower($request->get('correo')));
+            return $this->successResponse(['exists' => (bool)$user], HttpCodes::HTTP_OK);
+        }
+
+        if (!is_null($request->get('telefono'))) {
+            $user = $this->usuarioService->findByField('telefono', strtolower($request->get('telefono')));
+            return $this->successResponse(['exists' => (bool)$user], HttpCodes::HTTP_OK);
+        }
+
+        return $this->errorResponse('Error en la petición', HttpCodes::HTTP_BAD_REQUEST);
+    }
 }

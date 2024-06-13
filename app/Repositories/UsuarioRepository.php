@@ -62,4 +62,9 @@ class UsuarioRepository extends BaseRepository implements UsuarioRepositoryInter
             ->applySort($sort)
             ->paginate($limit, $columns);
     }
+
+    public function findByField(string $field, string $value): ?Usuario
+    {
+        return $this->entity->where($field, $value)->first();
+    }
 }

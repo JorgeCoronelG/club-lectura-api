@@ -13,4 +13,6 @@ use App\Models\Usuario;
 interface UsuarioServiceInterface extends BaseServiceInterface
 {
     public function createUserDonation(UsuarioDto $data): Usuario;
+
+    public function findByField(string $field, string $value): ?Usuario;
 }

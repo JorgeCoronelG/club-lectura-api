@@ -163,4 +163,9 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
         $usuario->externo()->create(['usuario_id' => $usuario->id]);
         return $usuario;
     }
+
+    public function findByField(string $field, string $value): ?Usuario
+    {
+        return $this->entityRepository->findByField($field, $value);
+    }
 }

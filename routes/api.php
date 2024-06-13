@@ -94,6 +94,7 @@ Route::middleware('auth:sanctum')
             ->name('users.')
             ->group(function () {
                 Route::get('/find-all', 'findAll')->name('find-all');
+                Route::get('/validate-data', 'validateData')->name('validate-data');
             });
 
         /* API RESOURCES */
