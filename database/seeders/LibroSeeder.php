@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\CatalogoOpcion;
 use App\Models\Enum\CatalogoEnum;
+use App\Models\Enum\CatalogoOpciones\EstatusLibroEnum;
 use App\Models\Genero;
 use App\Models\Libro;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,7 +31,7 @@ class LibroSeeder extends Seeder
             ->id;
         $estatusId = CatalogoOpcion::query()
             ->where('catalogo_id', CatalogoEnum::ESTATUS_LIBRO->value)
-            ->inRandomOrder()
+            ->where('opcion_id', EstatusLibroEnum::DISPONIBLE->value)
             ->first()
             ->id;
         $generoId = Genero::query()

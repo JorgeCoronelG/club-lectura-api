@@ -58,4 +58,10 @@ class LibroController extends BaseApiController
         $this->libroService->updateImage($id, $request->toData());
         return $this->noContentResponse();
     }
+
+    public function findAllLibraryPaginated(Request $request): JsonResponse
+    {
+        $books = $this->libroService->findAllLibraryPaginated($request);
+        return $this->showAll(new LibroCollection($books, true));
+    }
 }

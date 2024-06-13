@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\Repositories\LibroRepositoryInterface;
 use App\Core\BaseRepository;
+use App\Models\Enum\CatalogoOpciones\EstatusLibroEnum;
 use App\Models\Libro;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -50,5 +51,22 @@ class LibroRepository extends BaseRepository implements LibroRepositoryInterface
                 'donacion',
             ])
             ->findOrFail($id, $columns);
+    }
+
+    public function findAllLibraryPaginated(array $filters, int $limit, string $sort = null, array $columns = ['*']): LengthAwarePaginator
+    {
+        return $this->entity
+            ->with([
+                'estadoFisico',
+                'idioma',
+                'estatus',
+                'genero',
+            ])
+            ->whereHas('estatus', function (Builder $query) {
+                $query->where('opcion_id', '!=', EstatusLibroEnum::PERDIDO->value);
+            })
+            ->filter($filters)
+            ->applySort($sort)
+            ->paginate($limit, $columns);
     }
 }

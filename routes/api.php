@@ -50,7 +50,15 @@ Route::middleware('auth:sanctum')
             ->prefix('books')
             ->name('books.')
             ->group(function () {
-                Route::patch('image/{id}', 'updateImage')->name('image');
+                Route::get('/library', 'findAllLibraryPaginated')->name('library');
+
+                Route::patch('image/{id}', 'updateImage')
+                    ->name('image')
+                    ->middleware(
+                        'permission:'.
+                        RolEnum::ADMINISTRADOR->value.','.
+                        RolEnum::CAPTURISTA->value.','
+                    );
             });
 
         Route::controller(MenuController::class)

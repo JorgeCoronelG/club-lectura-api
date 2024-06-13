@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Collection;
 
 interface CatalogoOpcionServiceInterface extends BaseServiceInterface
 {
-    public function findByCatalogoId(int $catalogoId): Collection;
+    public function findByCatalogoId(int $catalogoId, array $omitOptions = []): Collection;
 }

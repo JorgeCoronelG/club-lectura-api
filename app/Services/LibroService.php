@@ -7,11 +7,15 @@ use App\Contracts\Services\LibroServiceInterface;
 use App\Core\BaseService;
 use App\Core\Contracts\BaseRepositoryInterface;
 use App\Core\Enum\Path;
+use App\Core\Enum\QueryParam;
 use App\Exceptions\CustomErrorException;
 use App\Helpers\File;
+use App\Helpers\Validation;
 use App\Models\Dto\AutorDto;
 use App\Models\Dto\LibroDto;
 use App\Models\Libro;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\LaravelData\Data;
 
 class LibroService extends BaseService implements LibroServiceInterface
@@ -70,5 +74,16 @@ class LibroService extends BaseService implements LibroServiceInterface
 
         $data->imagen = File::uploadImage($data->imagenFile, Path::BOOK_IMAGES->value.'/', File::BOOK_HEIGHT_IMAGE);
         $this->entityRepository->update($id, $data->only('imagen')->toArray());
+    }
+
+    /**
+     * @throws CustomErrorException
+     */
+    public function findAllLibraryPaginated(Request $request, array $columns = ['*']): LengthAwarePaginator
+    {
+        $filters = Validation::getFilters($request->get(QueryParam::FILTERS_KEY));
+        $perPage = Validation::getPerPage($request->get(QueryParam::PAGINATION_KEY));
+        $sort = $request->get(QueryParam::ORDER_BY_KEY);
+        return $this->entityRepository->findAllLibraryPaginated($filters, $perPage, $sort, $columns);
     }
 }

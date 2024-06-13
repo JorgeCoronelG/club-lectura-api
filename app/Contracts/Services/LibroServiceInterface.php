@@ -5,6 +5,8 @@ namespace App\Contracts\Services;
 use App\Core\Contracts\BaseServiceInterface;
 use App\Models\Dto\LibroDto;
 use App\Models\Libro;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @method Libro create(LibroDto $data)
@@ -14,4 +16,6 @@ use App\Models\Libro;
 interface LibroServiceInterface extends BaseServiceInterface
 {
     public function updateImage(int $id, LibroDto $data): void;
+
+    public function findAllLibraryPaginated(Request $request, array $columns = ['*']): LengthAwarePaginator;
 }

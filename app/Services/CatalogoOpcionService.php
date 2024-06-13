@@ -18,8 +18,8 @@ class CatalogoOpcionService extends BaseService implements CatalogoOpcionService
         $this->entityRepository = $catalogoOpcionRepository;
     }
 
-    public function findByCatalogoId(int $catalogoId): Collection
+    public function findByCatalogoId(int $catalogoId, array $omitOptions = []): Collection
     {
-        return $this->entityRepository->findByCatalogoId($catalogoId);
+        return $this->entityRepository->findByCatalogoId($catalogoId, $omitOptions);
     }
 }

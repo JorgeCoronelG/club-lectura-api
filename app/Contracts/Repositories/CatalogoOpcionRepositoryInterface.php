@@ -10,5 +10,5 @@ interface CatalogoOpcionRepositoryInterface extends BaseRepositoryInterface
 {
     public function findByOpcionIdAndCatalogoId(int $opcionId, int $catalogoId): CatalogoOpcion;
 
-    public function findByCatalogoId(int $catalogoId): Collection;
+    public function findByCatalogoId(int $catalogoId, array $omitOptions = []): Collection;
 }

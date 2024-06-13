@@ -27,10 +27,13 @@ class CatalogoOpcionRepository extends BaseRepository implements CatalogoOpcionR
             ->firstOrFail();
     }
 
-    public function findByCatalogoId(int $catalogoId): Collection
+    public function findByCatalogoId(int $catalogoId, array $omitOptions = []): Collection
     {
         return $this->entity
             ->where('catalogo_id', $catalogoId)
+            ->when(count($omitOptions) > 0, function (Builder $query) use ($omitOptions) {
+                $query->whereNotIn('opcion_id', $omitOptions);
+            })
             ->orderBy('valor')
             ->get();
     }

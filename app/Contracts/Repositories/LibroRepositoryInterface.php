@@ -4,6 +4,7 @@ namespace App\Contracts\Repositories;
 
 use App\Core\Contracts\BaseRepositoryInterface;
 use App\Models\Libro;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * @method Libro create(array $data)
@@ -12,5 +13,5 @@ use App\Models\Libro;
  */
 interface LibroRepositoryInterface extends BaseRepositoryInterface
 {
-    //
+    public function findAllLibraryPaginated(array $filters, int $limit, string $sort = null, array $columns = ['*']): LengthAwarePaginator;
 }
