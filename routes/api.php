@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\UsuarioController;
 use App\Http\Controllers\Api\LibroController;
 use App\Http\Controllers\Api\GeneroController;
 use App\Http\Controllers\Api\DonationController;
+use App\Http\Controllers\Api\PrestamoController;
 use App\Models\Enum\RolEnum;
 
 Route::controller(AuthController::class)
@@ -127,6 +128,15 @@ Route::middleware('auth:sanctum')
                 'permission:'.
                 RolEnum::ADMINISTRADOR->value.','.
                 RolEnum::CAPTURISTA->value.','
+            );
+
+        Route::apiResource('loans', PrestamoController::class)
+            ->only('index')
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value.','.
+                RolEnum::LECTOR->value
             );
 
         Route::apiResource('users', UsuarioController::class)

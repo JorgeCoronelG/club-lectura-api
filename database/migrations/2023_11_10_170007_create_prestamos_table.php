@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('fecha_real_entrega')
                 ->nullable();
             $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('estatus_id');
             $table->timestamp('creado_en')
                 ->useCurrent();
             $table->timestamp('actualizado_en')
@@ -27,6 +28,9 @@ return new class extends Migration
             $table->foreign('usuario_id')
                 ->references('id')
                 ->on('usuarios');
+            $table->foreign('estatus_id')
+                ->references('id')
+                ->on('catalogo_opciones');
         });
     }
 

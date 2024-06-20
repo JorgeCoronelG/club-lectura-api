@@ -20,6 +20,7 @@ class RepositoryServiceProvider extends ServiceProvider
         'GeneroRepositoryInterface' => 'GeneroRepository',
         'DonationRepositoryInterface' => 'DonationRepository',
         'DonacionUsuarioRepositoryInterface' => 'DonacionUsuarioRepository',
+        'PrestamoRepositoryInterface' => 'PrestamoRepository',
     ];
 
     /**

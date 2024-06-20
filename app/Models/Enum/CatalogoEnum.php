@@ -17,6 +17,7 @@ enum CatalogoEnum: int
     case ESTADO_FISICO_LIBRO = 7;
     case IDIOMA = 8;
     case ESTATUS_LIBRO = 9;
+    case ESTATUS_PRESTAMO = 10;
 
     static function customName(int $case): string
     {
@@ -30,6 +31,7 @@ enum CatalogoEnum: int
             self::ESTADO_FISICO_LIBRO->value => 'Estado físico del libro',
             self::IDIOMA->value => 'Idioma',
             self::ESTATUS_LIBRO->value => 'Estatus Libro',
+            self::ESTATUS_PRESTAMO->value => 'Estatus del préstamo',
             default => '',
         };
     }

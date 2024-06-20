@@ -7,6 +7,7 @@ use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\CarrerasEducativasEnum;
 use App\Models\Enum\CatalogoOpciones\EstadoFisicoLibroEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusLibroEnum;
+use App\Models\Enum\CatalogoOpciones\EstatusPrestamoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\IdiomaLibroEnum;
 use App\Models\Enum\CatalogoOpciones\SexoUsuarioEnum;
@@ -60,6 +61,12 @@ class CatalogoOpcionSeeder extends Seeder
             CatalogoEnum::ESTATUS_LIBRO->value,
             fn (int $case) => EstatusLibroEnum::customName($case),
             fn (int $case) => EstatusLibroEnum::classCss($case)
+        );
+        $this->insertCatalogo(
+            EstatusPrestamoEnum::values(),
+            CatalogoEnum::ESTATUS_PRESTAMO->value,
+            fn (int $case) => EstatusPrestamoEnum::customName($case),
+            fn (int $case) => EstatusPrestamoEnum::classCss($case)
         );
     }
 
