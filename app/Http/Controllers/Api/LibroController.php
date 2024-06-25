@@ -64,4 +64,10 @@ class LibroController extends BaseApiController
         $books = $this->libroService->findAllLibraryPaginated($request);
         return $this->showAll(new LibroCollection($books, true));
     }
+
+    public function findAllForLoan(): JsonResponse
+    {
+        $books = $this->libroService->findAllForLoan();
+        return $this->showAll(LibroCollection::make($books));
+    }
 }

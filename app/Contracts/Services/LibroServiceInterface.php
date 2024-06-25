@@ -5,6 +5,7 @@ namespace App\Contracts\Services;
 use App\Core\Contracts\BaseServiceInterface;
 use App\Models\Dto\LibroDto;
 use App\Models\Libro;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -18,4 +19,6 @@ interface LibroServiceInterface extends BaseServiceInterface
     public function updateImage(int $id, LibroDto $data): void;
 
     public function findAllLibraryPaginated(Request $request, array $columns = ['*']): LengthAwarePaginator;
+
+    public function findAllForLoan(): Collection;
 }

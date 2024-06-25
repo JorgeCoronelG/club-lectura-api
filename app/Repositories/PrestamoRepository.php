@@ -5,8 +5,10 @@ namespace App\Repositories;
 use App\Contracts\Repositories\PrestamoRepositoryInterface;
 use App\Core\BaseRepository;
 use App\Core\Classes\Filter;
+use App\Models\Enum\CatalogoOpciones\EstatusPrestamoEnum;
 use App\Models\Prestamo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -64,5 +66,15 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
             ->filter($filters)
             ->applySort($sort)
             ->paginate($limit, $columns);
+    }
+
+    public function loansByUserId(int $userId): Collection
+    {
+        return $this->entity
+            ->whereHas('estatus', function (Builder $query) {
+                $query->where('opcion_id', EstatusPrestamoEnum::PRESTAMO->value);
+            })
+            ->where('usuario_id', $userId)
+            ->get();
     }
 }

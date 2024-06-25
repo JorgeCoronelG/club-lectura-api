@@ -20,6 +20,7 @@ class Prestamo extends Model
     protected $table = 'prestamos';
     protected $fillable = [
         'fecha_prestamo',
+        'fecha_entrega',
         'fecha_real_entrega',
         'usuario_id',
         'estatus_id',

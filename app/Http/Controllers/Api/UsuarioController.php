@@ -95,4 +95,10 @@ class UsuarioController extends BaseApiController
 
         return $this->errorResponse('Error en la petición', HttpCodes::HTTP_BAD_REQUEST);
     }
+
+    public function findAllForLoan(): JsonResponse
+    {
+        $users = $this->usuarioService->findAllForLoan();
+        return $this->showAll(UsuarioCollection::make($users));
+    }
 }

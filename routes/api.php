@@ -51,6 +51,12 @@ Route::middleware('auth:sanctum')
             ->prefix('books')
             ->name('books.')
             ->group(function () {
+                Route::get('/find-for-loan', 'findAllForLoan')->name('find-for-loan')
+                    ->middleware(
+                        'permission:'.
+                        RolEnum::ADMINISTRADOR->value.','.
+                        RolEnum::CAPTURISTA->value.','
+                    );
                 Route::get('/library', 'findAllLibraryPaginated')->name('library');
 
                 Route::patch('image/{id}', 'updateImage')
@@ -103,6 +109,12 @@ Route::middleware('auth:sanctum')
             ->name('users.')
             ->group(function () {
                 Route::get('/find-all', 'findAll')->name('find-all');
+                Route::get('/find-for-loan', 'findAllForLoan')->name('find-for-loan')
+                    ->middleware(
+                        'permission:'.
+                        RolEnum::ADMINISTRADOR->value.','.
+                        RolEnum::CAPTURISTA->value.','
+                    );
                 Route::get('/validate-data', 'validateData')->name('validate-data');
             });
 
@@ -131,7 +143,7 @@ Route::middleware('auth:sanctum')
             );
 
         Route::apiResource('loans', PrestamoController::class)
-            ->only('index')
+            ->only('index', 'store')
             ->middleware(
                 'permission:'.
                 RolEnum::ADMINISTRADOR->value.','.

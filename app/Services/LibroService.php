@@ -14,6 +14,7 @@ use App\Helpers\Validation;
 use App\Models\Dto\AutorDto;
 use App\Models\Dto\LibroDto;
 use App\Models\Libro;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\LaravelData\Data;
@@ -85,5 +86,10 @@ class LibroService extends BaseService implements LibroServiceInterface
         $perPage = Validation::getPerPage($request->get(QueryParam::PAGINATION_KEY));
         $sort = $request->get(QueryParam::ORDER_BY_KEY);
         return $this->entityRepository->findAllLibraryPaginated($filters, $perPage, $sort, $columns);
+    }
+
+    public function findAllForLoan(): Collection
+    {
+        return $this->entityRepository->findAllForLoan();
     }
 }

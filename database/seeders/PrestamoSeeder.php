@@ -34,7 +34,7 @@ class PrestamoSeeder extends Seeder
             ->id;
         $estatusId = CatalogoOpcion::query()
             ->where('catalogo_id', CatalogoEnum::ESTATUS_LIBRO->value)
-            ->where('opcion_id', EstatusLibroEnum::PRESTADO->value)
+            ->where('opcion_id', EstatusLibroEnum::PRESTAMO->value)
             ->first()
             ->id;
         $generoId = Genero::query()

@@ -13,6 +13,7 @@ use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
 use App\Models\Usuario;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Spatie\LaravelData\Data;
@@ -167,5 +168,10 @@ class UsuarioService extends BaseService implements UsuarioServiceInterface
     public function findByField(string $field, string $value): ?Usuario
     {
         return $this->entityRepository->findByField($field, $value);
+    }
+
+    public function findAllForLoan(): Collection
+    {
+        return $this->entityRepository->findAllForLoan();
     }
 }
