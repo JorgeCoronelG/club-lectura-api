@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LibroSeeder::class);
         $this->call(AutorLibroSeeder::class);
         $this->call(PrestamoSeeder::class);
+        $this->call(MultaSeeder::class);
     }
 
     private function deleteImageBooks(): void

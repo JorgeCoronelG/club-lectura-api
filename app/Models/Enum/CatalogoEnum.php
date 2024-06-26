@@ -18,6 +18,8 @@ enum CatalogoEnum: int
     case IDIOMA = 8;
     case ESTATUS_LIBRO = 9;
     case ESTATUS_PRESTAMO = 10;
+    case ESTATUS_MULTA = 11;
+    case COSTO_MULTA_POR_DIA = 12;
 
     static function customName(int $case): string
     {
@@ -32,6 +34,8 @@ enum CatalogoEnum: int
             self::IDIOMA->value => 'Idioma',
             self::ESTATUS_LIBRO->value => 'Estatus Libro',
             self::ESTATUS_PRESTAMO->value => 'Estatus del préstamo',
+            self::ESTATUS_MULTA->value => 'Estatus de la multa',
+            self::COSTO_MULTA_POR_DIA->value => 'Costo de la multa por día de atraso',
             default => '',
         };
     }

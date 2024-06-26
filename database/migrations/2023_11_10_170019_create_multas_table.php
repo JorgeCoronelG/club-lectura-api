@@ -16,6 +16,11 @@ return new class extends Migration
             $table->float('costo');
             $table->unsignedBigInteger('estatus_id');
             $table->unsignedBigInteger('prestamo_id');
+            $table->timestamp('creado_en')
+                ->useCurrent();
+            $table->timestamp('actualizado_en')
+                ->nullable()
+                ->useCurrentOnUpdate();
 
             $table->foreign('estatus_id')
                 ->references('id')

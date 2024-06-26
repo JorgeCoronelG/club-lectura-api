@@ -10,6 +10,9 @@ class Multa extends Model
 {
     use HasFactory;
 
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
+
     protected $table = 'multas';
     protected $fillable = [
         'costo',

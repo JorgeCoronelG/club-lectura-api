@@ -7,9 +7,11 @@ use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\CarrerasEducativasEnum;
 use App\Models\Enum\CatalogoOpciones\EstadoFisicoLibroEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusLibroEnum;
+use App\Models\Enum\CatalogoOpciones\EstatusMultaEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusPrestamoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\IdiomaLibroEnum;
+use App\Models\Enum\CatalogoOpciones\CostoMultaEnum;
 use App\Models\Enum\CatalogoOpciones\SexoUsuarioEnum;
 use App\Models\Enum\CatalogoOpciones\TipoEscolarEnum;
 use App\Models\Enum\CatalogoOpciones\TipoUsuarioEnum;
@@ -67,6 +69,17 @@ class CatalogoOpcionSeeder extends Seeder
             CatalogoEnum::ESTATUS_PRESTAMO->value,
             fn (int $case) => EstatusPrestamoEnum::customName($case),
             fn (int $case) => EstatusPrestamoEnum::classCss($case)
+        );
+        $this->insertCatalogo(
+            EstatusMultaEnum::values(),
+            CatalogoEnum::ESTATUS_MULTA->value,
+            fn (int $case) => EstatusMultaEnum::customName($case),
+            fn (int $case) => EstatusMultaEnum::classCss($case)
+        );
+        $this->insertCatalogo(
+            CostoMultaEnum::values(),
+            CatalogoEnum::COSTO_MULTA_POR_DIA->value,
+            fn (int $case) => CostoMultaEnum::customName($case),
         );
     }
 
