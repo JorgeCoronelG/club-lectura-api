@@ -12,4 +12,6 @@ use Illuminate\Database\Eloquent\Collection;
 interface PrestamoRepositoryInterface extends BaseRepositoryInterface
 {
     public function loansByUserId(int $userId): Collection;
+
+    public function loansForFines(array $columns = ['*']): Collection;
 }

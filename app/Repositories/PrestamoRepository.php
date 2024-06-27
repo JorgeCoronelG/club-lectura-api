@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\Repositories\PrestamoRepositoryInterface;
 use App\Core\BaseRepository;
 use App\Core\Classes\Filter;
+use App\Models\Enum\CatalogoOpciones\EstatusMultaEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusPrestamoEnum;
 use App\Models\Prestamo;
 use Illuminate\Database\Eloquent\Builder;
@@ -76,5 +77,22 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
             })
             ->where('usuario_id', $userId)
             ->get();
+    }
+
+    public function loansForFines(array $columns = ['*']): Collection
+    {
+        return $this->entity
+            ->where('fecha_entrega', '<', now())
+            ->whereHas('estatus', function (Builder $query) {
+                $query->where('opcion_id', EstatusPrestamoEnum::PRESTAMO->value);
+            })
+            ->whereNotIn('id', function (QueryBuilder $query) {
+                $query
+                    ->select('m.prestamo_id')
+                    ->from('multas AS m')
+                    ->join('catalogo_opciones AS co', 'co.id', '=', 'm.estatus_id')
+                    ->where('co.opcion_id', EstatusMultaEnum::PENDIENTE->value);
+            })
+            ->get($columns);
     }
 }

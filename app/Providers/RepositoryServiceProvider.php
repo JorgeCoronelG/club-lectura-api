@@ -21,6 +21,7 @@ class RepositoryServiceProvider extends ServiceProvider
         'DonationRepositoryInterface' => 'DonationRepository',
         'DonacionUsuarioRepositoryInterface' => 'DonacionUsuarioRepository',
         'PrestamoRepositoryInterface' => 'PrestamoRepository',
+        'MultaRepositoryInterface' => 'MultaRepository'
     ];
 
     /**
