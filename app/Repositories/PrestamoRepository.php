@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\Repositories\PrestamoRepositoryInterface;
 use App\Core\BaseRepository;
 use App\Core\Classes\Filter;
+use App\Core\Enum\OperatorSql;
 use App\Models\Enum\CatalogoOpciones\EstatusMultaEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusPrestamoEnum;
 use App\Models\Prestamo;
@@ -39,7 +40,8 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
     {
         $filterUser = array_filter($filters, fn ($filter) => $filter->field === 'usuario');
         $filterBook = array_filter($filters, fn ($filter) => $filter->field === 'libro');
-        $filters = array_filter($filters, fn ($filter) => $filter->field !== 'usuario' && $filter->field !== 'libro');
+        $filterFine = array_filter($filters, fn ($filter) => $filter->field === 'multa');
+        $filters = array_filter($filters, fn ($filter) => !in_array($filter->field, ['usuario', 'libro', 'multa']));
 
         return $this->entity
             ->with([
@@ -63,6 +65,20 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
                         $query->filter($filter);
                     });
                 });
+            })
+            ->when($filterFine, function (Builder $query) use ($filterFine) {
+                $query
+                    ->when($filterFine[0]->operator === OperatorSql::IS_NULL, function (Builder $query) {
+                        $query->whereDoesntHave('multa');
+                    })
+                    ->when($filterFine[0]->operator !== OperatorSql::IS_NULL, function (Builder $query) use ($filterFine) {
+                        $query->whereHas('multa', function (Builder $query) use ($filterFine) {
+                            $filter = [new Filter('costo', $filterFine[0]->value, $filterFine[0]->operator)];
+                            $query->where(function (Builder $query) use ($filter) {
+                                $query->filter($filter);
+                            });
+                        });
+                    });
             })
             ->filter($filters)
             ->applySort($sort)

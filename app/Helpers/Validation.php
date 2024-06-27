@@ -15,11 +15,6 @@ class Validation
     // Formatos
     public const FORMAT_DATE_YMD = 'Y-m-d';
 
-    // Expresiones regulares
-    const PHONE_REGEX = '/^[0-9]{10}$/';
-    const INTEGER_ID = '[0-9]+';
-    const DATE_REGEX = '^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$';
-
     public static function getPerPage(string $queryParam = null): int
     {
         if (is_null($queryParam)) {
@@ -50,7 +45,6 @@ class Validation
         foreach ($filters[QueryParam::FILTERS_FIELD_KEY] as $filter) {
             if (
                 !isset($filter[QueryParam::FIELD_KEY]) ||
-                !isset($filter[QueryParam::VALUE_KEY]) ||
                 !isset($filter[QueryParam::OPERATOR_SQL_KEY])
             ) {
                 throw new CustomErrorException(Message::INVALID_QUERY_PARAMETER, Response::HTTP_BAD_REQUEST);

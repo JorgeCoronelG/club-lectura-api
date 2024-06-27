@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Core\Traits\AdvancedFilter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Multa extends Model
 {
-    use HasFactory;
+    use HasFactory, AdvancedFilter;
 
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';

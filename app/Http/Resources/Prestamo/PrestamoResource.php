@@ -4,6 +4,7 @@ namespace App\Http\Resources\Prestamo;
 
 use App\Http\Resources\CatalogoOpcion\CatalogoOpcionResource;
 use App\Http\Resources\Libro\LibroCollection;
+use App\Http\Resources\Multa\MultaResource;
 use App\Http\Resources\Usuario\UsuarioResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -29,6 +30,7 @@ class PrestamoResource extends JsonResource
             'libros' => LibroCollection::make($this->whenLoaded('libros')),
             'estatusId' => $this->estatus_id,
             'estatus' => CatalogoOpcionResource::make($this->whenLoaded('estatus')),
+            'multa' => MultaResource::make($this->whenLoaded('multa')),
         ];
     }
 }
