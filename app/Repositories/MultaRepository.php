@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Contracts\Repositories\MultaRepositoryInterface;
 use App\Core\BaseRepository;
 use App\Models\Enum\CatalogoOpciones\EstatusMultaEnum;
+use App\Models\Enum\CatalogoOpciones\EstatusPrestamoEnum;
 use App\Models\Multa;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -22,9 +23,19 @@ class MultaRepository extends BaseRepository implements MultaRepositoryInterface
     public function updateFines(float $amount): int
     {
         return $this->entity
+            ->whereHas('prestamo', function (Builder $query) {
+                $query->whereHas('estatus', function (Builder $query) {
+                    $query->where('opcion_id', EstatusPrestamoEnum::PRESTAMO->value);
+                });
+            })
             ->whereHas('estatus', function (Builder $query) {
                 $query->where('opcion_id', EstatusMultaEnum::PENDIENTE->value);
             })
             ->increment('costo', $amount);
+    }
+
+    public function findByLoanId(int $loanId): ?Multa
+    {
+        return $this->entity->where('prestamo_id', $loanId)->first();
     }
 }

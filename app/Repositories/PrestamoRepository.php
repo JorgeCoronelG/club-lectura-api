@@ -111,4 +111,13 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
             })
             ->get($columns);
     }
+
+    public function findById(int $id, array $columns = ['*']): Prestamo
+    {
+        return $this->entity
+            ->with([
+                'libros'
+            ])
+            ->findOrFail($id, $columns);
+    }
 }

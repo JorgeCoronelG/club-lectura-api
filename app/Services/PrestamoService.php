@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\Repositories\CatalogoOpcionRepositoryInterface;
 use App\Contracts\Repositories\LibroRepositoryInterface;
+use App\Contracts\Repositories\MultaRepositoryInterface;
 use App\Contracts\Repositories\PrestamoRepositoryInterface;
 use App\Contracts\Services\PrestamoServiceInterface;
 use App\Core\BaseService;
@@ -23,15 +24,18 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
     protected BaseRepositoryInterface $entityRepository;
     protected CatalogoOpcionRepositoryInterface $catalogoOpcionRepository;
     protected LibroRepositoryInterface $libroRepository;
+    protected MultaRepositoryInterface $multaRepository;
 
     public function __construct(
         PrestamoRepositoryInterface $prestamoRepository,
         CatalogoOpcionRepositoryInterface $catalogoOpcionRepository,
         LibroRepositoryInterface $libroRepository,
+        MultaRepositoryInterface $multaRepository,
     ) {
         $this->entityRepository = $prestamoRepository;
         $this->catalogoOpcionRepository = $catalogoOpcionRepository;
         $this->libroRepository = $libroRepository;
+        $this->multaRepository = $multaRepository;
     }
 
     /**
@@ -69,5 +73,27 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
         $this->libroRepository->bulkUpdate($bookIds, $libroDto->only('estatusId')->toArray());
 
         return $loan;
+    }
+
+    public function deliver(PrestamoDto $data, int $id): void
+    {
+        $existFine = $this->multaRepository->findByLoanId($id);
+        $statusLoan = $this->catalogoOpcionRepository->findById($data->estatusId);
+        $fine = $this->entityRepository->findById($id);
+
+        // Si no existe multa y fue entregado en tiempo
+        if (!$existFine && $statusLoan->opcion_id === EstatusPrestamoEnum::ENTREGADO->value) {
+            $bookAvailable = $this->catalogoOpcionRepository->findByOpcionIdAndCatalogoId(
+                EstatusLibroEnum::DISPONIBLE->value,
+                CatalogoEnum::ESTATUS_LIBRO->value
+            );
+
+
+            $this->entityRepository->update($id, $data->only('fechaRealEntrega', 'estatusId')->toArray());
+            $this->libroRepository->update($fine->libros[0]->id, ['estatus_id' => $bookAvailable->id]);
+            return;
+        }
+
+        return;
     }
 }

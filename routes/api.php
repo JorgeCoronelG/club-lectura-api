@@ -68,6 +68,24 @@ Route::middleware('auth:sanctum')
                     );
             });
 
+        Route::controller(PrestamoController::class)
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value.','.
+                RolEnum::LECTOR->value
+            )
+            ->prefix('loans')
+            ->group(function () {
+                Route::patch('/delivered/{id}', 'deliver')
+                    ->name('delivered')
+                    ->middleware(
+                        'permission:'.
+                        RolEnum::ADMINISTRADOR->value.','.
+                        RolEnum::CAPTURISTA->value
+                    );
+            });
+
         Route::controller(MenuController::class)
             ->middleware(
                 'permission:'.
@@ -147,8 +165,7 @@ Route::middleware('auth:sanctum')
             ->middleware(
                 'permission:'.
                 RolEnum::ADMINISTRADOR->value.','.
-                RolEnum::CAPTURISTA->value.','.
-                RolEnum::LECTOR->value
+                RolEnum::CAPTURISTA->value
             );
 
         Route::apiResource('users', UsuarioController::class)

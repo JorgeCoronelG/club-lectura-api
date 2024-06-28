@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @method Prestamo create(array $data)
+ * @method Prestamo findById(int $id, array $columns = ['*'])
  */
 interface PrestamoRepositoryInterface extends BaseRepositoryInterface
 {

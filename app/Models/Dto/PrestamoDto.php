@@ -26,6 +26,7 @@ class PrestamoDto extends Data
          * @var LibroPrestamoDto[]
          */
         public ?array $libros,
+        public ?MultaDto $multa,
     ) {
         //
     }
