@@ -88,12 +88,24 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
                 CatalogoEnum::ESTATUS_LIBRO->value
             );
 
-
             $this->entityRepository->update($id, $data->only('fechaRealEntrega', 'estatusId')->toArray());
             $this->libroRepository->update($fine->libros[0]->id, ['estatus_id' => $bookAvailable->id]);
             return;
         }
 
-        return;
+        // Reporta el libro como perdido sin tener multa
+        if (!$existFine && $statusLoan->opcion_id === EstatusPrestamoEnum::PERDIDO->value) {
+            $bookLost = $this->catalogoOpcionRepository->findByOpcionIdAndCatalogoId(
+                EstatusLibroEnum::PERDIDO->value,
+                CatalogoEnum::ESTATUS_LIBRO->value
+            );
+
+            $this->entityRepository->update($id, $data->only('estatusId')->toArray());
+            $this->libroRepository->update($fine->libros[0]->id, ['estatus_id' => $bookLost->id]);
+
+            $data->multa->costo = $fine->libros[0]->precio;
+            $data->multa->prestamoId = $id;
+            $this->multaRepository->create($data->multa->except('id')->all());
+        }
     }
 }
