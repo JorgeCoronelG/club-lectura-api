@@ -77,12 +77,12 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
 
     public function deliver(PrestamoDto $data, int $id): void
     {
-        $existFine = $this->multaRepository->findByLoanId($id);
+        $fine = $this->multaRepository->findByLoanId($id);
         $statusLoan = $this->catalogoOpcionRepository->findById($data->estatusId);
         $fine = $this->entityRepository->findById($id);
 
         // Si no existe multa y fue entregado en tiempo
-        if (!$existFine && $statusLoan->opcion_id === EstatusPrestamoEnum::ENTREGADO->value) {
+        if (!$fine && $statusLoan->opcion_id === EstatusPrestamoEnum::ENTREGADO->value) {
             $bookAvailable = $this->catalogoOpcionRepository->findByOpcionIdAndCatalogoId(
                 EstatusLibroEnum::DISPONIBLE->value,
                 CatalogoEnum::ESTATUS_LIBRO->value
@@ -94,7 +94,7 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
         }
 
         // Reporta el libro como perdido sin tener multa
-        if (!$existFine && $statusLoan->opcion_id === EstatusPrestamoEnum::PERDIDO->value) {
+        if (!$fine && $statusLoan->opcion_id === EstatusPrestamoEnum::PERDIDO->value) {
             $bookLost = $this->catalogoOpcionRepository->findByOpcionIdAndCatalogoId(
                 EstatusLibroEnum::PERDIDO->value,
                 CatalogoEnum::ESTATUS_LIBRO->value
@@ -106,6 +106,22 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
             $data->multa->costo = $fine->libros[0]->precio;
             $data->multa->prestamoId = $id;
             $this->multaRepository->create($data->multa->except('id')->all());
+            return;
+        }
+
+        // Entrega el libro después del tiempo estimado
+        if ($fine && $statusLoan->opcion_id === EstatusPrestamoEnum::ENTREGADO->value) {
+            $bookAvailable = $this->catalogoOpcionRepository->findByOpcionIdAndCatalogoId(
+                EstatusLibroEnum::DISPONIBLE->value,
+                CatalogoEnum::ESTATUS_LIBRO->value
+            );
+            // Actualizar el estatus del préstamo y la fecha real entrega
+            $this->entityRepository->update($id, $data->only('fechaRealEntrega', 'estatusId')->toArray());
+            // Actualizar el estatus del libro a disponible
+            $this->libroRepository->update($fine->libros[0]->id, ['estatus_id' => $bookAvailable->id]);
+            // Actualizar el estatus de la multa (pendiente o pagado
+            $this->multaRepository->update($fine->id, $data->multa->only('estatusId')->toArray());
+            return;
         }
     }
 }
