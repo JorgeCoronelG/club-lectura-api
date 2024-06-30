@@ -79,7 +79,7 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
     {
         $fine = $this->multaRepository->findByLoanId($id);
         $statusLoan = $this->catalogoOpcionRepository->findById($data->estatusId);
-        $fine = $this->entityRepository->findById($id);
+        $loan = $this->entityRepository->findById($id);
 
         // Si no existe multa y fue entregado en tiempo
         if (!$fine && $statusLoan->opcion_id === EstatusPrestamoEnum::ENTREGADO->value) {
@@ -89,7 +89,7 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
             );
 
             $this->entityRepository->update($id, $data->only('fechaRealEntrega', 'estatusId')->toArray());
-            $this->libroRepository->update($fine->libros[0]->id, ['estatus_id' => $bookAvailable->id]);
+            $this->libroRepository->update($loan->libros[0]->id, ['estatus_id' => $bookAvailable->id]);
             return;
         }
 
@@ -101,9 +101,9 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
             );
 
             $this->entityRepository->update($id, $data->only('estatusId')->toArray());
-            $this->libroRepository->update($fine->libros[0]->id, ['estatus_id' => $bookLost->id]);
+            $this->libroRepository->update($loan->libros[0]->id, ['estatus_id' => $bookLost->id]);
 
-            $data->multa->costo = $fine->libros[0]->precio;
+            $data->multa->costo = $loan->libros[0]->precio;
             $data->multa->prestamoId = $id;
             $this->multaRepository->create($data->multa->except('id')->all());
             return;
@@ -115,13 +115,23 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
                 EstatusLibroEnum::DISPONIBLE->value,
                 CatalogoEnum::ESTATUS_LIBRO->value
             );
-            // Actualizar el estatus del préstamo y la fecha real entrega
+
             $this->entityRepository->update($id, $data->only('fechaRealEntrega', 'estatusId')->toArray());
-            // Actualizar el estatus del libro a disponible
-            $this->libroRepository->update($fine->libros[0]->id, ['estatus_id' => $bookAvailable->id]);
-            // Actualizar el estatus de la multa (pendiente o pagado
-            $this->multaRepository->update($fine->id, $data->multa->only('estatusId')->toArray());
+            $this->libroRepository->update($loan->libros[0]->id, ['estatus_id' => $bookAvailable->id]);
+            $this->multaRepository->update($loan->id, $data->multa->only('estatusId')->toArray());
             return;
         }
+
+        // Se reporta el libro como perdido y, además, tiene multa
+        $bookLost = $this->catalogoOpcionRepository->findByOpcionIdAndCatalogoId(
+            EstatusLibroEnum::PERDIDO->value,
+            CatalogoEnum::ESTATUS_LIBRO->value
+        );
+
+        $this->entityRepository->update($id, $data->only('estatusId')->toArray());
+        $this->libroRepository->update($loan->libros[0]->id, ['estatus_id' => $bookLost->id]);
+
+        $data->multa->costo = $fine->costo + $loan->libros[0]->precio;
+        $this->multaRepository->update($fine->id, $data->multa->only('estatusId', 'costo')->toArray());
     }
 }
