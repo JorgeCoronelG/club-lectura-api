@@ -161,7 +161,7 @@ Route::middleware('auth:sanctum')
             );
 
         Route::apiResource('loans', PrestamoController::class)
-            ->only('index', 'store')
+            ->only('index', 'store', 'show')
             ->middleware(
                 'permission:'.
                 RolEnum::ADMINISTRADOR->value.','.

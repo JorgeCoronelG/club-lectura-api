@@ -22,7 +22,7 @@ class PrestamoResource extends JsonResource
             'id' => $this->id,
             'fechaPrestamo' => $this->fecha_prestamo->format('Y-m-d'),
             'fechaEntrega' => $this->fecha_entrega->format('Y-m-d'),
-            'fechaEntregaReal' => ($this->fecha_real_entrega)
+            'fechaRealEntrega' => ($this->fecha_real_entrega)
                 ? $this->fecha_real_entrega->format('Y-m-d')
                 : null,
             'usuarioId' => $this->usuario_id,

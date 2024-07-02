@@ -30,13 +30,19 @@ class PrestamoController extends BaseApiController
 
     public function store(StoreLoanRequest $request): JsonResponse
     {
-        $prestamo = $this->prestamoService->create($request->toData());
-        return $this->showOne(PrestamoResource::make($prestamo));
+        $loan = $this->prestamoService->create($request->toData());
+        return $this->showOne(PrestamoResource::make($loan));
     }
 
     public function deliver(DeliveredLoanRequest $request, int $id): Response
     {
         $this->prestamoService->deliver($request->toData(), $id);
         return $this->noContentResponse();
+    }
+
+    public function show(int $id): JsonResponse
+    {
+        $loan = $this->prestamoService->findById($id);
+        return $this->showOne(PrestamoResource::make($loan));
     }
 }

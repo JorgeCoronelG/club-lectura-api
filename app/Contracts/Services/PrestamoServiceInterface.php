@@ -8,6 +8,7 @@ use App\Models\Prestamo;
 
 /**
  * @method Prestamo create(\Spatie\LaravelData\Data $data)
+ * @method Prestamo findById(int $id, array $columns = ['*'])
  */
 interface PrestamoServiceInterface extends BaseServiceInterface
 {
