@@ -38,14 +38,15 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
         array $columns = ['*']
     ): LengthAwarePaginator
     {
-        $filterUser = array_filter($filters, fn ($filter) => $filter->field === 'usuario');
-        $filterBook = array_filter($filters, fn ($filter) => $filter->field === 'libro');
-        $filterFine = array_filter($filters, fn ($filter) => $filter->field === 'multa');
-        $filters = array_filter($filters, fn ($filter) => !in_array($filter->field, ['usuario', 'libro', 'multa']));
+        $filterUser = array_values(array_filter($filters, fn ($filter) => $filter->field === 'usuario'));
+        $filterBook = array_values(array_filter($filters, fn ($filter) => $filter->field === 'libro'));
+        $filterFine = array_values(array_filter($filters, fn ($filter) => $filter->field === 'multa' || $filter->field === 'estatus_multa'));
+        $filters = array_filter($filters, fn ($filter) => !in_array($filter->field, ['usuario', 'libro', 'multa', 'estatus_multa']));
 
         return $this->entity
             ->with([
                 'multa',
+                'multa.estatus',
                 'usuario',
                 'libros',
                 'estatus'
@@ -53,31 +54,49 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
             ->when($filterUser, function (Builder $query) use ($filterUser) {
                 $query->whereHas('usuario', function (Builder $query) use ($filterUser) {
                     $filter = [new Filter('nombre_completo', $filterUser[0]->value, $filterUser[0]->operator)];
-                    $query->where(function (Builder $query) use ($filter) {
-                        $query->filter($filter);
-                    });
+                    $query->filter($filter);
                 });
             })
             ->when($filterBook, function (Builder $query) use ($filterBook) {
                 $query->whereHas('libros', function (Builder $query) use ($filterBook) {
                     $filter = [new Filter('titulo', $filterBook[0]->value, $filterBook[0]->operator)];
-                    $query->where(function (Builder $query) use ($filter) {
-                        $query->filter($filter);
-                    });
+                    $query->filter($filter);
                 });
             })
             ->when($filterFine, function (Builder $query) use ($filterFine) {
-                $query
-                    ->when($filterFine[0]->operator === OperatorSql::IS_NULL, function (Builder $query) {
-                        $query->whereDoesntHave('multa');
-                    })
-                    ->when($filterFine[0]->operator !== OperatorSql::IS_NULL, function (Builder $query) use ($filterFine) {
-                        $query->whereHas('multa', function (Builder $query) use ($filterFine) {
-                            $filter = [new Filter('costo', $filterFine[0]->value, $filterFine[0]->operator)];
-                            $query->where(function (Builder $query) use ($filter) {
-                                $query->filter($filter);
+                $filterMulta = array_values(array_filter($filterFine, fn ($filter) => $filter->field === 'multa'));
+
+                if (count($filterMulta) === 1) {
+                    $query
+                        ->when($filterMulta[0]->operator === OperatorSql::IS_NULL, function (Builder $query) {
+                            $query->whereDoesntHave('multa');
+                        })
+                        ->when($filterMulta[0]->operator !== OperatorSql::IS_NULL, function (Builder $query) use ($filterFine) {
+                            $query->whereHas('multa', function (Builder $query) use ($filterFine) {
+                                $filterApply = [];
+                                $nameFields = ['multa' => 'costo', 'estatus_multa' => 'estatus_id'];
+
+                                foreach ($filterFine as $filter) {
+                                    if ($filter->field === 'multa' && $filter->operator === OperatorSql::NOT_NULL) {
+                                        continue;
+                                    }
+
+                                    $filterApply[] = new Filter($nameFields[$filter->field], $filter->value, $filter->operator);
+                                }
+
+                                if (count($filterApply) > 0) {
+                                    $query->filter($filterApply);
+                                }
                             });
                         });
+                    return;
+                }
+
+                $query
+                    ->whereHas('multa', function (Builder $query) use ($filterFine) {
+                        $filterApply = [new Filter('estatus_id', $filterFine[0]->value, $filterFine[0]->operator)];
+
+                        $query->filter($filterApply);
                     });
             })
             ->filter($filters)

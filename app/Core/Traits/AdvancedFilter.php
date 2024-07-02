@@ -25,32 +25,32 @@ trait AdvancedFilter
     private function filterAdvanced(Builder $query, Filter $filter): Builder
     {
         if (OperatorSql::CONTAIN === $filter->operator) {
-            $query->orWhere($filter->field, 'LIKE', "%$filter->value%");
+            $query->where($filter->field, 'LIKE', "%$filter->value%");
             return $query;
         }
 
         if (OperatorSql::NOT_CONTAIN === $filter->operator) {
-            $query->orWhere($filter->field, 'NOT LIKE', "%$filter->value%");
+            $query->where($filter->field, 'NOT LIKE', "%$filter->value%");
             return $query;
         }
 
         if (OperatorSql::STARTS_WITH === $filter->operator) {
-            $query->orWhere($filter->field, 'LIKE', "$filter->value%");
+            $query->where($filter->field, 'LIKE', "$filter->value%");
             return $query;
         }
 
         if (OperatorSql::ENDS_WITH === $filter->operator) {
-            $query->orWhere($filter->field, 'LIKE', "%$filter->value");
+            $query->where($filter->field, 'LIKE', "%$filter->value");
             return $query;
         }
 
         if (OperatorSql::IS_NULL === $filter->operator) {
-            $query->orWhereNull($filter->field);
+            $query->whereNull($filter->field);
             return $query;
         }
 
         if (OperatorSql::NOT_NULL === $filter->operator) {
-            $query->orWhereNotNull($filter->field);
+            $query->whereNotNull($filter->field);
             return $query;
         }
 
@@ -62,7 +62,7 @@ trait AdvancedFilter
             OperatorSql::LESS_THAN === $filter->operator ||
             OperatorSql::LESS_THAN_OR_EQUAL === $filter->operator
         ) {
-            $query->orWhere($filter->field, $filter->operator->value, $filter->value);
+            $query->where($filter->field, $filter->operator->value, $filter->value);
             return $query;
         }
 
