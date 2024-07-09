@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpArithmeticTypeCheckInspection */
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\LibroController;
 use App\Http\Controllers\Api\GeneroController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\PrestamoController;
+use App\Http\Controllers\Api\MultaController;
 use App\Models\Enum\RolEnum;
 
 Route::controller(AuthController::class)
@@ -104,6 +105,18 @@ Route::middleware('auth:sanctum')
                 Route::put('/permission/{userId}', 'syncNavigation')
                     ->name('permission')
                     ->middleware('permission:'.RolEnum::ADMINISTRADOR->value);
+            });
+
+        Route::controller(MultaController::class)
+            ->middleware(
+                'permission:'.
+                RolEnum::ADMINISTRADOR->value.','.
+                RolEnum::CAPTURISTA->value
+            )
+            ->prefix('fines')
+            ->name('fines.')
+            ->group(function () {
+                Route::patch('/paid/{id}', 'finePaid')->name('paid');
             });
 
         Route::controller(RolController::class)

@@ -135,6 +135,7 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
     {
         return $this->entity
             ->with([
+                'estatus',
                 'libros',
                 'multa',
                 'multa.estatus',

@@ -55,4 +55,13 @@ class MultaService extends BaseService implements MultaServiceInterface
             $this->entityRepository->bulkInsert($data);
         }
     }
+
+    public function finePaid(int $id): void
+    {
+        $statusFine = $this->catalogoOpcionRepository->findByOpcionIdAndCatalogoId(
+            EstatusMultaEnum::PAGADO->value,
+            CatalogoEnum::ESTATUS_MULTA->value
+        );
+        $this->entityRepository->update($id, ['estatus_id' => $statusFine->id]);
+    }
 }
