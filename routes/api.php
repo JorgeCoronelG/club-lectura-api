@@ -78,6 +78,10 @@ Route::middleware('auth:sanctum')
             )
             ->prefix('loans')
             ->group(function () {
+                Route::get('/reader', 'findAllByReaderPaginated')
+                    ->name('reader')
+                    ->middleware('permission:'. RolEnum::LECTOR->value);
+
                 Route::patch('/delivered/{id}', 'deliver')
                     ->name('delivered')
                     ->middleware(

@@ -45,4 +45,10 @@ class PrestamoController extends BaseApiController
         $loan = $this->prestamoService->findById($id);
         return $this->showOne(PrestamoResource::make($loan));
     }
+
+    public function findAllByReaderPaginated(Request $request): JsonResponse
+    {
+        $loans = $this->prestamoService->findAllByReaderPaginated($request, auth()->id());
+        return $this->showAll(new PrestamoCollection($loans, true));
+    }
 }

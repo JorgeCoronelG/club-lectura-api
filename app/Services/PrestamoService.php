@@ -9,13 +9,17 @@ use App\Contracts\Repositories\PrestamoRepositoryInterface;
 use App\Contracts\Services\PrestamoServiceInterface;
 use App\Core\BaseService;
 use App\Core\Contracts\BaseRepositoryInterface;
+use App\Core\Enum\QueryParam;
 use App\Exceptions\CustomErrorException;
+use App\Helpers\Validation;
 use App\Models\Dto\LibroDto;
 use App\Models\Dto\PrestamoDto;
 use App\Models\Enum\CatalogoEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusLibroEnum;
 use App\Models\Enum\CatalogoOpciones\EstatusPrestamoEnum;
 use App\Models\Prestamo;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\LaravelData\Data;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -133,5 +137,16 @@ class PrestamoService extends BaseService implements PrestamoServiceInterface
 
         $data->multa->costo = $fine->costo + $loan->libros[0]->precio;
         $this->multaRepository->update($fine->id, $data->multa->only('estatusId', 'costo')->toArray());
+    }
+
+    /**
+     * @throws CustomErrorException
+     */
+    public function findAllByReaderPaginated(Request $request, int $userId): LengthAwarePaginator
+    {
+        $filters = Validation::getFilters($request->get(QueryParam::FILTERS_KEY));
+        $perPage = Validation::getPerPage($request->get(QueryParam::PAGINATION_KEY));
+        $sort = $request->get(QueryParam::ORDER_BY_KEY);
+        return $this->entityRepository->findAllByReaderPaginated($userId, $filters, $perPage, $sort);
     }
 }
