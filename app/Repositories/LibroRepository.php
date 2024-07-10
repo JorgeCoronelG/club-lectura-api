@@ -91,4 +91,13 @@ class LibroRepository extends BaseRepository implements LibroRepositoryInterface
             ->orderBy('titulo')
             ->get();
     }
+
+    public function countExistBooks(): int
+    {
+        return $this->entity
+            ->whereHas('estatus', function (Builder $query) {
+                $query->where('opcion_id', '!=', EstatusLibroEnum::PERDIDO->value);
+            })
+            ->count();
+    }
 }

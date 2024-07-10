@@ -38,4 +38,15 @@ class MultaRepository extends BaseRepository implements MultaRepositoryInterface
     {
         return $this->entity->where('prestamo_id', $loanId)->first();
     }
+
+    public function countAllFines(int $userId = null): int
+    {
+        return $this->entity
+            ->when(!is_null($userId), function (Builder $query) use ($userId) {
+                $query->whereHas('prestamo', function (Builder $query) use ($userId) {
+                   $query->where('usuario_id', $userId);
+                });
+            })
+            ->count();
+    }
 }

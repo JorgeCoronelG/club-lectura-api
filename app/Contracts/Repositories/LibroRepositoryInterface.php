@@ -19,4 +19,6 @@ interface LibroRepositoryInterface extends BaseRepositoryInterface
     public function findBooksOnLoan(array $bookIds): Collection;
 
     public function findAllForLoan(): Collection;
+
+    public function countExistBooks(): int;
 }

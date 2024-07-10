@@ -212,4 +212,25 @@ class PrestamoRepository extends BaseRepository implements PrestamoRepositoryInt
             ->applySort($sort)
             ->paginate($limit, $columns);
     }
+
+    public function countAllLoans(int $userId = null): int
+    {
+        return $this->entity
+            ->when(!is_null($userId), function (Builder $query) use ($userId) {
+                $query->where('usuario_id', $userId);
+            })
+            ->count();
+    }
+
+    public function countActiveLoans(int $userId = null): int
+    {
+        return $this->entity
+            ->when(!is_null($userId), function (Builder $query) use ($userId) {
+                $query->where('usuario_id', $userId);
+            })
+            ->whereHas('estatus', function (Builder $query) {
+                $query->where('opcion_id', EstatusPrestamoEnum::PRESTAMO->value);
+            })
+            ->count();
+    }
 }

@@ -18,4 +18,8 @@ interface PrestamoRepositoryInterface extends BaseRepositoryInterface
     public function loansForFines(array $columns = ['*']): Collection;
 
     public function findAllByReaderPaginated(int $userId, array $filters, int $limit, string $sort = null, array $columns = ['*']): LengthAwarePaginator;
+
+    public function countAllLoans(int $userId = null): int;
+
+    public function countActiveLoans(int $userId = null): int;
 }

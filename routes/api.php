@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\GeneroController;
 use App\Http\Controllers\Api\DonationController;
 use App\Http\Controllers\Api\PrestamoController;
 use App\Http\Controllers\Api\MultaController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Models\Enum\RolEnum;
 
 Route::controller(AuthController::class)
@@ -39,6 +40,13 @@ Route::middleware('auth:sanctum')
             ->name('options-catalog.')
             ->group(function () {
                 Route::get('catalog-id/{catalogoId}', 'findByCatalogoId')->name('find-by-catalog-id');
+            });
+
+        Route::controller(DashboardController::class)
+            ->prefix('dashboard')
+            ->name('dashboard.')
+            ->group(function () {
+                Route::get('/stadistics', 'dashboardStadistics')->name('stadistics');
             });
 
         Route::controller(GeneroController::class)
