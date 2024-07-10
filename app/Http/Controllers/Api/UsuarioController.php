@@ -42,10 +42,15 @@ class UsuarioController extends BaseApiController
         return $this->showOne(UsuarioResource::make($usuario));
     }
 
-    public function show(string $id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         $usuario = $this->usuarioService->findById($id);
         return $this->showOne(UsuarioResource::make($usuario));
+    }
+
+    public function showProfile(): JsonResponse
+    {
+        return $this->show(auth()->id());
     }
 
     /**

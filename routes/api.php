@@ -70,12 +70,6 @@ Route::middleware('auth:sanctum')
             });
 
         Route::controller(PrestamoController::class)
-            ->middleware(
-                'permission:'.
-                RolEnum::ADMINISTRADOR->value.','.
-                RolEnum::CAPTURISTA->value.','.
-                RolEnum::LECTOR->value
-            )
             ->prefix('loans')
             ->group(function () {
                 Route::get('/reader', 'findAllByReaderPaginated')
@@ -92,12 +86,6 @@ Route::middleware('auth:sanctum')
             });
 
         Route::controller(MenuController::class)
-            ->middleware(
-                'permission:'.
-                RolEnum::ADMINISTRADOR->value.','.
-                RolEnum::CAPTURISTA->value.','.
-                RolEnum::LECTOR->value.','
-            )
             ->prefix('navigation')
             ->name('navigation.')
             ->group(function () {
@@ -136,14 +124,16 @@ Route::middleware('auth:sanctum')
             });
 
         Route::controller(UsuarioController::class)
-            ->middleware('permission:'.
-                RolEnum::ADMINISTRADOR->value.','.
-                RolEnum::CAPTURISTA->value.','
-            )
             ->prefix('users')
             ->name('users.')
             ->group(function () {
-                Route::get('/find-all', 'findAll')->name('find-all');
+                Route::get('/find-all', 'findAll')
+                    ->name('find-all')
+                    ->middleware(
+                        'permission:'.
+                        RolEnum::ADMINISTRADOR->value.','.
+                        RolEnum::CAPTURISTA->value
+                    );
                 Route::get('/find-for-loan', 'findAllForLoan')->name('find-for-loan')
                     ->middleware(
                         'permission:'.
@@ -151,6 +141,8 @@ Route::middleware('auth:sanctum')
                         RolEnum::CAPTURISTA->value.','
                     );
                 Route::get('/validate-data', 'validateData')->name('validate-data');
+                Route::get('/profile', 'showProfile')->name('profile');
+                Route::get('/{id}', 'show')->name('show');
             });
 
         /* API RESOURCES */
@@ -186,6 +178,7 @@ Route::middleware('auth:sanctum')
             );
 
         Route::apiResource('users', UsuarioController::class)
+            ->except('show')
             ->middleware(
                 'permission:'
                 .RolEnum::ADMINISTRADOR->value.','

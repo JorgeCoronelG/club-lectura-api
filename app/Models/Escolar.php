@@ -26,6 +26,6 @@ class Escolar extends Model
 
     public function tipo(): BelongsTo
     {
-        return $this->belongsTo(Escolar::class, 'tipo_id');
+        return $this->belongsTo(CatalogoOpcion::class, 'tipo_id');
     }
 }

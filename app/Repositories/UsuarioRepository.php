@@ -41,7 +41,10 @@ class UsuarioRepository extends BaseRepository implements UsuarioRepositoryInter
                 'rol',
                 'externo',
                 'alumno',
+                'alumno.turno',
+                'alumno.carrera',
                 'escolar',
+                'escolar.tipo',
                 'tipo'
             ])
             ->findOrFail($id, $columns);
