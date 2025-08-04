@@ -19,7 +19,7 @@ class AutorLibroSeeder extends Seeder
             ->each(function (Libro $libro) {
                 $autorIds = Autor::query()
                     ->inRandomOrder()
-                    ->take(random_int(2,5))
+                    ->take(random_int(1,5))
                     ->get(['id'])
                     ->pluck('id')
                     ->toArray();
