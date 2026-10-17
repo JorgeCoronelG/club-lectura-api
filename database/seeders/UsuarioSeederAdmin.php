@@ -36,11 +36,11 @@ class UsuarioSeederAdmin extends Seeder
 
         $usuario = Usuario::query()
             ->create([
-                'nombre_completo' => 'Jorge Coronel González',
-                'correo' => 'tprog.jorge.coronel@outlook.com',
+                'nombre_completo' => 'Administrador',
+                'correo' => 'admin@example.com',
                 'contrasenia' => bcrypt('password'),
-                'telefono' => '4423178052',
-                'fecha_nacimiento' => '1998-08-29',
+                'telefono' => '5555555555',
+                'fecha_nacimiento' => '1990-01-01',
                 'sexo_id' => $hombreId,
                 'estatus_id' => $activoId,
                 'rol_id' => RolEnum::ADMINISTRADOR->value,
